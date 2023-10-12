@@ -2,6 +2,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
@@ -26,6 +29,17 @@ public class Mine {
     String text = "hello world how are you";
     JTextArea textArea = new JTextArea(10, 30);
     Object lastIncorrectHighlight;
+
+    // Timer stuffs
+    long startTime = -1;
+    Timer timer = new Timer();
+    TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            long elapsedSeconds = (System.currentTimeMillis() - startTime) / 1000;
+            textLabel.setText(String.format("%ds", elapsedSeconds));
+        }
+    };
 
     Mine() {
         frame.setSize(boardWidth, boardHeight);
@@ -65,6 +79,13 @@ public class Mine {
                         if (KeyEvent.KEY_PRESSED == e.getID() && e.getKeyCode() != 8) {
                             System.out.println(currentIndex);
 
+                            // check if timer must be started
+                            if (startTime < 0) {
+                                // start timer
+                                startTime = System.currentTimeMillis();
+                                timer.schedule(task, 0, 1000);
+                            }
+
                             // textLabel.setText(textLabel.getText() + e.getKeyChar());
                             if (e.getKeyChar() == text.charAt(currentIndex)) {
                                 // correct character pressed
@@ -77,7 +98,14 @@ public class Mine {
 
                                     // color current character green
                                     highlightChar(currentIndex, GREEN_COLOR);
+
                                     currentIndex++;
+
+                                    if (currentIndex == text.length()) {
+                                        // stop timer
+                                        timer.cancel();
+                                        timer.purge();
+                                    }
 
                                 } catch (BadLocationException err) {
                                     // TODO Auto-generated catch block
