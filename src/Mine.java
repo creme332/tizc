@@ -9,20 +9,23 @@ import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.HighlightPainter;
 
 public class Mine {
-
+    Color GREEN_COLOR = new Color(204, 255, 153);
+    Color RED_COLOR = new Color(255, 153, 153);
     int tileSize = 70;
     int numRows = 9;
     int numCols = 9;
     int boardWidth = numCols * tileSize;
     int boardHeight = numRows * tileSize;
+    int currentIndex = 0;
 
     JFrame frame = new JFrame("tizc");
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
-    JTextArea textArea = new JTextArea(10, 30);
 
-    String text = "hello world. How are you?";
+    String text = "hello world how are you";
+    JTextArea textArea = new JTextArea(10, 30);
+    Object lastIncorrectHighlight;
 
     Mine() {
         frame.setSize(boardWidth, boardHeight);
@@ -45,12 +48,7 @@ public class Mine {
         textArea.setEditable(false);
 
         frame.add(textArea);
-        try {
-            highlight();
-        } catch (BadLocationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+
         // JOptionPane.showMessageDialog(null, new JScrollPane(textArea));
 
         boardPanel.setLayout(new GridLayout(numRows, numCols));
@@ -61,17 +59,41 @@ public class Mine {
                 .addKeyEventDispatcher(new KeyEventDispatcher() {
                     @Override
                     public boolean dispatchKeyEvent(KeyEvent e) {
-                        if (KeyEvent.KEY_PRESSED == e.getID()) {
-                            System.out.println(e.getKeyCode());
-                            // check if backspace is pressed
-                            if (e.getKeyCode() == 8) {
-                                // remove last character entered
-                                textLabel.setText(removeLastChar(textLabel.getText()));
-                                System.out.println("Backspace pressed");
-                            } else {
-                                // add new character
-                                textLabel.setText(textLabel.getText() + e.getKeyChar());
 
+                        // ignore all key events except key pressed event.
+                        // ignore backspace key press (keycode = 8) as well
+                        if (KeyEvent.KEY_PRESSED == e.getID() && e.getKeyCode() != 8) {
+                            System.out.println(currentIndex);
+
+                            // textLabel.setText(textLabel.getText() + e.getKeyChar());
+                            if (e.getKeyChar() == text.charAt(currentIndex)) {
+                                // correct character pressed
+                                try {
+                                    // remove any previous red highlight on current character
+                                    if (lastIncorrectHighlight != null) {
+                                        textArea.getHighlighter().removeHighlight(lastIncorrectHighlight);
+                                        lastIncorrectHighlight = null;
+                                    }
+
+                                    // color current character green
+                                    highlightChar(currentIndex, GREEN_COLOR);
+                                    currentIndex++;
+
+                                } catch (BadLocationException err) {
+                                    // TODO Auto-generated catch block
+                                    err.printStackTrace();
+                                }
+                            } else {
+                                // incorrect character pressed
+
+                                // color current character as red
+                                try {
+                                    lastIncorrectHighlight = highlightChar(currentIndex, RED_COLOR);
+
+                                } catch (BadLocationException err) {
+                                    // TODO Auto-generated catch block
+                                    err.printStackTrace();
+                                }
                             }
                         }
                         return false;
@@ -87,12 +109,10 @@ public class Mine {
                 : (s.substring(0, s.length() - 1));
     }
 
-    public void highlight() throws BadLocationException {
+    public Object highlightChar(int index, Color color) throws BadLocationException {
         Highlighter highlighter = textArea.getHighlighter();
-        HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(Color.pink);
-        int p0 = text.indexOf("world");
-        int p1 = p0 + "world".length();
-        highlighter.addHighlight(p0, p1, painter);
+        HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(color);
+        return highlighter.addHighlight(index, index + 1, painter);
     }
 
 }
