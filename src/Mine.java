@@ -6,69 +6,84 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.HighlightPainter;
 
 public class Mine {
+    // Define colors for text highlighting
     Color GREEN_COLOR = new Color(204, 255, 153);
     Color RED_COLOR = new Color(255, 153, 153);
-    int tileSize = 70;
-    int numRows = 9;
-    int numCols = 9;
-    int boardWidth = numCols * tileSize;
-    int boardHeight = numRows * tileSize;
-    int currentIndex = 0;
 
+    // frame
     JFrame frame = new JFrame("tizc");
-    JLabel textLabel = new JLabel();
-    JPanel textPanel = new JPanel();
-    JPanel boardPanel = new JPanel();
+    int frameWidth = 600;
+    int frameHeight = 600;
 
-    String text = "hello world how are you";
-    JTextArea textArea = new JTextArea(10, 30);
+    // panels
+    JPanel headerPanel = new JPanel();
+    JPanel bodyPanel = new JPanel();
+
+    // labels
+    JLabel timerLabel = new JLabel();
+
+    JTextArea typingArea = new JTextArea(10, 30); // text to be typed
+    Border border = BorderFactory.createLineBorder(Color.red);
+
+    // Define variables for text highlighting
+    String text = "hello world how are you the man is so woman are your peace";
     Object lastIncorrectHighlight;
+    int currentIndex = 0; // index of character to be typed
 
-    // Timer stuffs
+    // Define variables to track typing speed
     long startTime = -1;
     Timer timer = new Timer();
     TimerTask task = new TimerTask() {
         @Override
         public void run() {
             long elapsedSeconds = (System.currentTimeMillis() - startTime) / 1000;
-            textLabel.setText(String.format("%ds", elapsedSeconds));
+            timerLabel.setText(String.format("%ds", elapsedSeconds));
         }
     };
 
     Mine() {
-        frame.setSize(boardWidth, boardHeight);
+        // set frame properties
+        frame.setSize(frameWidth, frameHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        textLabel.setFont(new Font("Arial", Font.BOLD, 25));
-        textLabel.setHorizontalAlignment(JLabel.CENTER);
-        textLabel.setText("00:00");
-        textLabel.setOpaque(true);
+        // set timer label properties
+        timerLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        timerLabel.setHorizontalAlignment(JLabel.CENTER);
+        timerLabel.setText("00:00");
+        timerLabel.setOpaque(true);
+        timerLabel.setBackground(Color.gray);
+        timerLabel.setForeground(Color.white);
 
-        textPanel.setLayout(new BorderLayout());
-        textPanel.add(textLabel);
-        frame.add(textPanel, BorderLayout.NORTH);
+        headerPanel.setLayout(new BorderLayout());
+        headerPanel.setOpaque(true);
+        // headerPanel.setBackground(Color.green);
+        headerPanel.add(timerLabel);
+        // headerPanel.setBorder(BorderFactory.createCompoundBorder(border,
+        // BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        frame.add(headerPanel, BorderLayout.NORTH);
 
-        textArea.setText(text);
-        textArea.setFont(textArea.getFont().deriveFont(25f)); // will only change size to 12pt
-        textArea.setEditable(false);
+        typingArea.setText(text);
+        typingArea.setFont(new Font("Monospaced", Font.PLAIN, 25));
+        typingArea.setEditable(false);
+        typingArea.setBorder(BorderFactory.createCompoundBorder(border,
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-        frame.add(textArea);
+        bodyPanel.setLayout(new GridBagLayout());
+        bodyPanel.setOpaque(true);
+        bodyPanel.add(typingArea);
+        frame.add(bodyPanel);
 
-        // JOptionPane.showMessageDialog(null, new JScrollPane(textArea));
-
-        boardPanel.setLayout(new GridLayout(numRows, numCols));
-        boardPanel.setBackground(Color.white);
-        // frame.add(boardPanel);
-
+        // add event listener for keyboard presses
         KeyboardFocusManager.getCurrentKeyboardFocusManager()
                 .addKeyEventDispatcher(new KeyEventDispatcher() {
                     @Override
@@ -77,7 +92,8 @@ public class Mine {
                         // ignore all key events except key pressed event.
                         // ignore backspace key press (keycode = 8) as well
                         if (KeyEvent.KEY_PRESSED == e.getID() && e.getKeyCode() != 8) {
-                            System.out.println(currentIndex);
+                            System.out.println(
+                                    String.format("Current index = %d. Pressed %c", currentIndex, e.getKeyChar()));
 
                             // check if timer must be started
                             if (startTime < 0) {
@@ -86,13 +102,12 @@ public class Mine {
                                 timer.schedule(task, 0, 1000);
                             }
 
-                            // textLabel.setText(textLabel.getText() + e.getKeyChar());
                             if (e.getKeyChar() == text.charAt(currentIndex)) {
                                 // correct character pressed
                                 try {
                                     // remove any previous red highlight on current character
                                     if (lastIncorrectHighlight != null) {
-                                        textArea.getHighlighter().removeHighlight(lastIncorrectHighlight);
+                                        typingArea.getHighlighter().removeHighlight(lastIncorrectHighlight);
                                         lastIncorrectHighlight = null;
                                     }
 
@@ -131,14 +146,8 @@ public class Mine {
         frame.setVisible(true);
     }
 
-    private String removeLastChar(String s) {
-        return (s == null || s.length() == 0)
-                ? null
-                : (s.substring(0, s.length() - 1));
-    }
-
     public Object highlightChar(int index, Color color) throws BadLocationException {
-        Highlighter highlighter = textArea.getHighlighter();
+        Highlighter highlighter = typingArea.getHighlighter();
         HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(color);
         return highlighter.addHighlight(index, index + 1, painter);
     }
