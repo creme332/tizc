@@ -35,7 +35,7 @@ public class Mine {
     // Define variables for text highlighting
     String text = "hello world how are you the man is so woman are your peace";
     Object lastIncorrectHighlight;
-    int currentIndex = 0; // index of character to be typed
+    int charPtr = 0; // index of character to be typed
 
     // Define variables to track typing speed
     long startTime = -1;
@@ -90,19 +90,19 @@ public class Mine {
                     public boolean dispatchKeyEvent(KeyEvent e) {
 
                         // ignore all key events except key pressed event.
-                        // ignore backspace key press (keycode = 8) as well
-                        if (KeyEvent.KEY_PRESSED == e.getID() && e.getKeyCode() != 8) {
+                        // ignore backspace key press (keycode = 8)
+                        // ignore keypresses when all text has been typed
+                        if (KeyEvent.KEY_PRESSED == e.getID() && e.getKeyCode() != 8 && charPtr < text.length()) {
                             System.out.println(
-                                    String.format("Current index = %d. Pressed %c", currentIndex, e.getKeyChar()));
+                                    String.format("Current index = %d. Pressed %c", charPtr, e.getKeyChar()));
 
-                            // check if timer must be started
+                            // when a key is pressed for the first time, start timer
                             if (startTime < 0) {
-                                // start timer
                                 startTime = System.currentTimeMillis();
                                 timer.schedule(task, 0, 1000);
                             }
 
-                            if (e.getKeyChar() == text.charAt(currentIndex)) {
+                            if (e.getKeyChar() == text.charAt(charPtr)) {
                                 // correct character pressed
                                 try {
                                     // remove any previous red highlight on current character
@@ -112,33 +112,34 @@ public class Mine {
                                     }
 
                                     // color current character green
-                                    highlightChar(currentIndex, GREEN_COLOR);
+                                    highlightChar(charPtr, GREEN_COLOR);
 
-                                    currentIndex++;
+                                    // point to next character
+                                    charPtr++;
 
-                                    if (currentIndex == text.length()) {
+                                    if (charPtr == text.length()) {
                                         // stop timer
                                         timer.cancel();
                                         timer.purge();
                                     }
 
                                 } catch (BadLocationException err) {
-                                    // TODO Auto-generated catch block
                                     err.printStackTrace();
                                 }
                             } else {
                                 // incorrect character pressed
 
-                                // color current character as red
+                                // highlight current character red, if it is not already red
                                 try {
-                                    lastIncorrectHighlight = highlightChar(currentIndex, RED_COLOR);
-
+                                    if (lastIncorrectHighlight == null) {
+                                        lastIncorrectHighlight = highlightChar(charPtr, RED_COLOR);
+                                    }
                                 } catch (BadLocationException err) {
-                                    // TODO Auto-generated catch block
                                     err.printStackTrace();
                                 }
                             }
                         }
+
                         return false;
                     }
                 });
