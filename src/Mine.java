@@ -1,7 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,7 +31,7 @@ public class Mine {
     Border border = BorderFactory.createLineBorder(Color.red);
 
     // Define variables for text highlighting
-    String text = "hello world how are you the man is so woman are your peace";
+    String text = (new WordGenerator(100)).getString();
     Object lastIncorrectHighlight;
     int charPtr = 0; // index of character to be typed
 
@@ -43,7 +41,8 @@ public class Mine {
     TimerTask task = new TimerTask() {
         @Override
         public void run() {
-            long elapsedSeconds = (System.currentTimeMillis() - startTime) / 1000;
+            long ms = System.currentTimeMillis();
+            long elapsedSeconds = (ms - startTime) / 1000;
             timerLabel.setText(String.format("%ds", elapsedSeconds));
         }
     };
@@ -59,7 +58,7 @@ public class Mine {
         // set timer label properties
         timerLabel.setFont(new Font("Arial", Font.BOLD, 25));
         timerLabel.setHorizontalAlignment(JLabel.CENTER);
-        timerLabel.setText("00:00");
+        timerLabel.setText("Start typing when ready");
         timerLabel.setOpaque(true);
         timerLabel.setBackground(Color.gray);
         timerLabel.setForeground(Color.white);
@@ -75,6 +74,8 @@ public class Mine {
         typingArea.setText(text);
         typingArea.setFont(new Font("Monospaced", Font.PLAIN, 25));
         typingArea.setEditable(false);
+        typingArea.setLineWrap(true);
+        typingArea.setWrapStyleWord(true);
         typingArea.setBorder(BorderFactory.createCompoundBorder(border,
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
