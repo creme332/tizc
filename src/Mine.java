@@ -1,8 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
@@ -14,11 +16,21 @@ public class Mine {
     // Define colors for text highlighting
     Color GREEN_COLOR = new Color(204, 255, 153);
     Color RED_COLOR = new Color(255, 153, 153);
+    Font PoppinsLightFont;
 
     // frame
     JFrame frame = new JFrame("tizc");
-    int frameWidth = 600;
-    int frameHeight = 600;
+    int frameWidth = 800;
+    int frameHeight = 800;
+
+    JPanel panelContainer = new JPanel();
+    JPanel homeScreen = new JPanel();
+    JPanel playScreen = new JPanel();
+    JPanel gameOverScreen = new JPanel();
+
+    JButton startGameButton = new JButton("Play");
+
+    CardLayout cl = new CardLayout();
 
     // panels
     JPanel headerPanel = new JPanel();
@@ -31,9 +43,10 @@ public class Mine {
     Border border = BorderFactory.createLineBorder(Color.red);
 
     // Define variables for text highlighting
-    String text = (new WordGenerator(100)).getString();
+    String text = (new WordGenerator(5)).getString();
     Object lastIncorrectHighlight;
     int charPtr = 0; // index of character to be typed
+    int totalKeyPresses = 0;
 
     // Define variables to track typing speed
     long startTime = -1;
@@ -48,6 +61,34 @@ public class Mine {
     };
 
     Mine() {
+
+        try {
+            File font_file = new File("font/Poppins/Poppins-Light.ttf");
+            PoppinsLightFont = Font.createFont(Font.TRUETYPE_FONT, font_file);
+        } catch (FontFormatException | IOException ex) {
+        }
+
+        charPtr = 0;
+        totalKeyPresses = 0;
+
+        startGameButton.setPreferredSize(new Dimension(200, 100));
+        startGameButton.setFont(PoppinsLightFont.deriveFont(30f));
+        startGameButton.setFocusPainted(false);
+        // startGameButton.setBorderPainted(false);
+        startGameButton.setOpaque(false);
+        startGameButton.setContentAreaFilled(false);
+        startGameButton.setForeground(Color.BLACK);
+        startGameButton.setBackground(Color.BLACK);
+        try {
+            Image img = ImageIO.read(getClass().getResource("icon/player-play-filled.png")).getScaledInstance(30, 30,
+                    Image.SCALE_DEFAULT);
+            startGameButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+        homeScreen.add(startGameButton);
+
         // set frame properties
         frame.setSize(frameWidth, frameHeight);
         frame.setLocationRelativeTo(null);
@@ -60,19 +101,16 @@ public class Mine {
         timerLabel.setHorizontalAlignment(JLabel.CENTER);
         timerLabel.setText("Start typing when ready");
         timerLabel.setOpaque(true);
-        timerLabel.setBackground(Color.gray);
+        timerLabel.setBackground(Color.black);
         timerLabel.setForeground(Color.white);
 
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setOpaque(true);
-        // headerPanel.setBackground(Color.green);
         headerPanel.add(timerLabel);
-        // headerPanel.setBorder(BorderFactory.createCompoundBorder(border,
-        // BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        frame.add(headerPanel, BorderLayout.NORTH);
+        playScreen.add(headerPanel, BorderLayout.NORTH);
 
         typingArea.setText(text);
-        typingArea.setFont(new Font("Monospaced", Font.PLAIN, 25));
+        typingArea.setFont(PoppinsLightFont.deriveFont(30f));
         typingArea.setEditable(false);
         typingArea.setLineWrap(true);
         typingArea.setWrapStyleWord(true);
@@ -82,13 +120,33 @@ public class Mine {
         bodyPanel.setLayout(new GridBagLayout());
         bodyPanel.setOpaque(true);
         bodyPanel.add(typingArea);
-        frame.add(bodyPanel);
+        playScreen.add(bodyPanel);
 
+        panelContainer.setLayout(cl);
+        panelContainer.add(homeScreen, "homeScreen");
+        panelContainer.add(playScreen, "playScreen");
+        panelContainer.add(gameOverScreen, "gameOverScreen");
+        cl.show(panelContainer, "homeScreen"); // show home screen intially
+
+        frame.add(panelContainer);
+
+        // add event listener to start button
+        startGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                cl.show(panelContainer, "playScreen");
+
+            }
+        });
         // add event listener for keyboard presses
         KeyboardFocusManager.getCurrentKeyboardFocusManager()
                 .addKeyEventDispatcher(new KeyEventDispatcher() {
                     @Override
                     public boolean dispatchKeyEvent(KeyEvent e) {
+
+                        // count key press
+                        if (KeyEvent.KEY_PRESSED == e.getID())
+                            totalKeyPresses++;
 
                         // ignore all key events except key pressed event.
                         // ignore backspace key press (keycode = 8)
@@ -118,10 +176,9 @@ public class Mine {
                                     // point to next character
                                     charPtr++;
 
+                                    // check if all words have been typed => game over
                                     if (charPtr == text.length()) {
-                                        // stop timer
-                                        timer.cancel();
-                                        timer.purge();
+                                        handleGameOver();
                                     }
 
                                 } catch (BadLocationException err) {
@@ -146,6 +203,16 @@ public class Mine {
                 });
 
         frame.setVisible(true);
+    }
+
+    public void handleGameOver() {
+        // stop timer
+        timer.cancel();
+        timer.purge();
+
+        // show game over screen
+        cl.show(panelContainer, "gameOverScreen");
+
     }
 
     public Object highlightChar(int index, Color color) throws BadLocationException {
