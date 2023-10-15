@@ -14,9 +14,15 @@ public class WordGenerator {
         allWords = getAllWords();
         totalWordCount = allWords.size();
         rand = new Random();
-        wordCount = word_count;
+        wordCount = word_count > 0 ? word_count : 0;
     }
 
+    /**
+     * Return a space-separated string containing random words.
+     * The number of words is given by `wordCount`.
+     * 
+     * @return String
+     */
     public String getString() {
         String result = "";
         for (int i = 0; i < wordCount; i++) {
@@ -33,7 +39,8 @@ public class WordGenerator {
     }
 
     private ArrayList<String> getAllWords() {
-        ArrayList<String> allWords = new ArrayList<>();
+        // Reference: https://www.w3schools.com/java/java_files_read.asp
+        ArrayList<String> allWords = new ArrayList<String>();
         try {
             File myObj = new File("src/words.txt");
             Scanner myReader = new Scanner(myObj);
