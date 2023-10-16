@@ -42,7 +42,8 @@ public class WordGenerator {
         // Reference: https://www.w3schools.com/java/java_files_read.asp
         ArrayList<String> allWords = new ArrayList<String>();
         try {
-            File myObj = new File("src/words.txt");
+            // System.out.println(new File(".").getAbsolutePath());
+            File myObj = new File("words.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
