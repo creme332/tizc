@@ -43,7 +43,7 @@ public class WordGenerator {
         ArrayList<String> allWords = new ArrayList<String>();
         try {
             // System.out.println(new File(".").getAbsolutePath());
-            File myObj = new File("words.txt");
+            File myObj = new File("resources/data/words.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();

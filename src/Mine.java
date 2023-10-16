@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
@@ -20,7 +19,7 @@ public class Mine {
 
     // frame
     JFrame frame = new JFrame("tizc");
-    int frameWidth = 800;
+    int frameWidth = 1000;
     int frameHeight = 800;
 
     JPanel panelContainer = new JPanel();
@@ -63,9 +62,10 @@ public class Mine {
     Mine() {
 
         try {
-            File font_file = new File("font/Poppins/Poppins-Light.ttf");
+            File font_file = new File("resources/font/Poppins/Poppins-Light.ttf");
             PoppinsLightFont = Font.createFont(Font.TRUETYPE_FONT, font_file);
         } catch (FontFormatException | IOException ex) {
+            System.out.println(ex);
         }
 
         charPtr = 0;
@@ -79,30 +79,30 @@ public class Mine {
         startGameButton.setContentAreaFilled(false);
         startGameButton.setForeground(Color.BLACK);
         startGameButton.setBackground(Color.BLACK);
-        try {
-            Image img = ImageIO.read(getClass().getResource("icon/player-play-filled.png")).getScaledInstance(30, 30,
-                    Image.SCALE_DEFAULT);
-            startGameButton.setIcon(new ImageIcon(img));
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
+
+        ImageIcon imageIcon = new ImageIcon(
+                new ImageIcon("resources/icon/player-play-filled.png").getImage().getScaledInstance(20, 20,
+                        Image.SCALE_DEFAULT));
+
+        startGameButton.setIcon(imageIcon);
 
         homeScreen.add(startGameButton);
 
         // set frame properties
         frame.setSize(frameWidth, frameHeight);
         frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
+        // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // set timer label properties
         timerLabel.setFont(new Font("Arial", Font.BOLD, 25));
         timerLabel.setHorizontalAlignment(JLabel.CENTER);
         timerLabel.setText("Start typing when ready");
         timerLabel.setOpaque(true);
-        timerLabel.setBackground(Color.black);
-        timerLabel.setForeground(Color.white);
+        // timerLabel.setBackground(Color.black);
+        // timerLabel.setForeground(Color.white);
 
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setOpaque(true);
@@ -117,7 +117,7 @@ public class Mine {
         typingArea.setBorder(BorderFactory.createCompoundBorder(border,
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-        bodyPanel.setLayout(new GridBagLayout());
+        // bodyPanel.setLayout(new GridBagLayout());
         bodyPanel.setOpaque(true);
         bodyPanel.add(typingArea);
         playScreen.add(bodyPanel);
