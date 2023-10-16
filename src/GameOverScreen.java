@@ -13,9 +13,9 @@ public class GameOverScreen extends JPanel {
     JLabel timeTakenText = new JLabel();
     JLabel wpmText = new JLabel();
     JLabel cpmText = new JLabel();
-    int mediumFontSize = 20;
+    float mediumFontSize = 20;
 
-    GameOverScreen() {
+    GameOverScreen(Font myFont) {
         GridBagConstraints gbc = new GridBagConstraints();
         GridBagLayout layout = new GridBagLayout();
         this.setLayout(layout);
@@ -35,14 +35,14 @@ public class GameOverScreen extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gameOverText.setIcon(celebrationIcon);
-        gameOverText.setFont(new Font("Arial", Font.BOLD, 50));
+        gameOverText.setFont(myFont.deriveFont(50f));
         this.add(gameOverText, gbc);
 
         // styles for time taken
         gbc.gridx = 0;
         gbc.gridy = 1;
         setTimeTaken(0);
-        timeTakenText.setFont(new Font("Arial", Font.BOLD, mediumFontSize));
+        timeTakenText.setFont(myFont.deriveFont(mediumFontSize));
 
         timeTakenText.setIcon(timerIcon);
         this.add(timeTakenText, gbc);
@@ -51,7 +51,7 @@ public class GameOverScreen extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 1;
         setWPM(0);
-        wpmText.setFont(new Font("Arial", Font.BOLD, mediumFontSize));
+        wpmText.setFont(myFont.deriveFont(mediumFontSize));
 
         wpmText.setIcon(speedometerIcon);
         this.add(wpmText, gbc);

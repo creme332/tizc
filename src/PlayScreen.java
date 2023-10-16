@@ -60,6 +60,10 @@ public class PlayScreen extends JPanel {
         return highlighter.addHighlight(index, index + 1, painter);
     }
 
+    public void removeAllHighlights() {
+        typingArea.getHighlighter().removeAllHighlights();
+    }
+
     public void removeHighlight(Object highlightObj) {
         typingArea.getHighlighter().removeHighlight(highlightObj);
     }

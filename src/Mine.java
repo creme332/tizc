@@ -22,12 +22,12 @@ public class Mine {
     JPanel screenContainer = new JPanel();
     HomeScreen homeScreen;
     PlayScreen playScreen;
-    GameOverScreen gameOverScreen = new GameOverScreen();
+    GameOverScreen gameOverScreen;
     CardLayout cl = new CardLayout();
     String currentScreen; // screen which is currently displayed
 
     // generate some text to type
-    String typeText = (new WordGenerator(5)).getString();
+    String typeText;
 
     // Define variables for text highlighting
     Object lastIncorrectHighlight;
@@ -61,6 +61,7 @@ public class Mine {
         // instantiate screens
         homeScreen = new HomeScreen(PoppinsLightFont);
         playScreen = new PlayScreen(PoppinsLightFont);
+        gameOverScreen = new GameOverScreen(PoppinsLightFont);
 
         // set frame properties
         frame.setSize(frameWidth, frameHeight);
@@ -75,8 +76,6 @@ public class Mine {
         screenContainer.add(gameOverScreen, "gameOverScreen");
         setScreen("homeScreen");
 
-        playScreen.showText(typeText);
-
         // listen to start button presses on home screen
         homeScreen.startGameButton.addActionListener(new ActionListener() {
             @Override
@@ -86,83 +85,94 @@ public class Mine {
             }
         });
 
-        // listen to keyboard presses on playScreen
-        playScreen.getActionMap()
-        KeyboardFocusManager.getCurrentKeyboardFocusManager()
-                .addKeyEventDispatcher(new KeyEventDispatcher() {
-                    @Override
-                    public boolean dispatchKeyEvent(KeyEvent e) {
-                        System.out.println("key event");
-                        // ignore all key events except key pressed event.
-                        if (KeyEvent.KEY_PRESSED == e.getID())
-                            return false;
-
-                        // ignore key presses if not on play screen
-                        if (currentScreen != "playScreen")
-                            return false;
-
-                        // ignore backspaces
-                        int BACKSPACE_KEY_CODE = 8;
-                        if (e.getKeyCode() != BACKSPACE_KEY_CODE)
-                            return false;
-
-                        // ignore keypresses after game is over
-                        if (charPtr >= typeText.length())
-                            return false;
-
-                        System.out.println(
-                                String.format("Current index = %d. Pressed %c", charPtr, e.getKeyChar()));
-
-                        // when a key is pressed for the first time, start timer
-                        if (startTime < 0) {
-                            startTimer();
-                        }
-
-                        if (e.getKeyChar() == typeText.charAt(charPtr)) {
-                            // correct character pressed
-                            try {
-                                // remove any previous red highlight on current character
-                                if (lastIncorrectHighlight != null) {
-                                    playScreen.removeHighlight(lastIncorrectHighlight);
-                                    lastIncorrectHighlight = null;
-                                }
-
-                                // color current character green
-                                playScreen.highlightChar(charPtr, GREEN_COLOR);
-
-                                // point to next character
-                                charPtr++;
-
-                                // check if all words have been typed => game over
-                                if (charPtr == typeText.length()) {
-                                    handleGameOver();
-                                }
-
-                            } catch (BadLocationException err) {
-                                err.printStackTrace();
-                            }
-                        } else {
-                            // incorrect character pressed
-
-                            // highlight incorrectly typed character red, if it is not already red
-                            try {
-                                if (lastIncorrectHighlight == null) {
-                                    lastIncorrectHighlight = playScreen.highlightChar(charPtr, RED_COLOR);
-                                }
-                            } catch (BadLocationException err) {
-                                err.printStackTrace();
-                            }
-                        }
-
-                        return false;
-                    }
-                });
-
+        gameOverScreen.restarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                initialise();
+                // go to play screen
+                setScreen("playScreen");
+            }
+        });
+        initialise();
+        createKeyBindings();
         frame.add(screenContainer);
         frame.setVisible(true);
     }
 
-    public void setScreen(String newWindow) {
+    public void dispatchKeyEvent(String keyCommand) {
+        // ignore keys which are not lowercase alphabets
+        if (keyCommand.length() > 1)
+            return;
+
+        // ignore keypresses after game is over
+        if (charPtr >= typeText.length())
+            return;
+
+        System.out.println(
+                String.format("Current index = %d. Pressed %s", charPtr, keyCommand));
+
+        // when a key is pressed for the first time, start timer
+        if (startTime < 0) {
+            startTimer();
+        }
+
+        if (keyCommand.charAt(0) == typeText.charAt(charPtr)) {
+            // correct character pressed
+            try {
+                // remove any previous red highlight on current character
+                if (lastIncorrectHighlight != null) {
+                    playScreen.removeHighlight(lastIncorrectHighlight);
+                    lastIncorrectHighlight = null;
+                }
+
+                // color current character green
+                playScreen.highlightChar(charPtr, GREEN_COLOR);
+
+                // point to next character
+                charPtr++;
+
+                // check if all words have been typed => game over
+                if (charPtr == typeText.length()) {
+                    handleGameOver();
+                }
+
+            } catch (BadLocationException err) {
+                err.printStackTrace();
+            }
+        } else {
+            // incorrect character pressed
+
+            // highlight incorrectly typed character red, if it is not already red
+            try {
+                if (lastIncorrectHighlight == null) {
+                    lastIncorrectHighlight = playScreen.highlightChar(charPtr, RED_COLOR);
+                }
+            } catch (BadLocationException err) {
+                err.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Creates keybindings for play screen.
+     */
+    private void createKeyBindings() {
+        Action keyPressAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispatchKeyEvent(e.getActionCommand());
+            }
+        };
+
+        String KEY_PRESS = "keypress";
+        for (int keycode = 1; keycode < 91; keycode++) {
+            playScreen.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                    .put(KeyStroke.getKeyStroke(keycode, 0), KEY_PRESS);
+            playScreen.getActionMap().put(KEY_PRESS, keyPressAction);
+        }
+    }
+
+    private void setScreen(String newWindow) {
         if (newWindow != "homeScreen" && newWindow != "gameOverScreen" && newWindow != "playScreen") {
             System.out.println("Invalid screen name");
             return;
@@ -171,7 +181,27 @@ public class Mine {
         cl.show(screenContainer, currentScreen);
     }
 
-    public void handleGameOver() {
+    private void initialise() {
+        // reset game duration
+        gameDuration = -1;
+        playScreen.showTime(0);
+
+        // reset start time
+        startTime = -1;
+
+        // reset highlights
+        playScreen.removeAllHighlights();
+
+        // reset charPtr
+        charPtr = 0;
+
+        // update typeText
+        typeText = (new WordGenerator(5)).getString();
+
+        playScreen.showText(typeText);
+    }
+
+    private void handleGameOver() {
         // stop timer
         stopTimer();
 
@@ -182,12 +212,12 @@ public class Mine {
         setScreen("gameOverScreen");
     }
 
-    public void startTimer() {
+    private void startTimer() {
         startTime = System.currentTimeMillis();
         timer.schedule(task, 0, 1000);
     }
 
-    public void stopTimer() {
+    private void stopTimer() {
         timer.cancel();
         timer.purge();
     }
