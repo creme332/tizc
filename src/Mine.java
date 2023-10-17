@@ -1,30 +1,15 @@
-import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 
 public class Mine {
-    // Define colors and font
-    Color GREEN_COLOR = new Color(204, 255, 153);
-    Color RED_COLOR = new Color(255, 153, 153);
-    Font PoppinsLightFont;
-
-    // frame
-    JFrame frame = new JFrame("tizc");
-    int frameWidth = 1000;
-    int frameHeight = 800;
-
-    // screens
-    JPanel screenContainer = new JPanel();
-    HomeScreen homeScreen;
-    PlayScreen playScreen;
-    GameOverScreen gameOverScreen;
-    CardLayout cl = new CardLayout();
-    String currentScreen; // screen which is currently displayed
+    // declare frame and screens that it will display
+    Frame frame = new Frame();
+    HomeScreen homeScreen = frame.homeScreen;
+    PlayScreen playScreen = frame.playScreen;
+    GameOverScreen gameOverScreen = frame.gameOverScreen;
 
     // generate some text to type
     String typeText;
@@ -36,52 +21,18 @@ public class Mine {
     // Define variables to track typing speed
     long startTime = -1;
     long gameDuration = 0;
-    Timer timer = new Timer();
+    Timer timer;
 
     // create a task for timer
-    TimerTask task = new TimerTask() {
-        @Override
-        public void run() {
-            long ms = System.currentTimeMillis();
-            long elapsedSeconds = (ms - startTime) / 1000;
-            gameDuration = elapsedSeconds;
-            playScreen.showTime(gameDuration);
-        }
-    };
+    TimerTask task;
 
     Mine() {
-        // fetch font
-        try {
-            File font_file = new File("resources/font/Poppins/Poppins-Light.ttf");
-            PoppinsLightFont = Font.createFont(Font.TRUETYPE_FONT, font_file);
-        } catch (FontFormatException | IOException ex) {
-            System.out.println(ex);
-        }
-
-        // instantiate screens
-        homeScreen = new HomeScreen(PoppinsLightFont);
-        playScreen = new PlayScreen(PoppinsLightFont);
-        gameOverScreen = new GameOverScreen(PoppinsLightFont);
-
-        // set frame properties
-        frame.setSize(frameWidth, frameHeight);
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // add screens to screen container
-        screenContainer.setLayout(cl);
-        screenContainer.add(homeScreen, "homeScreen");
-        screenContainer.add(playScreen, "playScreen");
-        screenContainer.add(gameOverScreen, "gameOverScreen");
-        setScreen("homeScreen");
-
         // listen to start button presses on home screen
         homeScreen.startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // when start button is clicked, show playScreen
-                setScreen("playScreen");
+                frame.setScreen("playScreen");
             }
         });
 
@@ -90,13 +41,12 @@ public class Mine {
             public void actionPerformed(ActionEvent arg0) {
                 initialise();
                 // go to play screen
-                setScreen("playScreen");
+                frame.setScreen("playScreen");
             }
         });
         initialise();
         createKeyBindings();
-        frame.add(screenContainer);
-        frame.setVisible(true);
+        frame.showFrame();
     }
 
     public void dispatchKeyEvent(String keyCommand) {
@@ -126,7 +76,7 @@ public class Mine {
                 }
 
                 // color current character green
-                playScreen.highlightChar(charPtr, GREEN_COLOR);
+                playScreen.highlightChar(charPtr, frame.GREEN_COLOR);
 
                 // point to next character
                 charPtr++;
@@ -145,7 +95,7 @@ public class Mine {
             // highlight incorrectly typed character red, if it is not already red
             try {
                 if (lastIncorrectHighlight == null) {
-                    lastIncorrectHighlight = playScreen.highlightChar(charPtr, RED_COLOR);
+                    lastIncorrectHighlight = playScreen.highlightChar(charPtr, frame.RED_COLOR);
                 }
             } catch (BadLocationException err) {
                 err.printStackTrace();
@@ -172,18 +122,21 @@ public class Mine {
         }
     }
 
-    private void setScreen(String newWindow) {
-        if (newWindow != "homeScreen" && newWindow != "gameOverScreen" && newWindow != "playScreen") {
-            System.out.println("Invalid screen name");
-            return;
-        }
-        currentScreen = newWindow;
-        cl.show(screenContainer, currentScreen);
-    }
-
     private void initialise() {
+        timer = new Timer();
+
+        // create a timer task
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                long ms = System.currentTimeMillis();
+                long elapsedSeconds = (ms - startTime) / 1000;
+                gameDuration = elapsedSeconds;
+                playScreen.showTime(gameDuration);
+            }
+        };
+
         // reset game duration
-        gameDuration = -1;
         playScreen.showTime(0);
 
         // reset start time
@@ -209,7 +162,7 @@ public class Mine {
         gameOverScreen.setWPM(60 * typeText.length() / (5 * gameDuration));
 
         // show game over screen
-        setScreen("gameOverScreen");
+        frame.setScreen("gameOverScreen");
     }
 
     private void startTimer() {
