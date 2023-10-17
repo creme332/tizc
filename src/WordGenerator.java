@@ -19,6 +19,7 @@ public class WordGenerator {
 
     /**
      * Return a space-separated string containing random words.
+     * String is in lowercase.
      * The number of words is given by `wordCount`.
      * 
      * @return String
@@ -31,7 +32,7 @@ public class WordGenerator {
                 result += " ";
             }
         }
-        return result;
+        return result.toLowerCase();
     }
 
     private String getRandomWord() {
