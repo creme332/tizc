@@ -1,7 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -22,28 +24,43 @@ public class PlayScreen extends JPanel {
     JTextArea typingArea = new JTextArea(10, 30); // text to be typed
     Border border = BorderFactory.createLineBorder(Color.red);
 
-    PlayScreen(Font myFont) {
+    PlayScreen() {
+        Font PoppinsLight = new PoppinsFont().Light;
+        Font PoppinsBold = new PoppinsFont().Bold;
+
         // set timer label properties
-        timerLabel.setFont(myFont.deriveFont(25f));
+        timerLabel.setFont(PoppinsBold.deriveFont(25f));
         timerLabel.setHorizontalAlignment(JLabel.CENTER);
         timerLabel.setText("Start typing when ready");
-        timerLabel.setOpaque(true);
+        timerLabel.setOpaque(false);
+        timerLabel.setForeground(Color.WHITE);
 
         headerPanel.setLayout(new BorderLayout());
-        headerPanel.setOpaque(true);
+        headerPanel.setOpaque(false);
         headerPanel.add(timerLabel);
         this.add(headerPanel, BorderLayout.NORTH);
 
-        typingArea.setFont(myFont.deriveFont(30f));
+        typingArea.setFont(PoppinsLight.deriveFont(30f));
+        typingArea.setForeground(Color.white);
         typingArea.setEditable(false);
         typingArea.setLineWrap(true);
         typingArea.setWrapStyleWord(true);
-        typingArea.setBorder(BorderFactory.createCompoundBorder(border,
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        typingArea.setOpaque(false);
+        // typingArea.setBorder(BorderFactory.createCompoundBorder(border,
+        // BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-        bodyPanel.setOpaque(true);
+        bodyPanel.setOpaque(false);
         bodyPanel.add(typingArea);
         this.add(bodyPanel);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+
+        super.paintComponent(g);
+        ImageIcon img = new ImageIcon("resources/bg1.jpg");
+
+        g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }
 
     public void showTime(long t) {
