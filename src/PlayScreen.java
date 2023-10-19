@@ -15,8 +15,8 @@ import javax.swing.text.Highlighter.HighlightPainter;
 
 public class PlayScreen extends JPanel {
     // Define colors for highlighting
-    Color GREEN_COLOR = new Color(204, 255, 153);
-    Color RED_COLOR = new Color(255, 153, 153);
+    Color GOOD_COLOR = Color.BLACK; // color of highlight when correct character is typed
+    Color BAD_COLOR = new Color(78, 78, 78); // color of highlight when incorrect character is typed
 
     // panels
     JPanel headerPanel = new JPanel();
@@ -75,9 +75,9 @@ public class PlayScreen extends JPanel {
         typingArea.setText(t);
     }
 
-    public Object highlightChar(int index, Color color) throws BadLocationException {
+    public Object highlightChar(int index, Boolean correctChar) throws BadLocationException {
         Highlighter highlighter = typingArea.getHighlighter();
-        HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(color);
+        HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(correctChar ? GOOD_COLOR : BAD_COLOR);
         return highlighter.addHighlight(index, index + 1, painter);
     }
 
