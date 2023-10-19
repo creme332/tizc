@@ -143,9 +143,10 @@ public class Mine {
         // stop timer
         stopTimer();
 
+        long textLength = model.typeText.length();
         gameOverScreen.setTimeTaken(model.gameDuration);
-        gameOverScreen.setWPM(60 * model.typeText.length() / (5 * model.gameDuration));
-
+        gameOverScreen.setWPM(60 * textLength / (5 * model.gameDuration));
+        gameOverScreen.setAccuracy(100 * (textLength - model.totalMistakes) / textLength);
         // show game over screen
         frame.setScreen("gameOverScreen");
     }
