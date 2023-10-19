@@ -2,15 +2,18 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.File; // Import the File class
-import java.io.FileNotFoundException; // Import this class to handle errors
-import java.util.Scanner; // Import the Scanner class to read text files
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
+/**
+ * Generates the text to be typed.
+ */
 public class WordGenerator {
-    private ArrayList<String> allWords;
-    private int totalWordCount;
-    private Random rand;
-    private int wordCount;
+    private ArrayList<String> allWords; // list of all words in dictionary.txt
+    private int totalWordCount; // total number of words in dictionary.txt
+    private Random rand; // used for generating random words
+    private int wordCount; // required number of words in text to be generated
 
     public WordGenerator(int word_count) {
         allWords = getAllWords();
@@ -21,10 +24,10 @@ public class WordGenerator {
 
     /**
      * Return a space-separated string containing random words.
-     * String is in lowercase.
+     * String is in lowercase and has no numbers or special characters.
      * The number of words is given by `wordCount`.
      * 
-     * @return String
+     * @return A sentence containing random words.
      */
     public String getString() {
         String result = "";
@@ -37,16 +40,25 @@ public class WordGenerator {
         return result.toLowerCase();
     }
 
+    /**
+     * 
+     * @return A single random word from dictionary
+     */
     private String getRandomWord() {
         return allWords.get(rand.nextInt(totalWordCount));
     }
 
+    /**
+     * Loads all words from dictionary.txt to array
+     * 
+     * @return an array containing all words in dictionary
+     */
     private ArrayList<String> getAllWords() {
         // Reference: https://www.w3schools.com/java/java_files_read.asp
         ArrayList<String> allWords = new ArrayList<String>();
         try {
             // System.out.println(new File(".").getAbsolutePath());
-            File myObj = new File("resources/data/words.txt");
+            File myObj = new File("resources/data/dictionary.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();

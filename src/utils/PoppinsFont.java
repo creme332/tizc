@@ -5,6 +5,9 @@ import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Makes different font styles for the Poppins font available.
+ */
 public class PoppinsFont {
     public Font Black;
     public Font Bold;

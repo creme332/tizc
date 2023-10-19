@@ -12,6 +12,9 @@ import javax.swing.JPanel;
 
 import utils.PoppinsFont;
 
+/**
+ * Screen displayed when game ends.
+ */
 public class GameOverScreen extends JPanel {
     public JButton restarButton = new JButton("Restart");
     private JLabel gameOverText = new JLabel("Game Over");
@@ -19,11 +22,10 @@ public class GameOverScreen extends JPanel {
     private JLabel wpmText = new JLabel();
     private JLabel accuracyText = new JLabel();
 
-    float mediumFontSize = 50;
-    int iconSize = 50;
-
     public GameOverScreen() {
         PoppinsFont myFont = new PoppinsFont();
+        float mediumFontSize = 50; // font size to be used in JLabels
+        int iconSize = 50;
 
         GridBagConstraints gbc = new GridBagConstraints();
         GridBagLayout layout = new GridBagLayout();
@@ -71,12 +73,12 @@ public class GameOverScreen extends JPanel {
         restarButton.setContentAreaFilled(false);
         restarButton.setForeground(Color.WHITE);
 
-        // POSITIONING
+        // set global gbc constraints
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // position gameOverText
+        // position gameOverText at (0, 0) with a width of 3 cells
         gbc.gridx = 0; // column
         gbc.gridy = 0; // row
         gbc.gridwidth = 3;
@@ -86,25 +88,25 @@ public class GameOverScreen extends JPanel {
 
         gbc.weighty = 1;
 
-        // position timeTakenText
+        // position timeTakenText at (1, 0) with unit width
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
         this.add(timeTakenText, gbc);
 
-        // position wpmText
+        // position wpmText at (1, 1) with a unit width
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
         this.add(wpmText, gbc);
 
-        // position accuracyText
+        // position accuracyText at (1, 2) with unit width
         gbc.gridx = 2;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
         this.add(accuracyText, gbc);
 
-        // position restartButton
+        // position restartButton at (2, 1) with unit width
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.gridwidth = 1;
@@ -115,23 +117,41 @@ public class GameOverScreen extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-
+        // add background image to panel
         super.paintComponent(g);
         ImageIcon img = new ImageIcon("resources/bg.jpg");
 
         g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }
 
+    /**
+     * Displays time in timeTakenText JLabel.
+     * 
+     * @param time time in seconds.
+     */
     public void setTimeTaken(long time) {
         timeTakenText.setText(String.format("%d s", time));
     }
 
+    /**
+     * Displays words per minute in wpmText JLabel.
+     * 
+     * @param wpm words per minute.
+     */
     public void setWPM(long wpm) {
         wpmText.setText(String.format("%d wpm", wpm));
     }
 
+    /**
+     * Displays typing accuracy in accuracyText JLabel
+     * 
+     * @param acc A percentage representing typing accuracy.
+     */
     public void setAccuracy(long acc) {
-        accuracyText.setText(String.format("%d %%", acc));
+        if (acc < 0 || acc > 100) {
+            System.out.println("Invalid accuracy");
+        } else {
+            accuracyText.setText(String.format("%d %%", acc));
+        }
     }
-
 }
