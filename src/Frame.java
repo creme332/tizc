@@ -2,10 +2,6 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Frame extends JFrame {
-    // Define colors and font
-    Color GREEN_COLOR = new Color(204, 255, 153);
-    Color RED_COLOR = new Color(255, 153, 153);
-
     // frame properties
     int frameWidth = 1000;
     int frameHeight = 800;

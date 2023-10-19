@@ -14,6 +14,10 @@ import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.HighlightPainter;
 
 public class PlayScreen extends JPanel {
+    // Define colors for highlighting
+    Color GREEN_COLOR = new Color(204, 255, 153);
+    Color RED_COLOR = new Color(255, 153, 153);
+
     // panels
     JPanel headerPanel = new JPanel();
     JPanel bodyPanel = new JPanel();

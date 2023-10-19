@@ -65,7 +65,7 @@ public class Mine {
                 }
 
                 // color current character green
-                playScreen.highlightChar(model.charPtr, frame.GREEN_COLOR);
+                playScreen.highlightChar(model.charPtr, playScreen.GREEN_COLOR);
 
                 // point to next character
                 model.charPtr++;
@@ -85,7 +85,7 @@ public class Mine {
             // highlight incorrectly typed character red, if it is not already red
             try {
                 if (model.lastIncorrectHighlight == null) {
-                    model.lastIncorrectHighlight = playScreen.highlightChar(model.charPtr, frame.RED_COLOR);
+                    model.lastIncorrectHighlight = playScreen.highlightChar(model.charPtr, playScreen.RED_COLOR);
                 }
             } catch (BadLocationException err) {
                 err.printStackTrace();
