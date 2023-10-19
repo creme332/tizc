@@ -1,3 +1,5 @@
+package view;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -7,10 +9,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import utils.PoppinsFont;
+
 public class HomeScreen extends JPanel {
     public JButton startGameButton = new JButton("Play");
 
-    HomeScreen() {
+    public HomeScreen() {
         this.setLayout(new GridBagLayout());
 
         Font myFont = new PoppinsFont().Black;
@@ -18,7 +22,6 @@ public class HomeScreen extends JPanel {
         startGameButton.setPreferredSize(new Dimension(200, 100));
         startGameButton.setFont(myFont.deriveFont(30f));
         startGameButton.setFocusPainted(false);
-        // startGameButton.setBorderPainted(false);
         startGameButton.setOpaque(false);
         startGameButton.setContentAreaFilled(false);
         startGameButton.setForeground(Color.WHITE);

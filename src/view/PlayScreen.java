@@ -1,34 +1,35 @@
+package view;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.HighlightPainter;
 
+import utils.PoppinsFont;
+
 public class PlayScreen extends JPanel {
     // Define colors for highlighting
-    Color GOOD_COLOR = Color.BLACK; // color of highlight when correct character is typed
-    Color BAD_COLOR = new Color(78, 78, 78); // color of highlight when incorrect character is typed
+    private Color GOOD_COLOR = Color.BLACK; // color of highlight when correct character is typed
+    private Color BAD_COLOR = new Color(78, 78, 78); // color of highlight when incorrect character is typed
 
     // panels
-    JPanel headerPanel = new JPanel();
-    JPanel bodyPanel = new JPanel();
+    private JPanel headerPanel = new JPanel();
+    private JPanel bodyPanel = new JPanel();
 
     // labels
-    JLabel timerLabel = new JLabel();
+    private JLabel timerLabel = new JLabel();
 
-    JTextArea typingArea = new JTextArea(10, 30); // text to be typed
-    Border border = BorderFactory.createLineBorder(Color.red);
+    private JTextArea typingArea = new JTextArea(10, 30); // text to be typed
 
-    PlayScreen() {
+    public PlayScreen() {
         Font PoppinsLight = new PoppinsFont().Light;
         Font PoppinsBold = new PoppinsFont().Bold;
 
@@ -50,8 +51,6 @@ public class PlayScreen extends JPanel {
         typingArea.setLineWrap(true);
         typingArea.setWrapStyleWord(true);
         typingArea.setOpaque(false);
-        // typingArea.setBorder(BorderFactory.createCompoundBorder(border,
-        // BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
         bodyPanel.setOpaque(false);
         bodyPanel.add(typingArea);

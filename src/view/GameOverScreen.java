@@ -1,3 +1,5 @@
+package view;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -8,18 +10,19 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import utils.PoppinsFont;
+
 public class GameOverScreen extends JPanel {
-    JButton restarButton = new JButton("Restart");
-    JLabel gameOverText = new JLabel("Game Over");
-    JLabel timeTakenText = new JLabel();
-    JLabel wpmText = new JLabel();
-    JLabel cpmText = new JLabel();
-    JLabel accuracyText = new JLabel();
+    public JButton restarButton = new JButton("Restart");
+    private JLabel gameOverText = new JLabel("Game Over");
+    private JLabel timeTakenText = new JLabel();
+    private JLabel wpmText = new JLabel();
+    private JLabel accuracyText = new JLabel();
 
     float mediumFontSize = 50;
     int iconSize = 50;
 
-    GameOverScreen() {
+    public GameOverScreen() {
         PoppinsFont myFont = new PoppinsFont();
 
         GridBagConstraints gbc = new GridBagConstraints();

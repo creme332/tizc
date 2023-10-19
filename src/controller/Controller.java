@@ -1,21 +1,27 @@
+package controller;
+
 import java.awt.event.*;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 
+import model.Model;
+import utils.WordGenerator;
+import view.*;
+
 public class Controller {
     // declare frame and screens that it will display
-    Frame frame = new Frame();
-    HomeScreen homeScreen = frame.homeScreen;
-    PlayScreen playScreen = frame.playScreen;
-    GameOverScreen gameOverScreen = frame.gameOverScreen;
+    private Frame frame = new Frame();
+    private HomeScreen homeScreen = frame.homeScreen;
+    private PlayScreen playScreen = frame.playScreen;
+    private GameOverScreen gameOverScreen = frame.gameOverScreen;
 
-    Model model = new Model();
-    Timer timer = new Timer();
-    TimerTask task; // create a task for timer
+    private Model model = new Model();
+    private Timer timer = new Timer();
+    private TimerTask task; // create a task for timer
 
-    Controller() {
+    public Controller() {
         // listen to start button presses on home screen
         homeScreen.startGameButton.addActionListener(new ActionListener() {
             @Override

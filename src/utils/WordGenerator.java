@@ -1,3 +1,5 @@
+package utils;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.io.File; // Import the File class
@@ -5,12 +7,12 @@ import java.io.FileNotFoundException; // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 
 public class WordGenerator {
-    ArrayList<String> allWords;
-    int totalWordCount;
+    private ArrayList<String> allWords;
+    private int totalWordCount;
     private Random rand;
-    int wordCount;
+    private int wordCount;
 
-    WordGenerator(int word_count) {
+    public WordGenerator(int word_count) {
         allWords = getAllWords();
         totalWordCount = allWords.size();
         rand = new Random();

@@ -1,20 +1,22 @@
+package view;
+
 import java.awt.*;
 import javax.swing.*;
 
 public class Frame extends JFrame {
     // frame properties
-    int frameWidth = 1000;
-    int frameHeight = 800;
+    private int frameWidth = 1000;
+    private int frameHeight = 800;
 
     // screens
     JPanel screenContainer = new JPanel();
     public HomeScreen homeScreen;
     public PlayScreen playScreen;
     public GameOverScreen gameOverScreen;
-    CardLayout cl = new CardLayout();
-    String currentScreen; // screen which is currently displayed
+    private CardLayout cl = new CardLayout();
+    private String currentScreen; // screen which is currently displayed
 
-    Frame() {
+    public Frame() {
         this.setTitle("tizc");
 
         // instantiate screens
