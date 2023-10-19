@@ -29,24 +29,17 @@ public class GameOverScreen extends JPanel {
         GridBagLayout layout = new GridBagLayout();
         this.setLayout(layout);
 
-        ImageIcon celebrationIcon = new ImageIcon(
-                new ImageIcon("resources/icon/celebration.png").getImage().getScaledInstance(100, 100,
-                        Image.SCALE_DEFAULT));
         ImageIcon timerIcon = new ImageIcon(
                 new ImageIcon("resources/icon/deadline.png").getImage().getScaledInstance(iconSize, iconSize,
                         Image.SCALE_DEFAULT));
         ImageIcon speedometerIcon = new ImageIcon(
                 new ImageIcon("resources/icon/speedometer.png").getImage().getScaledInstance(iconSize, iconSize,
                         Image.SCALE_DEFAULT));
-        ImageIcon restartIcon = new ImageIcon(
-                new ImageIcon("resources/icon/restart.png").getImage().getScaledInstance(iconSize, iconSize,
-                        Image.SCALE_DEFAULT));
         ImageIcon accuracyIcon = new ImageIcon(
                 new ImageIcon("resources/icon/accuracy.png").getImage().getScaledInstance(iconSize, iconSize,
                         Image.SCALE_DEFAULT));
 
         // styles for gameOverText
-        gameOverText.setIcon(celebrationIcon);
         gameOverText.setFont(myFont.Bold.deriveFont(70f));
         gameOverText.setHorizontalAlignment(JLabel.CENTER);
         gameOverText.setForeground(Color.WHITE);
@@ -74,10 +67,10 @@ public class GameOverScreen extends JPanel {
 
         // styles for restartButton
         restarButton.setFocusPainted(false);
-        restarButton.setIcon(restartIcon);
-        restarButton.setFont(myFont.Regular.deriveFont(mediumFontSize));
+        restarButton.setFont(myFont.Regular.deriveFont(30f));
         restarButton.setContentAreaFilled(false);
         restarButton.setForeground(Color.WHITE);
+
         // POSITIONING
         gbc.weightx = 1;
         gbc.weighty = 1;
