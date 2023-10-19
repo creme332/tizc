@@ -4,7 +4,7 @@ import java.util.TimerTask;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 
-public class Mine {
+public class Controller {
     // declare frame and screens that it will display
     Frame frame = new Frame();
     HomeScreen homeScreen = frame.homeScreen;
@@ -15,7 +15,7 @@ public class Mine {
     Timer timer = new Timer();
     TimerTask task; // create a task for timer
 
-    Mine() {
+    Controller() {
         // listen to start button presses on home screen
         homeScreen.startGameButton.addActionListener(new ActionListener() {
             @Override
@@ -134,7 +134,7 @@ public class Mine {
         playScreen.removeAllHighlights();
 
         // update typeText
-        model.typeText = (new WordGenerator(5)).getString();
+        model.typeText = (new WordGenerator(60)).getString();
 
         playScreen.showText(model.typeText);
     }
