@@ -11,20 +11,9 @@ public class Mine {
     PlayScreen playScreen = frame.playScreen;
     GameOverScreen gameOverScreen = frame.gameOverScreen;
 
-    // generate some text to type
-    String typeText;
-
-    // Define variables for text highlighting
-    Object lastIncorrectHighlight;
-    int charPtr = 0; // index of character to be typed
-
-    // Define variables to track typing speed
-    long startTime = -1;
-    long gameDuration = 0;
-    Timer timer;
-
-    // create a task for timer
-    TimerTask task;
+    Model model = new Model();
+    Timer timer = new Timer();
+    TimerTask task; // create a task for timer
 
     Mine() {
         // listen to start button presses on home screen
@@ -55,34 +44,34 @@ public class Mine {
             return;
 
         // ignore keypresses after game is over
-        if (charPtr >= typeText.length())
+        if (model.charPtr >= model.typeText.length())
             return;
 
         System.out.println(
-                String.format("Current index = %d. Pressed %s", charPtr, keyCommand));
+                String.format("Current index = %d. Pressed %s", model.charPtr, keyCommand));
 
         // when a key is pressed for the first time, start timer
-        if (startTime < 0) {
+        if (model.startTime < 0) {
             startTimer();
         }
 
-        if (keyCommand.charAt(0) == typeText.charAt(charPtr)) {
+        if (keyCommand.charAt(0) == model.typeText.charAt(model.charPtr)) {
             // correct character pressed
             try {
                 // remove any previous red highlight on current character
-                if (lastIncorrectHighlight != null) {
-                    playScreen.removeHighlight(lastIncorrectHighlight);
-                    lastIncorrectHighlight = null;
+                if (model.lastIncorrectHighlight != null) {
+                    playScreen.removeHighlight(model.lastIncorrectHighlight);
+                    model.lastIncorrectHighlight = null;
                 }
 
                 // color current character green
-                playScreen.highlightChar(charPtr, frame.GREEN_COLOR);
+                playScreen.highlightChar(model.charPtr, frame.GREEN_COLOR);
 
                 // point to next character
-                charPtr++;
+                model.charPtr++;
 
                 // check if all words have been typed => game over
-                if (charPtr == typeText.length()) {
+                if (model.charPtr == model.typeText.length()) {
                     handleGameOver();
                 }
 
@@ -91,11 +80,12 @@ public class Mine {
             }
         } else {
             // incorrect character pressed
+            model.totalMistakes++;
 
             // highlight incorrectly typed character red, if it is not already red
             try {
-                if (lastIncorrectHighlight == null) {
-                    lastIncorrectHighlight = playScreen.highlightChar(charPtr, frame.RED_COLOR);
+                if (model.lastIncorrectHighlight == null) {
+                    model.lastIncorrectHighlight = playScreen.highlightChar(model.charPtr, frame.RED_COLOR);
                 }
             } catch (BadLocationException err) {
                 err.printStackTrace();
@@ -123,50 +113,45 @@ public class Mine {
     }
 
     private void initialise() {
+        model = new Model();
         timer = new Timer();
 
-        // create a timer task
+        // create a timer task to calculate time elapsed and update timer on screen
         task = new TimerTask() {
             @Override
             public void run() {
                 long ms = System.currentTimeMillis();
-                long elapsedSeconds = (ms - startTime) / 1000;
-                gameDuration = elapsedSeconds;
-                playScreen.showTime(gameDuration);
+                long elapsedSeconds = (ms - model.startTime) / 1000;
+                model.gameDuration = elapsedSeconds;
+                playScreen.showTime(model.gameDuration);
             }
         };
 
         // reset game duration
         playScreen.showTime(0);
 
-        // reset start time
-        startTime = -1;
-
         // reset highlights
         playScreen.removeAllHighlights();
 
-        // reset charPtr
-        charPtr = 0;
-
         // update typeText
-        typeText = (new WordGenerator(5)).getString();
+        model.typeText = (new WordGenerator(5)).getString();
 
-        playScreen.showText(typeText);
+        playScreen.showText(model.typeText);
     }
 
     private void handleGameOver() {
         // stop timer
         stopTimer();
 
-        gameOverScreen.setTimeTaken(gameDuration);
-        gameOverScreen.setWPM(60 * typeText.length() / (5 * gameDuration));
+        gameOverScreen.setTimeTaken(model.gameDuration);
+        gameOverScreen.setWPM(60 * model.typeText.length() / (5 * model.gameDuration));
 
         // show game over screen
         frame.setScreen("gameOverScreen");
     }
 
     private void startTimer() {
-        startTime = System.currentTimeMillis();
+        model.startTime = System.currentTimeMillis();
         timer.schedule(task, 0, 1000);
     }
 
