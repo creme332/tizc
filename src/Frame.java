@@ -1,13 +1,10 @@
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import javax.swing.*;
 
 public class Frame extends JFrame {
     // Define colors and font
     Color GREEN_COLOR = new Color(204, 255, 153);
     Color RED_COLOR = new Color(255, 153, 153);
-    Font PoppinsLightFont;
 
     // frame properties
     int frameWidth = 1000;
@@ -24,18 +21,10 @@ public class Frame extends JFrame {
     Frame() {
         this.setTitle("tizc");
 
-        // fetch font
-        try {
-            File font_file = new File("resources/font/Poppins/Poppins-Light.ttf");
-            PoppinsLightFont = Font.createFont(Font.TRUETYPE_FONT, font_file);
-        } catch (FontFormatException | IOException ex) {
-            System.out.println(ex);
-        }
-
         // instantiate screens
-        homeScreen = new HomeScreen(PoppinsLightFont);
-        playScreen = new PlayScreen(PoppinsLightFont);
-        gameOverScreen = new GameOverScreen(PoppinsLightFont);
+        homeScreen = new HomeScreen();
+        playScreen = new PlayScreen();
+        gameOverScreen = new GameOverScreen();
 
         // set frame properties
         this.setSize(frameWidth, frameHeight);
