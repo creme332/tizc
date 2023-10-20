@@ -107,22 +107,50 @@ public class Controller {
 
     /**
      * Create keybindings for play screen.
+     * 
+     * @see <a href=
+     *      "https://docs.oracle.com/javase/tutorial/uiswing/misc/keybinding.html">https://docs.oracle.com/javase/tutorial/uiswing/misc/keybinding.html</a>
+     * @see <a href= "https://www.asciitable.com/">https://www.asciitable.com/</a>
+     * 
+     * 
      */
     private void createKeyBindings() {
-        Action keyPressAction = new AbstractAction() {
+        Action letterPressAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // when a letter is pressed, highlight char pressed and move cursor if needed
                 dispatchKeyEvent(e.getActionCommand());
             }
         };
 
         // add keybindings for all letters
-        String KEY_PRESS = "keypress";
-        for (int keycode = 1; keycode < 91; keycode++) {
+        String KEY_PRESS = "keypress"; // ! TAB_PRESS should not contain capital letters
+        // Note: ascii codes for A-Z = 65-90.
+        for (int keycode = 65; keycode < 91; keycode++) {
             playScreen.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                     .put(KeyStroke.getKeyStroke(keycode, 0), KEY_PRESS);
-            playScreen.getActionMap().put(KEY_PRESS, keyPressAction);
+            playScreen.getActionMap().put(KEY_PRESS, letterPressAction);
         }
+
+        // add keybinding for space bar
+        playScreen.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), KEY_PRESS);
+        playScreen.getActionMap().put(KEY_PRESS, letterPressAction);
+
+        // create keybinding for tab key
+        Action tabAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Tab key pressed");
+                // when tab key is pressed while on playScreen, restart game
+                initialise();
+            }
+        };
+
+        String TAB_PRESS = "tabpress"; // ! TAB_PRESS should not contain capital letters
+        playScreen.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), TAB_PRESS);
+        playScreen.getActionMap().put(TAB_PRESS, tabAction);
     }
 
     /**
@@ -130,6 +158,16 @@ public class Controller {
      */
     private void initialise() {
         model = new Model();
+
+        // reset game duration
+        playScreen.showTime(0);
+
+        // reset highlights in text area
+        playScreen.removeAllHighlights();
+
+        // display text on playScreen
+        playScreen.showText(model.typeText);
+
         timer = new Timer();
 
         // create a timer task to calculate time elapsed and update timer on screen
@@ -142,15 +180,6 @@ public class Controller {
                 playScreen.showTime(model.gameDuration);
             }
         };
-
-        // reset game duration
-        playScreen.showTime(0);
-
-        // reset highlights in text area
-        playScreen.removeAllHighlights();
-
-        // display text on playScreen
-        playScreen.showText(model.typeText);
     }
 
     private void handleGameOver() {
