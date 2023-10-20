@@ -7,9 +7,11 @@ import javax.swing.*;
 import javax.swing.text.BadLocationException;
 
 import model.Model;
-import utils.WordGenerator;
 import view.*;
 
+/**
+ * Controls all the logic in the application by linking views and model.
+ */
 public class Controller {
     // declare frame and screens that it will display
     private Frame frame = new Frame();
@@ -17,9 +19,11 @@ public class Controller {
     private PlayScreen playScreen = frame.playScreen;
     private GameOverScreen gameOverScreen = frame.gameOverScreen;
 
-    private Model model = new Model();
-    private Timer timer = new Timer();
-    private TimerTask task; // create a task for timer
+    private Model model; // game state
+
+    // setup variables for timer found in playScreen
+    private Timer timer;
+    private TimerTask task;
 
     public Controller() {
         // listen to start button presses on home screen
@@ -31,9 +35,11 @@ public class Controller {
             }
         });
 
+        // listen to restart button presses on game over screen
         gameOverScreen.restarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                // when restart button is clicked, reset variables and move to play screen
                 initialise();
                 // go to play screen
                 frame.setScreen("playScreen");
@@ -100,7 +106,7 @@ public class Controller {
     }
 
     /**
-     * Creates keybindings for play screen.
+     * Create keybindings for play screen.
      */
     private void createKeyBindings() {
         Action keyPressAction = new AbstractAction() {
@@ -110,6 +116,7 @@ public class Controller {
             }
         };
 
+        // add keybindings for all letters
         String KEY_PRESS = "keypress";
         for (int keycode = 1; keycode < 91; keycode++) {
             playScreen.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
@@ -118,6 +125,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Initialises variables for a new game
+     */
     private void initialise() {
         model = new Model();
         timer = new Timer();
@@ -136,12 +146,10 @@ public class Controller {
         // reset game duration
         playScreen.showTime(0);
 
-        // reset highlights
+        // reset highlights in text area
         playScreen.removeAllHighlights();
 
-        // update typeText
-        model.typeText = (new WordGenerator(60)).getString();
-
+        // display text on playScreen
         playScreen.showText(model.typeText);
     }
 
@@ -149,10 +157,11 @@ public class Controller {
         // stop timer
         stopTimer();
 
-        long textLength = model.typeText.length();
-        gameOverScreen.setTimeTaken(model.gameDuration);
-        gameOverScreen.setWPM(60 * textLength / (5 * model.gameDuration));
-        gameOverScreen.setAccuracy(100 * (textLength - model.totalMistakes) / textLength);
+        long textLength = model.typeText.length(); // total characters in text to be typed
+        gameOverScreen.setTimeTaken(model.gameDuration); // display game duration
+        gameOverScreen.setWPM(60 * textLength / (5 * model.gameDuration)); // display wpm
+        gameOverScreen.setAccuracy(100 * (textLength - model.totalMistakes) / textLength); // display accuracy
+
         // show game over screen
         frame.setScreen("gameOverScreen");
     }
