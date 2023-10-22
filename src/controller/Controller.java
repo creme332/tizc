@@ -56,34 +56,34 @@ public class Controller {
             return;
 
         // ignore keypresses after game is over
-        if (model.charPtr >= model.typeText.length())
+        if (model.getCursorPos() >= model.getTypeText().length())
             return;
 
         System.out.println(
-                String.format("Current index = %d. Pressed %s", model.charPtr, keyCommand));
+                String.format("Current index = %d. Pressed %s", model.getCursorPos(), keyCommand));
 
         // when a key is pressed for the first time, start timer
-        if (model.startTime < 0) {
+        if (model.getStartTime() <= 0) {
             startTimer();
         }
 
-        if (keyCommand.charAt(0) == model.typeText.charAt(model.charPtr)) {
+        if (keyCommand.charAt(0) == model.getCurrentChar()) {
             // correct character pressed
             try {
                 // remove any previous red highlight on current character
-                if (model.lastIncorrectHighlight != null) {
-                    playScreen.removeHighlight(model.lastIncorrectHighlight);
-                    model.lastIncorrectHighlight = null;
+                if (model.getBadHighlight() != null) {
+                    playScreen.removeHighlight(model.getBadHighlight());
+                    model.setBadHighlight(null);
                 }
 
                 // color current character green
-                playScreen.highlightChar(model.charPtr, true);
+                playScreen.highlightChar(model.getCursorPos(), true);
 
                 // point to next character
-                model.charPtr++;
+                model.incrementCursor();
 
                 // check if all words have been typed => game over
-                if (model.charPtr == model.typeText.length()) {
+                if (model.getCursorPos() == model.getTypeText().length()) {
                     handleGameOver();
                 }
 
@@ -92,12 +92,13 @@ public class Controller {
             }
         } else {
             // incorrect character pressed
-            model.totalMistakes++;
+            model.incrementMistakes();
+            ;
 
             // highlight incorrectly typed character red, if it is not already red
             try {
-                if (model.lastIncorrectHighlight == null) {
-                    model.lastIncorrectHighlight = playScreen.highlightChar(model.charPtr, false);
+                if (model.getBadHighlight() == null) {
+                    model.setBadHighlight(playScreen.highlightChar(model.getCursorPos(), false));
                 }
             } catch (BadLocationException err) {
                 err.printStackTrace();
@@ -166,7 +167,7 @@ public class Controller {
         playScreen.removeAllHighlights();
 
         // display text on playScreen
-        playScreen.showText(model.typeText);
+        playScreen.showText(model.getTypeText());
 
         timer = new Timer();
 
@@ -175,9 +176,9 @@ public class Controller {
             @Override
             public void run() {
                 long ms = System.currentTimeMillis();
-                long elapsedSeconds = (ms - model.startTime) / 1000;
-                model.gameDuration = elapsedSeconds;
-                playScreen.showTime(model.gameDuration);
+                long elapsedSeconds = (ms - model.getStartTime()) / 1000;
+                model.setGameDuration(elapsedSeconds);
+                playScreen.showTime(elapsedSeconds);
             }
         };
     }
@@ -186,17 +187,19 @@ public class Controller {
         // stop timer
         stopTimer();
 
-        long textLength = model.typeText.length(); // total characters in text to be typed
-        gameOverScreen.setTimeTaken(model.gameDuration); // display game duration
-        gameOverScreen.setWPM(60 * textLength / (5 * model.gameDuration)); // display wpm
-        gameOverScreen.setAccuracy(100 * (textLength - model.totalMistakes) / textLength); // display accuracy
-
+        long textLength = model.getTypeText().length(); // total characters in text to be typed
+        gameOverScreen.setTimeTaken(model.getGameDuration()); // display game duration
+        gameOverScreen.setWPM(60 * textLength / (5 * model.getGameDuration())); // display wpm
+        gameOverScreen.setAccuracy(100 * (textLength - model.getMistakes()) / textLength); // display accuracy
+        // ! What if number of mistakes > text length
+        // ! prevent division by zero
+        // TODO: Write separate functions to calculate performance
         // show game over screen
         frame.setScreen("gameOverScreen");
     }
 
     private void startTimer() {
-        model.startTime = System.currentTimeMillis();
+        model.initStartTime();
         timer.schedule(task, 0, 1000);
     }
 
