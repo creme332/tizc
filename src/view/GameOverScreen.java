@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,7 +18,7 @@ import utils.PoppinsFont;
  * Screen displayed when game ends.
  */
 public class GameOverScreen extends JPanel {
-    public JButton restarButton = new JButton("Restart");
+    private JButton restarButton = new JButton("Restart");
     private JLabel gameOverText = new JLabel("Game Over");
     private JLabel timeTakenText = new JLabel();
     private JLabel wpmText = new JLabel();
@@ -153,5 +155,14 @@ public class GameOverScreen extends JPanel {
         } else {
             accuracyText.setText(String.format("%d %%", acc));
         }
+    }
+
+    /***
+     * Add action listener to restart button
+     * 
+     * @param newActionListener
+     */
+    public void addRestartButtonListener(ActionListener newActionListener) {
+        restarButton.addActionListener(newActionListener);
     }
 }

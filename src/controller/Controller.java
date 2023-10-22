@@ -27,7 +27,7 @@ public class Controller {
 
     public Controller() {
         // listen to start button presses on home screen
-        homeScreen.startGameButton.addActionListener(new ActionListener() {
+        homeScreen.addStartButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // when start button is clicked, show playScreen
@@ -36,7 +36,7 @@ public class Controller {
         });
 
         // listen to restart button presses on game over screen
-        gameOverScreen.restarButton.addActionListener(new ActionListener() {
+        gameOverScreen.addRestartButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // when restart button is clicked, reset variables and move to play screen
