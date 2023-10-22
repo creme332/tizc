@@ -60,7 +60,7 @@ public class Model {
         totalMistakes++;
     }
 
-    public int getMistakes() {
+    public int getTotalMistakes() {
         return totalMistakes;
     }
 
