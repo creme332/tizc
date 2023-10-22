@@ -183,17 +183,48 @@ public class Controller {
         };
     }
 
+    /**
+     * Calculates the typing speed in WPM (words per minute) of a player
+     * 
+     * @param charCount total number of characters (including spaces) in text typed
+     * @param timeTaken time taken in seconds by player
+     * @return WPM
+     */
+    private long getWPM(long charCount, long timeTaken) {
+        long secondsInMinute = 60;
+        long charPerWord = 5; // average number of characters in a word
+        if (timeTaken > 0) {
+            return (secondsInMinute * charCount / (charPerWord * timeTaken));
+        }
+        return 0;
+    }
+
+    /**
+     * Calculates the accuracy of a player
+     * 
+     * @param charCount    total number of characters (including spaces) in text
+     *                     typed
+     * @param mistakeCount number of characters wrongly typed
+     * @return A percentage (0-100)
+     */
+    private long getAccuracy(long charCount, long mistakeCount) {
+        if (charCount > 0)
+            return 100 * (charCount - mistakeCount) / charCount;
+        return 0;
+
+    }
+
     private void handleGameOver() {
         // stop timer
         stopTimer();
 
         long textLength = model.getTypeText().length(); // total characters in text to be typed
+        long gameDuration = model.getGameDuration();
+
         gameOverScreen.setTimeTaken(model.getGameDuration()); // display game duration
-        gameOverScreen.setWPM(60 * textLength / (5 * model.getGameDuration())); // display wpm
-        gameOverScreen.setAccuracy(100 * (textLength - model.getMistakes()) / textLength); // display accuracy
-        // ! What if number of mistakes > text length
-        // ! prevent division by zero
-        // TODO: Write separate functions to calculate performance
+        gameOverScreen.setWPM(getWPM(textLength, gameDuration)); // display wpm
+        gameOverScreen.setAccuracy(getAccuracy(textLength, model.getTotalMistakes())); // display accuracy
+
         // show game over screen
         frame.setScreen("gameOverScreen");
     }
