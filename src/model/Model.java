@@ -21,6 +21,9 @@ public class Model {
     private int totalMistakes = 0; // number of times a character was wrongly typed
     private long gameDuration = 0;
 
+    public void reset(){
+
+    }
     public String getTypeText() {
         return typeText;
     }
