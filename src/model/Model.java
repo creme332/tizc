@@ -21,9 +21,15 @@ public class Model {
     private int totalMistakes = 0; // number of times a character was wrongly typed
     private long gameDuration = 0;
 
-    public void reset(){
-
+    public void reset() {
+        typeText = (new WordGenerator(10)).getString();
+        badHighlight = null;
+        charPtr = 0;
+        startTime = -1;
+        totalMistakes = 0;
+        gameDuration = 0;
     }
+
     public String getTypeText() {
         return typeText;
     }
