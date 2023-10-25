@@ -7,7 +7,7 @@ import view.HomeScreen;
 public class HomeScreenController {
     private HomeScreen homeScreen = new HomeScreen();
 
-    void addStartButtonListener(ActionListener newActionListener) {
+    public void addStartButtonListener(ActionListener newActionListener) {
         homeScreen.addStartButtonListener(newActionListener);
     }
 
