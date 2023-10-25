@@ -34,9 +34,9 @@ public class PlayScreen extends JPanel {
         // set timer label properties
         timerLabel.setFont(PoppinsBold.deriveFont(25f));
         timerLabel.setHorizontalAlignment(JLabel.CENTER);
-        timerLabel.setText("Start typing when ready");
         timerLabel.setOpaque(false);
         timerLabel.setForeground(Color.WHITE);
+        showTime(0);
 
         // panels for layout
         JPanel headerPanel = new JPanel(); // container for clock

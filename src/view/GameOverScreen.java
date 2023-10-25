@@ -132,10 +132,7 @@ public class GameOverScreen extends JPanel {
      * @param time time in seconds.
      */
     public void setTimeTaken(long time) {
-        if (time == 0) {
-            timeTakenText.setText("Start typing when ready");
-
-        } else {
+        if (time >= 0) {
             timeTakenText.setText(String.format("%d s", time));
         }
     }
