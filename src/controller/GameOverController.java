@@ -1,6 +1,10 @@
 package controller;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import javax.swing.Action;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import view.GameOverScreen;
 import model.Model;
@@ -15,6 +19,13 @@ public class GameOverController {
 
     public void addActionOnGameRestart(ActionListener action) {
         gameOverScreen.addRestartButtonListener(action);
+    }
+
+    public void addTabAction(Action tabAction) {
+        String TAB_PRESS = "tabpress"; // ! TAB_PRESS should not contain capital letters
+        gameOverScreen.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), TAB_PRESS);
+        gameOverScreen.getActionMap().put(TAB_PRESS, tabAction);
     }
 
     /**
@@ -48,7 +59,7 @@ public class GameOverController {
 
     }
 
-    private void showStats() {
+    public void showStats() {
         gameOverScreen.setTimeTaken(model.getGameDuration()); // display game duration
         gameOverScreen.setWPM(getWPM(model.getTypeText().length(), model.getGameDuration())); // display wpm
         gameOverScreen.setAccuracy(getAccuracy(model.getTypeText().length(), model.getTotalMistakes())); // display
