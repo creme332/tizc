@@ -18,6 +18,7 @@ import utils.PoppinsFont;
  */
 public class HomeScreen extends JPanel {
     private JButton startGameButton = new JButton("Play");
+    public static String name = "homeScreen";
 
     public HomeScreen() {
         this.setLayout(new GridBagLayout());

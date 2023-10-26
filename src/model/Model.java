@@ -21,6 +21,9 @@ public class Model {
     private int totalMistakes = 0; // number of times a character was wrongly typed
     private long gameDuration = 0;
 
+    /**
+     * Resets model to its intial state.
+     */
     public void reset() {
         typeText = (new WordGenerator(10)).getString();
         badHighlight = null;
@@ -65,6 +68,9 @@ public class Model {
         return charPtr;
     }
 
+    /**
+     * Add 1 to the total number of mistakes made by user when typing
+     */
     public void incrementMistakes() {
         totalMistakes++;
     }

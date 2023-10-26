@@ -33,7 +33,12 @@ public class PlayScreenController {
         createKeyBindings();
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    /**
+     * When game is over, notify listeners
+     * 
+     * @param listener
+     */
+    public void addGameOverListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener("gameOver", listener);
     }
 

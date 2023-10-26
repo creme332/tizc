@@ -24,8 +24,8 @@ public class PlayScreen extends JPanel {
     private Color BAD_COLOR = new Color(78, 78, 78); // color of highlight when incorrect character is typed
 
     private JLabel timerLabel = new JLabel(); // label to display time
-
     private JTextArea typingArea = new JTextArea(10, 30); // text to be typed
+    public static String name = "playScreen";
 
     public PlayScreen() {
         Font PoppinsLight = new PoppinsFont().Light;

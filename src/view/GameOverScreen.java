@@ -23,6 +23,7 @@ public class GameOverScreen extends JPanel {
     private JLabel timeTakenText = new JLabel();
     private JLabel wpmText = new JLabel();
     private JLabel accuracyText = new JLabel();
+    public static String name = "gameOverScreen";
 
     public GameOverScreen() {
         PoppinsFont myFont = new PoppinsFont();

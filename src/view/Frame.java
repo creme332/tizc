@@ -59,7 +59,7 @@ public class Frame extends JFrame {
      *                  "gameOverScreen"
      */
     public void setScreen(String newWindow) {
-        if (newWindow != "homeScreen" && newWindow != "gameOverScreen" && newWindow != "playScreen") {
+        if (newWindow != HomeScreen.name && newWindow != GameOverScreen.name && newWindow != PlayScreen.name) {
             System.out.println("Invalid screen name");
             return;
         }
@@ -70,6 +70,12 @@ public class Frame extends JFrame {
         cl.show(screenContainer, currentScreen);
     }
 
+    /**
+     * Adds a different screen to frame.
+     * 
+     * @param screen
+     * @param name
+     */
     public void addToScreenContainer(Component screen, String name) {
         screenContainer.add(screen, name);
         this.validate();

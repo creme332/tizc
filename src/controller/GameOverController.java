@@ -59,6 +59,9 @@ public class GameOverController {
 
     }
 
+    /**
+     * Display game statistics: game duration, WPM, accuracy
+     */
     public void showStats() {
         gameOverScreen.setTimeTaken(model.getGameDuration()); // display game duration
         gameOverScreen.setWPM(getWPM(model.getTypeText().length(), model.getGameDuration())); // display wpm
@@ -69,5 +72,4 @@ public class GameOverController {
     public GameOverScreen getGameOverScreen() {
         return gameOverScreen;
     }
-
 }

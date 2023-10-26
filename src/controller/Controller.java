@@ -17,24 +17,22 @@ public class Controller implements PropertyChangeListener {
     private HomeScreenController homeScreenController = new HomeScreenController();
     private PlayScreenController playScreenController = new PlayScreenController(model);
     private GameOverController gameOverController = new GameOverController(model);
-    private Action restartGameAction;
 
     public Controller() {
-        // TODO: not a good idea to make name of screen set by user
-        frame.addToScreenContainer(homeScreenController.getHomeScreen(), "homeScreen");
-        frame.addToScreenContainer(playScreenController.getPlayScreen(), "playScreen");
-        frame.addToScreenContainer(gameOverController.getGameOverScreen(), "gameOverScreen");
+        frame.addToScreenContainer(homeScreenController.getHomeScreen(), HomeScreen.name);
+        frame.addToScreenContainer(playScreenController.getPlayScreen(), PlayScreen.name);
+        frame.addToScreenContainer(gameOverController.getGameOverScreen(), GameOverScreen.name);
 
         // listen to start button presses on home screen
         homeScreenController.addStartButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // when start button is clicked, show playScreen
-                frame.setScreen("playScreen");
+                frame.setScreen(PlayScreen.name);
             }
         });
 
-        restartGameAction = new AbstractAction() {
+        Action restartGameAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 restartGame();
@@ -43,27 +41,24 @@ public class Controller implements PropertyChangeListener {
         gameOverController.addActionOnGameRestart(restartGameAction);
         gameOverController.addTabAction(restartGameAction);
 
-        playScreenController.addPropertyChangeListener(this);
+        // playScreenController determines when game is over. Listen to it.
+        playScreenController.addGameOverListener(this);
 
         frame.showFrame();
-
     }
 
     private void restartGame() {
         playScreenController.initialise();
-        frame.setScreen("playScreen");
+        frame.setScreen(PlayScreen.name);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         String propertyName = e.getPropertyName();
-        System.out.println(":rere");
         if ("gameOver".equals(propertyName)) {
             gameOverController.showStats();
-            frame.setScreen("gameOverScreen");
-
+            frame.setScreen(GameOverScreen.name);
         }
 
     }
-
 }
