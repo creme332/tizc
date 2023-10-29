@@ -2,8 +2,10 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,11 +44,16 @@ public class PlayScreen extends JPanel {
         JPanel headerPanel = new JPanel(); // container for clock
         JPanel bodyPanel = new JPanel(); // container for typing area
 
+        // add borders to panels for debugging
+        // headerPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        // bodyPanel.setBorder(BorderFactory.createLineBorder(Color.green));
+        // this.setBorder(BorderFactory.createLineBorder(Color.red));
+
         // setup header panel
         headerPanel.setLayout(new BorderLayout());
+        headerPanel.setPreferredSize(new Dimension(400, 50));
         headerPanel.setOpaque(false);
         headerPanel.add(timerLabel);
-        this.add(headerPanel, BorderLayout.NORTH);
 
         // setup typing area
         typingArea.setFont(PoppinsLight.deriveFont(30f));
@@ -56,9 +63,14 @@ public class PlayScreen extends JPanel {
         typingArea.setWrapStyleWord(true);
         typingArea.setOpaque(false);
 
+        bodyPanel.setPreferredSize(new Dimension(800, 500));
         bodyPanel.setOpaque(false);
         bodyPanel.add(typingArea);
-        this.add(bodyPanel);
+
+        // setup frame layout
+        this.setLayout(new BorderLayout());
+        this.add(headerPanel, BorderLayout.PAGE_START);
+        this.add(bodyPanel, BorderLayout.CENTER);
     }
 
     @Override
