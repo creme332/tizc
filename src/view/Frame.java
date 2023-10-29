@@ -21,10 +21,11 @@ public class Frame extends JFrame {
 
         // set frame properties
         this.setSize(frameWidth, frameHeight);
-        this.setLocationRelativeTo(null); // center frame on startup
+        // this.setLocationRelativeTo(null); // center frame on startup
         this.setResizable(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // add close button to frame
-
+        this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        // ! Do not set locationRelative to null if screen is maximised
         screenContainer.setLayout(cl);
 
         this.add(screenContainer);
