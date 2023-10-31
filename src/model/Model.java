@@ -1,13 +1,15 @@
 package model;
 
+import utils.Calculator;
 import utils.WordGenerator;
+import java.util.ArrayList;
 
 /**
  * Stores game state.
  * 
  */
 public class Model {
-    private String typeText = (new WordGenerator(10)).getString(); // Text to be typed
+    private String typeText; // Text to be typed
     private Object badHighlight;
     /**
      * badHighlight:
@@ -21,6 +23,9 @@ public class Model {
     private int totalMistakes = 0; // number of times a character was wrongly typed
     private long gameDuration = 0;
 
+    ArrayList<Long> timeArray = new ArrayList<Long>();
+    ArrayList<Long> wpmArray = new ArrayList<Long>();
+
     /**
      * Resets model to its intial state.
      */
@@ -31,6 +36,10 @@ public class Model {
         startTime = -1;
         totalMistakes = 0;
         gameDuration = 0;
+        if (timeArray != null)
+            timeArray.clear();
+        if (wpmArray != null)
+            wpmArray.clear();
     }
 
     public String getTypeText() {
@@ -85,5 +94,33 @@ public class Model {
 
     public void setBadHighlight(Object highlight) {
         badHighlight = highlight;
+    }
+
+    public void recordWPM(long currentSecond) {
+        Calculator calc = new Calculator();
+        timeArray.add(currentSecond);
+        long wpm = calc.getWPM(getCursorPos(), currentSecond);
+        wpmArray.add(wpm);
+        System.out.println(String.format("Time = %d WPM = %d ", currentSecond, wpm));
+    }
+
+    public double[] getTimeArray() {
+        long[] res = timeArray.stream().mapToLong(i -> i).toArray();
+        double[] dest = new double[res.length];
+        for (int i = 0; i < res.length; i++) {
+            dest[i] = res[i];
+        }
+        return dest;
+    }
+
+    public double[] getWPMArray() {
+        long[] res = wpmArray.stream().mapToLong(i -> i).toArray();
+        double[] dest = new double[res.length];
+        for (int i = 0; i < res.length; i++) {
+            dest[i] = res[i];
+            System.out.println(dest[i]);
+
+        }
+        return dest;
     }
 }

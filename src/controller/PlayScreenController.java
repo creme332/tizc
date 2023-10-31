@@ -183,6 +183,10 @@ public class PlayScreenController {
                 long elapsedSeconds = (ms - model.getStartTime()) / 1000;
                 model.setGameDuration(elapsedSeconds);
                 playScreen.showTime(model.getGameDuration());
+
+                // record current wpm
+                if (elapsedSeconds > 0)
+                    model.recordWPM(elapsedSeconds);
             }
         };
 

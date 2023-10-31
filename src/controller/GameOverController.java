@@ -34,6 +34,9 @@ public class GameOverController {
      * Display game statistics: game duration, WPM, accuracy
      */
     public void showStats() {
+        gameOverScreen.drawChart(model.getTimeArray(),
+                model.getWPMArray());
+
         // display game duration
         gameOverScreen.setTimeTaken(model.getGameDuration());
 
