@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,11 +14,6 @@ import javax.swing.JPanel;
 
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
-import org.knowm.xchart.style.Styler.LegendPosition;
-import org.knowm.xchart.style.colors.XChartSeriesColors;
 
 import utils.PoppinsFont;
 
@@ -35,8 +29,7 @@ public class GameOverScreen extends JPanel {
     public static String name = "gameOverScreen";
 
     // Create Chart
-    private XYChart chart = new XYChartBuilder().width(800).height(600).title("Typing speed").xAxisTitle("Time")
-            .yAxisTitle("WPM").build();
+    WPMChart chart = new WPMChart();
     JPanel chartPanel;
 
     public GameOverScreen() {
@@ -96,12 +89,12 @@ public class GameOverScreen extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // position gameOverText at (0, 0) with a width of 3 cells
-        gbc.gridx = 0; // column
-        gbc.gridy = 0; // row
-        gbc.gridwidth = 3;
-        gbc.weighty = 0.3;
+        // gbc.gridx = 0; // column
+        // gbc.gridy = 0; // row
+        // gbc.gridwidth = 3;
+        // gbc.weighty = 0.3;
 
-        this.add(gameOverText, gbc);
+        // this.add(gameOverText, gbc);
 
         gbc.weighty = 1;
 
@@ -130,23 +123,7 @@ public class GameOverScreen extends JPanel {
         gbc.weighty = 0.3;
         this.add(restarButton, gbc);
 
-        // Customize Chart
-        // chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
-        chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Line);
-        chart.getStyler().setChartBackgroundColor(new Color(0, 0, 0, 0));
-        chart.getStyler().setPlotBackgroundColor(new Color(0, 0, 0, 0));
-        chart.getStyler().setToolTipsEnabled(true);
-        // chart.getStyler().setPlotMargin(0);
-        // chart.getStyler().setPlotContentSize(.95);
-        chart.getStyler().setYAxisMin(0.0);
-        chart.getStyler().setYAxisTickMarksColor(Color.WHITE);
-        chart.getStyler().setAxisTickLabelsColor(Color.WHITE);
-
-        // set font
-        chart.getStyler().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 20));
-        chart.getStyler().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 20));
-
-        chartPanel = new XChartPanel<XYChart>(chart);
+        chartPanel = new XChartPanel<XYChart>(chart.get());
         chartPanel.setOpaque(false);
 
         gbc.gridx = 0;
@@ -207,13 +184,7 @@ public class GameOverScreen extends JPanel {
     }
 
     public void drawChart(double[] timeData, double[] wpmData) {
-
-        chart.removeSeries("Typing speed");
-
-        XYSeries series = chart.addSeries("Typing speed", timeData, wpmData);
-        series.setLineColor(Color.PINK);
-
-        // turn off series marker
+        chart.updateSeries(timeData, wpmData);
         chartPanel.repaint();
     }
 }
