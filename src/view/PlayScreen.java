@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -52,7 +51,7 @@ public class PlayScreen extends JPanel {
         // setup header panel
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setPreferredSize(new Dimension(400, 50));
-        headerPanel.setOpaque(false);
+        headerPanel.setOpaque(false); // Make panel transparent
         headerPanel.add(timerLabel);
 
         // setup typing area
@@ -61,8 +60,7 @@ public class PlayScreen extends JPanel {
         typingArea.setEditable(false);
         typingArea.setLineWrap(true);
         typingArea.setWrapStyleWord(true);
-        typingArea.setOpaque(false);
-
+        typingArea.setOpaque(false); // Make transparent
         bodyPanel.setPreferredSize(new Dimension(800, 500));
         bodyPanel.setOpaque(false);
         bodyPanel.add(typingArea);

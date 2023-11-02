@@ -19,9 +19,13 @@ public class Controller implements PropertyChangeListener {
     private GameOverController gameOverController = new GameOverController(model);
 
     public Controller() {
+        // insert screens to frame
         frame.addToScreenContainer(homeScreenController.getHomeScreen(), HomeScreen.name);
         frame.addToScreenContainer(playScreenController.getPlayScreen(), PlayScreen.name);
         frame.addToScreenContainer(gameOverController.getGameOverScreen(), GameOverScreen.name);
+
+        // set default screen
+        frame.setScreen(HomeScreen.name);
 
         // listen to start button presses on home screen
         homeScreenController.addStartButtonListener(new ActionListener() {
@@ -48,7 +52,7 @@ public class Controller implements PropertyChangeListener {
     }
 
     private void restartGame() {
-        playScreenController.initialise();
+        playScreenController.initialiseGame();
         frame.setScreen(PlayScreen.name);
     }
 

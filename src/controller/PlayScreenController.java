@@ -15,6 +15,9 @@ import javax.swing.text.BadLocationException;
 import view.PlayScreen;
 import model.Model;
 
+/**
+ * Controller for PlayScreen
+ */
 public class PlayScreenController {
     Model model;
     PlayScreen playScreen = new PlayScreen();
@@ -22,14 +25,18 @@ public class PlayScreenController {
     // setup variables for timer
     private Timer timer;
     private TimerTask task;
-    private PropertyChangeSupport support;
+
+    private PropertyChangeSupport support; // variable for observer pattern
 
     public PlayScreenController(Model model) {
+        // initialise model
+        this.model = model;
+
+        // PlayScreenController is a subject and notifies observers.
         support = new PropertyChangeSupport(this);
 
-        this.model = model;
-        initialise();
-        playScreen.showText(model.getTypeText());
+        initialiseGame();
+
         createKeyBindings();
     }
 
@@ -42,6 +49,11 @@ public class PlayScreenController {
         support.addPropertyChangeListener("gameOver", listener);
     }
 
+    /**
+     * Handles key event.
+     * 
+     * @param keyCommand key pressed
+     */
     private void dispatchKeyEvent(String keyCommand) {
         // ignore keys which are not lowercase alphabets
         if (keyCommand.length() > 1)
@@ -97,20 +109,27 @@ public class PlayScreenController {
         }
     }
 
+    /**
+     * Game over handler. Call this function when game is over.
+     */
     public void handleGameOver() {
-        System.out.println("game over");
         stopTimer();
 
-        // notify game over
+        // notify listeners that game is over
         support.firePropertyChange("gameOver", false, true);
-
     }
 
+    /**
+     * Starts timer on PlayScreen.
+     */
     private void startTimer() {
         model.initStartTime();
         timer.schedule(task, 0, 1000);
     }
 
+    /**
+     * Stops timer on PlayScreen.
+     */
     private void stopTimer() {
         if (timer != null) {
             timer.cancel();
@@ -156,7 +175,7 @@ public class PlayScreenController {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Tab key pressed");
                 // when tab key is pressed while on playScreen, restart game
-                initialise();
+                initialiseGame();
             }
         };
 
@@ -166,13 +185,26 @@ public class PlayScreenController {
         playScreen.getActionMap().put(TAB_PRESS, tabAction);
     }
 
+    /**
+     * Returns PlayScreen, the screen where game takes place.
+     * 
+     * @return PlayScreen
+     */
     public PlayScreen getPlayScreen() {
         return playScreen;
     }
 
-    public void initialise() {
+    /**
+     * Initialises all variables for a new game.
+     */
+    public void initialiseGame() {
+        // stop timer
         stopTimer();
+
+        // reset model
         model.reset();
+
+        // create a new timer
         timer = new Timer();
 
         // create a timer task to calculate time elapsed and update timer on screen
@@ -196,6 +228,7 @@ public class PlayScreenController {
         // reset highlights
         playScreen.removeAllHighlights();
 
+        // show text to be typed
         playScreen.showText(model.getTypeText());
     }
 }
