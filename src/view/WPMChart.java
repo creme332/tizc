@@ -1,8 +1,8 @@
 package view;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.util.function.Function;
 
 import org.knowm.xchart.AnnotationLine;
 import org.knowm.xchart.BitmapEncoder;
@@ -21,6 +21,8 @@ public class WPMChart {
     private Font labelFont = myFont.Regular.deriveFont(12f);
     private AnnotationLine xLine = new AnnotationLine(10, false, false);
 
+    private Color greenColour = new Color(147, 232, 211);
+
     public WPMChart() {
         chart = new XYChartBuilder()
                 .width(800)
@@ -29,14 +31,13 @@ public class WPMChart {
                 .yAxisTitle("Words per Minute")
                 .build();
 
-        // chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Line);
 
         chart.getStyler().setPlotGridLinesVisible(false); // hide grid lines
         chart.getStyler().setMarkerSize(10);
-        chart.getStyler().setPlotBorderColor(new Color(0, 0, 0, 0));
 
         // make chart transparent
+        chart.getStyler().setPlotBorderColor(new Color(0, 0, 0, 0));
         chart.getStyler().setChartBackgroundColor(new Color(0, 0, 0, 0));
         chart.getStyler().setPlotBackgroundColor(new Color(0, 0, 0, 0));
 
@@ -44,7 +45,7 @@ public class WPMChart {
         chart.getStyler().setLegendVisible(false);
 
         // enable tooltips
-        // chart.getStyler().setToolTipsEnabled(true);
+        chart.getStyler().setToolTipsEnabled(true);
 
         chart.getStyler().setYAxisMin(0.0);
         chart.getStyler().setYAxisTickMarksColor(Color.WHITE);
@@ -55,26 +56,12 @@ public class WPMChart {
         chart.getStyler().setAxisTitleFont(labelFont);
         chart.getStyler().setAxisTickLabelsFont(labelFont);
 
-        chart.getStyler().setXAxisMaxLabelCount(5);
-
-        Function<Double, String> function = (Double d) -> {
-            int a = d.intValue();
-            if (a % 2 == 0) {
-                System.out.println(a);
-                return String.valueOf(a);
-            }
-            return "x";
-        };
-
         // style annotation line
-        chart.getStyler().setAnnotationLineColor(Color.white);
+        chart.getStyler().setAnnotationLineColor(greenColour);
 
-        // customize spacing of xtick labels
-        // chart.getStyler().setxAxisTickLabelsFormattingFunction(null);
-        // chart.getStyler().setXAxisTickMarkSpacingHint(1);
-
-        // chart.getStyler().setxAxisTickLabelsFormattingFunction(function);
-        // chart.setCustomXAxisTickLabelsFormatter(x->"x");
+        // make annotation line dashed: https://stackoverflow.com/q/21989082/17627866
+        chart.getStyler().setAnnotationLineStroke(
+                new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL, 0, new float[] { 5 }, 0));
 
         chart.getStyler().setxAxisTickLabelsFormattingFunction(x -> x.longValue() % 2 == 0 ? "y" : "x");
 
@@ -82,6 +69,7 @@ public class WPMChart {
         updateSeries(new double[] { 1, 2, 3, 4, 5, 6 },
                 new double[] { 60, 53, 56, 55, 61, 64 });
 
+        // add annotation line
         chart.addAnnotation(xLine);
     }
 
@@ -107,13 +95,15 @@ public class WPMChart {
         XYSeries series = chart.addSeries(seriesName, timeData, wpmData);
 
         // customise series
-        series.setLineColor(new Color(147, 232, 211));
+        series.setLineColor(greenColour);
         series.setLineWidth(3f);
-        series.setMarkerColor(new Color(147, 232, 211));
+        series.setMarkerColor(greenColour);
     }
 
     /**
-     * Displays horizontal line
+     * Updates position of horizontal line indicating average WPM
+     * 
+     * @param value new average WPM
      */
     public void updateAverageWPM(double value) {
         xLine.setValue(value);
