@@ -2,7 +2,9 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.function.Function;
 
+import org.knowm.xchart.AnnotationLine;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.XYChart;
@@ -17,6 +19,7 @@ public class WPMChart {
     private XYChart chart;
     private PoppinsFont myFont = new PoppinsFont();
     private Font labelFont = myFont.Regular.deriveFont(12f);
+    private AnnotationLine xLine = new AnnotationLine(10, false, false);
 
     public WPMChart() {
         chart = new XYChartBuilder()
@@ -37,6 +40,7 @@ public class WPMChart {
         chart.getStyler().setChartBackgroundColor(new Color(0, 0, 0, 0));
         chart.getStyler().setPlotBackgroundColor(new Color(0, 0, 0, 0));
 
+        // hide legend
         chart.getStyler().setLegendVisible(false);
 
         // enable tooltips
@@ -51,8 +55,34 @@ public class WPMChart {
         chart.getStyler().setAxisTitleFont(labelFont);
         chart.getStyler().setAxisTickLabelsFont(labelFont);
 
+        chart.getStyler().setXAxisMaxLabelCount(5);
+
+        Function<Double, String> function = (Double d) -> {
+            int a = d.intValue();
+            if (a % 2 == 0) {
+                System.out.println(a);
+                return String.valueOf(a);
+            }
+            return "x";
+        };
+
+        // style annotation line
+        chart.getStyler().setAnnotationLineColor(Color.white);
+
+        // customize spacing of xtick labels
+        // chart.getStyler().setxAxisTickLabelsFormattingFunction(null);
+        // chart.getStyler().setXAxisTickMarkSpacingHint(1);
+
+        // chart.getStyler().setxAxisTickLabelsFormattingFunction(function);
+        // chart.setCustomXAxisTickLabelsFormatter(x->"x");
+
+        chart.getStyler().setxAxisTickLabelsFormattingFunction(x -> x.longValue() % 2 == 0 ? "y" : "x");
+
         // add a default series
-        updateSeries(new double[] { 1, 2, 3, 4 }, new double[] { 110, 120, 133, 90 });
+        updateSeries(new double[] { 1, 2, 3, 4, 5, 6 },
+                new double[] { 60, 53, 56, 55, 61, 64 });
+
+        chart.addAnnotation(xLine);
     }
 
     public XYChart get() {
@@ -80,6 +110,12 @@ public class WPMChart {
         series.setLineColor(new Color(147, 232, 211));
         series.setLineWidth(3f);
         series.setMarkerColor(new Color(147, 232, 211));
+    }
 
+    /**
+     * Displays horizontal line
+     */
+    public void updateAverageWPM(double value) {
+        xLine.setValue(value);
     }
 }

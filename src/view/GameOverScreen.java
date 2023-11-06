@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -185,6 +186,8 @@ public class GameOverScreen extends JPanel {
 
     public void drawChart(double[] timeData, double[] wpmData) {
         chart.updateSeries(timeData, wpmData);
+        double average = Arrays.stream(wpmData).average().orElse(Double.NaN);
+        chart.updateAverageWPM(average);
         chartPanel.repaint();
     }
 }
