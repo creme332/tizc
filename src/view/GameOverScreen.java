@@ -23,15 +23,14 @@ import utils.PoppinsFont;
  */
 public class GameOverScreen extends JPanel {
     private JButton restarButton = new JButton("Restart");
-    private JLabel gameOverText = new JLabel("Game Over");
     private JLabel timeTakenText = new JLabel();
     private JLabel wpmText = new JLabel();
     private JLabel accuracyText = new JLabel();
     public static String name = "gameOverScreen";
 
-    // Create Chart
     WPMChart chart = new WPMChart();
     JPanel chartPanel;
+    GridBagLayout layout;
 
     public GameOverScreen() {
         PoppinsFont myFont = new PoppinsFont();
@@ -39,7 +38,7 @@ public class GameOverScreen extends JPanel {
         int iconSize = 50;
 
         GridBagConstraints gbc = new GridBagConstraints();
-        GridBagLayout layout = new GridBagLayout();
+        layout = new GridBagLayout();
         this.setLayout(layout);
 
         ImageIcon timerIcon = new ImageIcon(
@@ -51,11 +50,6 @@ public class GameOverScreen extends JPanel {
         ImageIcon accuracyIcon = new ImageIcon(
                 new ImageIcon("resources/icon/accuracy.png").getImage().getScaledInstance(iconSize, iconSize,
                         Image.SCALE_DEFAULT));
-
-        // styles for gameOverText
-        gameOverText.setFont(myFont.Bold.deriveFont(70f));
-        gameOverText.setHorizontalAlignment(JLabel.CENTER);
-        gameOverText.setForeground(Color.WHITE);
 
         // styles for time taken
         setTimeTaken(0);
@@ -84,20 +78,20 @@ public class GameOverScreen extends JPanel {
         restarButton.setContentAreaFilled(false);
         restarButton.setForeground(Color.WHITE);
 
+        // styles for chart
+        chartPanel = new XChartPanel<XYChart>(chart.get());
+        chartPanel.setOpaque(false);
+
         // set global gbc constraints
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // position gameOverText at (0, 0) with a width of 3 cells
-        // gbc.gridx = 0; // column
-        // gbc.gridy = 0; // row
-        // gbc.gridwidth = 3;
-        // gbc.weighty = 0.3;
-
-        // this.add(gameOverText, gbc);
-
-        gbc.weighty = 1;
+        // position chart
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 3;
+        this.add(chartPanel, gbc);
 
         // position timeTakenText at (1, 0) with unit width
         gbc.gridx = 0;
@@ -119,19 +113,31 @@ public class GameOverScreen extends JPanel {
 
         // position restartButton at (2, 1) with unit width
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.gridwidth = 1;
-        gbc.weighty = 0.3;
+        // gbc.weighty = 0.3;
         this.add(restarButton, gbc);
-
-        chartPanel = new XChartPanel<XYChart>(chart.get());
-        chartPanel.setOpaque(false);
-
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 1;
-        this.add(chartPanel, gbc);
     }
+
+    /**
+     * Code to display grid lines on game over screen. Uncomment for debugging purposes.
+     */
+    // @Override
+    // public void paint(Graphics g) {
+    //     super.paint(g);
+    //     int[][] dims = layout.getLayoutDimensions();
+    //     g.setColor(Color.white);
+    //     int x = 0;
+    //     for (int add : dims[0]) {
+    //         x += add;
+    //         g.drawLine(x, 0, x, getHeight());
+    //     }
+    //     int y = 0;
+    //     for (int add : dims[1]) {
+    //         y += add;
+    //         g.drawLine(0, y, getWidth(), y);
+    //     }
+    // }
 
     @Override
     protected void paintComponent(Graphics g) {

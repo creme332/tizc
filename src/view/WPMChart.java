@@ -26,7 +26,7 @@ public class WPMChart {
     public WPMChart() {
         chart = new XYChartBuilder()
                 .width(800)
-                .height(200)
+                .height(400)
                 .xAxisTitle("Time")
                 .yAxisTitle("Words per Minute")
                 .build();
@@ -63,7 +63,7 @@ public class WPMChart {
         chart.getStyler().setAnnotationLineStroke(
                 new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL, 0, new float[] { 5 }, 0));
 
-        chart.getStyler().setxAxisTickLabelsFormattingFunction(x -> x.longValue() % 2 == 0 ? "y" : "x");
+        // chart.getStyler().setxAxisTickLabelsFormattingFunction(x -> x.longValue() % 2 == 0 ? "y" : "x");
 
         // add a default series
         updateSeries(new double[] { 1, 2, 3, 4, 5, 6 },
