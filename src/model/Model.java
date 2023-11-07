@@ -101,7 +101,7 @@ public class Model {
         timeArray.add(currentSecond);
         long wpm = calc.getWPM(getCursorPos(), currentSecond);
         wpmArray.add(wpm);
-        System.out.println(String.format("Time = %d WPM = %d ", currentSecond, wpm));
+        // System.out.println(String.format("Time = %d WPM = %d ", currentSecond, wpm));
     }
 
     public double[] getTimeArray() {
@@ -118,8 +118,6 @@ public class Model {
         double[] dest = new double[res.length];
         for (int i = 0; i < res.length; i++) {
             dest[i] = res[i];
-            System.out.println(dest[i]);
-
         }
         return dest;
     }

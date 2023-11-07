@@ -63,8 +63,9 @@ public class PlayScreenController {
         if (model.getCursorPos() >= model.getTypeText().length())
             return;
 
-        System.out.println(
-                String.format("Current index = %d. Pressed %s", model.getCursorPos(), keyCommand));
+        // System.out.println(
+        // String.format("Current index = %d. Pressed %s", model.getCursorPos(),
+        // keyCommand));
 
         // when a key is pressed for the first time, start timer
         if (model.getStartTime() <= 0) {
