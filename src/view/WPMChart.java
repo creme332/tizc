@@ -108,7 +108,7 @@ public class WPMChart {
             BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI",
                     BitmapFormat.PNG, 300);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println(e);
         }
     }
 
