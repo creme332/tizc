@@ -14,6 +14,7 @@ import javax.swing.text.BadLocationException;
 
 import view.PlayScreen;
 import model.Model;
+import utils.Calculator;
 
 /**
  * Controller for PlayScreen
@@ -217,8 +218,12 @@ public class PlayScreenController {
                 playScreen.showTime(model.getGameDuration());
 
                 // record current wpm
+                double currentWPM = new Calculator()
+                        .getWPM(
+                                model.getCursorPos(),
+                                elapsedSeconds);
                 if (elapsedSeconds > 0)
-                    model.recordWPM(elapsedSeconds);
+                    model.recordWPM(elapsedSeconds, currentWPM);
             }
         };
 

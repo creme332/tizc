@@ -1,6 +1,5 @@
 package model;
 
-import utils.Calculator;
 import utils.WordGenerator;
 import java.util.ArrayList;
 
@@ -23,8 +22,9 @@ public class Model {
     private int totalMistakes = 0; // number of times a character was wrongly typed
     private long gameDuration = 0;
 
-    ArrayList<Long> timeArray = new ArrayList<Long>();
-    ArrayList<Long> wpmArray = new ArrayList<Long>();
+    // create arrays to store pairs (time, wpm)
+    ArrayList<Double> timeArray = new ArrayList<Double>();
+    ArrayList<Double> wpmArray = new ArrayList<Double>();
 
     /**
      * Resets model to its intial state.
@@ -96,29 +96,16 @@ public class Model {
         badHighlight = highlight;
     }
 
-    public void recordWPM(long currentSecond) {
-        Calculator calc = new Calculator();
+    public void recordWPM(double currentSecond, double wpm) {
         timeArray.add(currentSecond);
-        long wpm = calc.getWPM(getCursorPos(), currentSecond);
         wpmArray.add(wpm);
-        // System.out.println(String.format("Time = %d WPM = %d ", currentSecond, wpm));
     }
 
     public double[] getTimeArray() {
-        long[] res = timeArray.stream().mapToLong(i -> i).toArray();
-        double[] dest = new double[res.length];
-        for (int i = 0; i < res.length; i++) {
-            dest[i] = res[i];
-        }
-        return dest;
+        return timeArray.stream().mapToDouble(Double::doubleValue).toArray();
     }
 
     public double[] getWPMArray() {
-        long[] res = wpmArray.stream().mapToLong(i -> i).toArray();
-        double[] dest = new double[res.length];
-        for (int i = 0; i < res.length; i++) {
-            dest[i] = res[i];
-        }
-        return dest;
+        return wpmArray.stream().mapToDouble(Double::doubleValue).toArray();
     }
 }

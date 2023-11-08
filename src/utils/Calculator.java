@@ -12,7 +12,7 @@ public class Calculator {
      * @param timeTaken time taken in seconds by player
      * @return WPM
      */
-    public long getWPM(long charCount, long timeTaken) {
+    public double getWPM(long charCount, long timeTaken) {
         long secondsInMinute = 60;
         long charPerWord = 5; // average number of characters in a word
         if (timeTaken > 0) {

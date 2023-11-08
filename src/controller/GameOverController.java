@@ -55,11 +55,11 @@ public class GameOverController {
         // display game duration
         gameOverScreen.setTimeTaken(model.getGameDuration());
 
-        // display wpm
-        gameOverScreen.setWPM(
-                calc.getWPM(
-                        model.getTypeText().length(),
-                        model.getGameDuration()));
+        // display final wpm
+        double wpm = calc.getWPM(
+                model.getTypeText().length(),
+                model.getGameDuration());
+        gameOverScreen.setWPM((long) wpm);
 
         // display accuracy
         gameOverScreen.setAccuracy(
