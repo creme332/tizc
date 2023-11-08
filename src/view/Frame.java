@@ -8,8 +8,8 @@ import javax.swing.*;
  */
 public class Frame extends JFrame {
     // frame properties
-    private int frameWidth = 1000;
-    private int frameHeight = 800;
+    private int frameWidth = 1600;
+    private int frameHeight = 1000;
 
     // screens
     JPanel screenContainer = new JPanel(); // a container for all screens
@@ -17,15 +17,27 @@ public class Frame extends JFrame {
     private String currentScreen; // screen which is currently displayed
 
     public Frame() {
-        this.setTitle("tizc"); // frame title
+        this.setTitle("tizc"); // set frame title
 
-        // set frame properties
+        // set frame size
         this.setSize(frameWidth, frameHeight);
-        // this.setLocationRelativeTo(null); // center frame on startup
+
+        // make frame resizable
         this.setResizable(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // add close button to frame
-        this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        // ! Do not set locationRelative to null if screen is maximised
+
+        // add close button to frame
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // maximize frame on startup. 
+        // TODO: Fix white screen bug when frame is maximised
+        // this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        // center frame on startup if frame is not maximised
+        if (this.getExtendedState() != JFrame.MAXIMIZED_BOTH) {
+            // ! Do not set locationRelative to null if screen is maximised
+            this.setLocationRelativeTo(null);
+        }
+
         screenContainer.setLayout(cl);
 
         this.add(screenContainer);
