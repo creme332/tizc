@@ -18,14 +18,14 @@ public class WPMChart {
     private String seriesName = "game";
     private XYChart chart;
     private PoppinsFont myFont = new PoppinsFont();
-    private Font labelFont = myFont.Regular.deriveFont(12f);
+    private Font labelFont = myFont.Regular.deriveFont(16f);
     private AnnotationLine xLine = new AnnotationLine(10, false, false);
 
     private Color greenColour = new Color(147, 232, 211);
 
     public WPMChart() {
         chart = new XYChartBuilder()
-                .width(800)
+                .width(700)
                 .height(400)
                 .xAxisTitle("Time")
                 .yAxisTitle("Words per Minute")
@@ -40,17 +40,20 @@ public class WPMChart {
         chart.getStyler().setPlotBorderColor(new Color(0, 0, 0, 0));
         chart.getStyler().setChartBackgroundColor(new Color(0, 0, 0, 0));
         chart.getStyler().setPlotBackgroundColor(new Color(0, 0, 0, 0));
+        chart.getStyler().setChartFontColor(Color.WHITE);
 
         // hide legend
         chart.getStyler().setLegendVisible(false);
 
         // enable tooltips
         chart.getStyler().setToolTipsEnabled(true);
+        chart.getStyler().setToolTipBackgroundColor(Color.BLACK);
+        chart.getStyler().setToolTipFont(labelFont);
 
+        // style axes
         chart.getStyler().setYAxisMin(0.0);
         chart.getStyler().setYAxisTickMarksColor(Color.WHITE);
         chart.getStyler().setAxisTickLabelsColor(Color.WHITE);
-        chart.getStyler().setChartFontColor(Color.WHITE);
 
         // set font
         chart.getStyler().setAxisTitleFont(labelFont);
@@ -63,18 +66,36 @@ public class WPMChart {
         chart.getStyler().setAnnotationLineStroke(
                 new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL, 0, new float[] { 5 }, 0));
 
-        // chart.getStyler().setxAxisTickLabelsFormattingFunction(x -> x.longValue() % 2 == 0 ? "y" : "x");
-
-        // add a default series
-        updateSeries(new double[] { 1, 2, 3, 4, 5, 6 },
-                new double[] { 60, 53, 56, 55, 61, 64 });
+        // change formatting of xAxis tick labels
+        chart.getStyler().setxAxisTickLabelsFormattingFunction(x -> ((x.longValue() % 5) == 0) ? "y" : "x");
 
         // add annotation line
         chart.addAnnotation(xLine);
+
+        // plot random data on graph for testing purposes
+        plotRandomData(60);
     }
 
     public XYChart get() {
         return chart;
+    }
+
+    /**
+     * Plots random data on graph and updates annotation line appropriately.
+     *
+     * @param numPoints Dataset size
+     */
+    private void plotRandomData(int numPoints) {
+        double[] y = new double[numPoints];
+        double sum = 0;
+        y[0] = 0;
+
+        for (int i = 1; i < y.length; i++) {
+            y[i] = 50 * Math.random() + 30;
+            sum += y[i];
+        }
+        updateSeries(null, y);
+        updateAverageWPM(sum / numPoints);
     }
 
     public void saveImage() {
