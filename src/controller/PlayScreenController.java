@@ -174,7 +174,6 @@ public class PlayScreenController {
         Action tabAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Tab key pressed");
                 // when tab key is pressed while on playScreen, restart game
                 initialiseGame();
             }

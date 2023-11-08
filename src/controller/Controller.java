@@ -25,7 +25,7 @@ public class Controller implements PropertyChangeListener {
         frame.addToScreenContainer(gameOverController.getGameOverScreen(), GameOverScreen.name);
 
         // set default screen
-        frame.setScreen(HomeScreen.name);
+        frame.setScreen(GameOverScreen.name);
 
         // listen to start button presses on home screen
         homeScreenController.addStartButtonListener(new ActionListener() {
@@ -42,6 +42,8 @@ public class Controller implements PropertyChangeListener {
                 restartGame();
             }
         };
+
+        // Restart game when Tab key is pressed
         gameOverController.addActionOnGameRestart(restartGameAction);
         gameOverController.addTabAction(restartGameAction);
 
@@ -51,6 +53,9 @@ public class Controller implements PropertyChangeListener {
         frame.showFrame();
     }
 
+    /**
+     * Restarts game and displays PlayScreen
+     */
     private void restartGame() {
         playScreenController.initialiseGame();
         frame.setScreen(PlayScreen.name);
@@ -59,10 +64,10 @@ public class Controller implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         String propertyName = e.getPropertyName();
+        // when game is over, display game over screen with game stats
         if ("gameOver".equals(propertyName)) {
             gameOverController.showStats();
             frame.setScreen(GameOverScreen.name);
         }
-
     }
 }
