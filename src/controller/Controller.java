@@ -24,8 +24,8 @@ public class Controller implements PropertyChangeListener {
         frame.addToScreenContainer(playScreenController.getPlayScreen(), PlayScreen.name);
         frame.addToScreenContainer(gameOverController.getGameOverScreen(), GameOverScreen.name);
 
-        // set default screen
-        frame.setScreen(GameOverScreen.name);
+        // set home screen as default screen
+        frame.setScreen(HomeScreen.name);
 
         // listen to start button presses on home screen
         homeScreenController.addStartButtonListener(new ActionListener() {
