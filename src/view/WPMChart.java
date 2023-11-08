@@ -16,12 +16,13 @@ import utils.PoppinsFont;
 
 public class WPMChart {
     private String seriesName = "game";
-    private XYChart chart;
     private PoppinsFont myFont = new PoppinsFont();
     private Font labelFont = myFont.Regular.deriveFont(16f);
-    private AnnotationLine xLine = new AnnotationLine(10, false, false);
-
     private Color greenColour = new Color(147, 232, 211);
+    private Color transparent = new Color(0, 0, 0, 0);
+
+    private XYChart chart;
+    private AnnotationLine xLine = new AnnotationLine(10, false, false);
 
     public WPMChart() {
         chart = new XYChartBuilder()
@@ -37,9 +38,9 @@ public class WPMChart {
         chart.getStyler().setMarkerSize(10);
 
         // make chart transparent
-        chart.getStyler().setPlotBorderColor(new Color(0, 0, 0, 0));
-        chart.getStyler().setChartBackgroundColor(new Color(0, 0, 0, 0));
-        chart.getStyler().setPlotBackgroundColor(new Color(0, 0, 0, 0));
+        chart.getStyler().setPlotBorderColor(transparent);
+        chart.getStyler().setChartBackgroundColor(transparent);
+        chart.getStyler().setPlotBackgroundColor(transparent);
         chart.getStyler().setChartFontColor(Color.WHITE);
 
         // hide legend
@@ -66,8 +67,8 @@ public class WPMChart {
         chart.getStyler().setAnnotationLineStroke(
                 new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL, 0, new float[] { 5 }, 0));
 
-        // change formatting of xAxis tick labels
-        chart.getStyler().setxAxisTickLabelsFormattingFunction(x -> ((x.longValue() % 5) == 0) ? "y" : "x");
+        // round off displayed values for y tick label. (useful for tooltip)
+        chart.getStyler().setyAxisTickLabelsFormattingFunction(y -> String.valueOf(y.intValue()));
 
         // add annotation line
         chart.addAnnotation(xLine);
@@ -111,6 +112,13 @@ public class WPMChart {
         }
     }
 
+    /**
+     * Updates series data displayed on chart
+     * 
+     * @param timeData Time array. Can be set to null to use sequence 1..n, where n
+     *                 is the size of wpmData
+     * @param wpmData  array of WPM data.
+     */
     public void updateSeries(double[] timeData, double[] wpmData) {
         chart.removeSeries(seriesName);
         XYSeries series = chart.addSeries(seriesName, timeData, wpmData);
