@@ -41,19 +41,9 @@ public class GameOverScreen extends JPanel {
         layout = new GridBagLayout();
         this.setLayout(layout);
 
-        // TODO: Refactor below using a function
-        ImageIcon timerIcon = new ImageIcon(
-                new ImageIcon(this.getClass().getResource("/icon/deadline.png")).getImage().getScaledInstance(iconSize,
-                        iconSize,
-                        Image.SCALE_DEFAULT));
-        ImageIcon speedometerIcon = new ImageIcon(
-                new ImageIcon(this.getClass().getResource("/icon/speedometer.png")).getImage().getScaledInstance(
-                        iconSize, iconSize,
-                        Image.SCALE_DEFAULT));
-        ImageIcon accuracyIcon = new ImageIcon(
-                new ImageIcon(this.getClass().getResource("/icon/accuracy.png")).getImage().getScaledInstance(iconSize,
-                        iconSize,
-                        Image.SCALE_DEFAULT));
+        ImageIcon timerIcon = loadIcon("/icon/deadline.png", iconSize);
+        ImageIcon speedometerIcon = loadIcon("/icon/speedometer.png", iconSize);
+        ImageIcon accuracyIcon = loadIcon("/icon/accuracy.png", iconSize);
 
         // styles for time taken
         setTimeTaken(0);
@@ -151,6 +141,20 @@ public class GameOverScreen extends JPanel {
         ImageIcon img = new ImageIcon(this.getClass().getResource("/bg.jpg"));
 
         g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+    }
+
+    /**
+     * Returns an icon found in resources folder.
+     * 
+     * @param path     Must start with / since path is relative to resources folder.
+     * @param iconSize size of icon in pixels
+     * @return
+     */
+    private ImageIcon loadIcon(String path, int iconSize) {
+        return new ImageIcon(
+                new ImageIcon(this.getClass().getResource(path)).getImage().getScaledInstance(iconSize,
+                        iconSize,
+                        Image.SCALE_DEFAULT));
     }
 
     /**
