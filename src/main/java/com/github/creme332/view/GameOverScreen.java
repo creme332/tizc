@@ -1,4 +1,4 @@
-package view;
+package com.github.creme332.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
-import utils.PoppinsFont;
+import com.github.creme332.utils.PoppinsFont;
 
 /**
  * Screen displayed when game ends.

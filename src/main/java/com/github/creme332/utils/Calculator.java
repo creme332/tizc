@@ -1,4 +1,4 @@
-package utils;
+package com.github.creme332.utils;
 
 /**
  * Calculates game statistics

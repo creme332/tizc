@@ -1,4 +1,4 @@
-package controller;
+package com.github.creme332.controller;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -7,9 +7,9 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import view.GameOverScreen;
-import model.Model;
-import utils.Calculator;
+import com.github.creme332.view.GameOverScreen;
+import com.github.creme332.model.Model;
+import com.github.creme332.utils.Calculator;
 
 /**
  * Controller for game over screen

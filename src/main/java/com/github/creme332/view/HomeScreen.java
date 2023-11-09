@@ -1,4 +1,4 @@
-package view;
+package com.github.creme332.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import utils.PoppinsFont;
+import com.github.creme332.utils.PoppinsFont;
 
 /**
  * First screen that is shown to user when app starts.

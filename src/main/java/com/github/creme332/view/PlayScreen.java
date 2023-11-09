@@ -1,4 +1,4 @@
-package view;
+package com.github.creme332.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,7 +14,7 @@ import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.HighlightPainter;
 
-import utils.PoppinsFont;
+import com.github.creme332.utils.PoppinsFont;
 
 /**
  * Main screen where user plays.

@@ -1,8 +1,8 @@
-package controller;
+package com.github.creme332.controller;
 
 import java.awt.event.*;
-import model.Model;
-import view.*;
+import com.github.creme332.model.Model;
+import com.github.creme332.view.*;
 import java.beans.*;
 
 import javax.swing.AbstractAction;

@@ -1,4 +1,4 @@
-package view;
+package com.github.creme332.view;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -12,7 +12,7 @@ import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 
-import utils.PoppinsFont;
+import com.github.creme332.utils.PoppinsFont;
 
 public class WPMChart {
     private String seriesName = "game";

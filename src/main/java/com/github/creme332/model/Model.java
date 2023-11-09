@@ -1,6 +1,6 @@
-package model;
+package com.github.creme332.model;
 
-import utils.WordGenerator;
+import com.github.creme332.utils.WordGenerator;
 import java.util.ArrayList;
 
 /**

@@ -1,4 +1,4 @@
-package utils;
+package com.github.creme332.utils;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -18,8 +18,8 @@ public class PoppinsFont {
     public PoppinsFont() {
         try {
             File font_file;
-
-            font_file = new File("resources/font/Poppins/Poppins-Black.ttf");
+            // URL resource = getClass().getResource("/font/Poppins/Poppins-Black.ttf");
+            font_file = new File( "resources/font/Poppins/Poppins-Black.ttf");
             Black = Font.createFont(Font.TRUETYPE_FONT, font_file);
 
             font_file = new File("resources/font/Poppins/Poppins-Bold.ttf");

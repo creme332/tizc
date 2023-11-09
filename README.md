@@ -1,6 +1,6 @@
 # tizc 🖐
 
-A typing game built in Java with the AWT and Swing graphics library. 
+A typing test built with the AWT and Swing graphics library. 
 
 ![](design/design.excalidraw.png)
 
@@ -42,18 +42,19 @@ Click on the `Play` button and start typing when you are ready. As soon as you m
 > 🟢 **Tip**: Press `Tab` to restart game at any time. The timer only starts when you start typing.
 
 ## To-do
-- [ ] use double instead of long to store time
-- [ ] Add JUnit testing
+- [ ] Use maven to setup lib
+- [ ] Add JUnit testing + github actions
 - [ ] Use https://www.formdev.com/flatlaf/
 - [ ] Create a release with a .jar file. Use github actions to auto-generate.
 - [ ] Display incorrectly typed letters at end of game
 - [ ] Add a settings section
   - [ ] Add customisations (number of words ...)
 - [ ] Add data persistence
+  - [ ] use sql database
   - [ ] Create a dynamic scoreboard
   - [ ] Save highscore
-- [ ] Use maven to setup lib
 - [ ] [Make UI responsive](https://www.youtube.com/watch?v=ZJsjlucSoXM&ab_channel=SIMPLECODE)
+- [ ] Create a banner 
 
 ## References
 - List of english words in `words.txt`: https://www.ef.com/wwen/english-resources/english-vocabulary/top-1000-words/

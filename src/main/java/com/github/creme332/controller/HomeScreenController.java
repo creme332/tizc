@@ -1,8 +1,8 @@
-package controller;
+package com.github.creme332.controller;
 
 import java.awt.event.ActionListener;
 
-import view.HomeScreen;
+import com.github.creme332.view.HomeScreen;
 
 public class HomeScreenController {
     private HomeScreen homeScreen = new HomeScreen();

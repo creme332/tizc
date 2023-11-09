@@ -1,4 +1,4 @@
-package view;
+package com.github.creme332.view;
 
 import java.awt.*;
 import javax.swing.*;
