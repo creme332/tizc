@@ -41,14 +41,18 @@ public class GameOverScreen extends JPanel {
         layout = new GridBagLayout();
         this.setLayout(layout);
 
+        // TODO: Refactor below using a function
         ImageIcon timerIcon = new ImageIcon(
-                new ImageIcon("resources/icon/deadline.png").getImage().getScaledInstance(iconSize, iconSize,
+                new ImageIcon(this.getClass().getResource("/icon/deadline.png")).getImage().getScaledInstance(iconSize,
+                        iconSize,
                         Image.SCALE_DEFAULT));
         ImageIcon speedometerIcon = new ImageIcon(
-                new ImageIcon("resources/icon/speedometer.png").getImage().getScaledInstance(iconSize, iconSize,
+                new ImageIcon(this.getClass().getResource("/icon/speedometer.png")).getImage().getScaledInstance(
+                        iconSize, iconSize,
                         Image.SCALE_DEFAULT));
         ImageIcon accuracyIcon = new ImageIcon(
-                new ImageIcon("resources/icon/accuracy.png").getImage().getScaledInstance(iconSize, iconSize,
+                new ImageIcon(this.getClass().getResource("/icon/accuracy.png")).getImage().getScaledInstance(iconSize,
+                        iconSize,
                         Image.SCALE_DEFAULT));
 
         // styles for time taken
@@ -120,30 +124,31 @@ public class GameOverScreen extends JPanel {
     }
 
     /**
-     * Code to display grid lines on game over screen. Uncomment for debugging purposes.
+     * Code to display grid lines on game over screen. Uncomment for debugging
+     * purposes.
      */
     // @Override
     // public void paint(Graphics g) {
-    //     super.paint(g);
-    //     int[][] dims = layout.getLayoutDimensions();
-    //     g.setColor(Color.white);
-    //     int x = 0;
-    //     for (int add : dims[0]) {
-    //         x += add;
-    //         g.drawLine(x, 0, x, getHeight());
-    //     }
-    //     int y = 0;
-    //     for (int add : dims[1]) {
-    //         y += add;
-    //         g.drawLine(0, y, getWidth(), y);
-    //     }
+    // super.paint(g);
+    // int[][] dims = layout.getLayoutDimensions();
+    // g.setColor(Color.white);
+    // int x = 0;
+    // for (int add : dims[0]) {
+    // x += add;
+    // g.drawLine(x, 0, x, getHeight());
+    // }
+    // int y = 0;
+    // for (int add : dims[1]) {
+    // y += add;
+    // g.drawLine(0, y, getWidth(), y);
+    // }
     // }
 
     @Override
     protected void paintComponent(Graphics g) {
         // add background image to panel
         super.paintComponent(g);
-        ImageIcon img = new ImageIcon("resources/bg.jpg");
+        ImageIcon img = new ImageIcon(this.getClass().getResource("/bg.jpg"));
 
         g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }

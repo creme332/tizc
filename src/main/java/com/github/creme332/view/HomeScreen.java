@@ -50,7 +50,7 @@ public class HomeScreen extends JPanel {
     protected void paintComponent(Graphics g) {
         // add background image
         super.paintComponent(g);
-        ImageIcon img = new ImageIcon("resources/bg1.jpg");
+        ImageIcon img = new ImageIcon(this.getClass().getResource("/bg1.jpg"));
 
         g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }

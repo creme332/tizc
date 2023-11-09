@@ -19,19 +19,19 @@ public class PoppinsFont {
         try {
             File font_file;
             // URL resource = getClass().getResource("/font/Poppins/Poppins-Black.ttf");
-            font_file = new File( "resources/font/Poppins/Poppins-Black.ttf");
+            font_file = new File(this.getClass().getResource("/font/Poppins/Poppins-Black.ttf").getPath());
             Black = Font.createFont(Font.TRUETYPE_FONT, font_file);
 
-            font_file = new File("resources/font/Poppins/Poppins-Bold.ttf");
+            font_file = new File(this.getClass().getResource("/font/Poppins/Poppins-Bold.ttf").getPath());
             Bold = Font.createFont(Font.TRUETYPE_FONT, font_file);
 
-            font_file = new File("resources/font/Poppins/Poppins-Light.ttf");
+            font_file = new File(this.getClass().getResource("/font/Poppins/Poppins-Light.ttf").getPath());
             Light = Font.createFont(Font.TRUETYPE_FONT, font_file);
 
-            font_file = new File("resources/font/Poppins/Poppins-Medium.ttf");
+            font_file = new File(this.getClass().getResource("/font/Poppins/Poppins-Medium.ttf").getPath());
             Medium = Font.createFont(Font.TRUETYPE_FONT, font_file);
 
-            font_file = new File("resources/font/Poppins/Poppins-Regular.ttf");
+            font_file = new File(this.getClass().getResource("/font/Poppins/Poppins-Regular.ttf").getPath());
             Regular = Font.createFont(Font.TRUETYPE_FONT, font_file);
 
         } catch (FontFormatException | IOException ex) {
