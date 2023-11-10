@@ -1,6 +1,7 @@
 package com.github.creme332.model;
 
 import com.github.creme332.utils.WordGenerator;
+
 import java.util.ArrayList;
 
 /**
@@ -69,13 +70,19 @@ public class Model {
     }
 
     /**
-     * Returns the current character that user need to type.
+     * Returns the current character that user needs to type.
      * 
      * @return character
      */
-    public char getCurrentChar() {
-        // TODO: What if typeText is not initialised
-        // TODO: What if chartPtr has an invalid value
+    public char getCurrentChar() throws Exception {
+        // check if typeText is not initialised
+        if (typeText == null || typeText.length() == 0)
+            throw new Exception("typeText has not been initialised");
+
+        // check if chartPtr is valid
+        if (charPtr >= typeText.length() || charPtr < 0)
+            throw new Exception("charPtr is out of bounds");
+
         return typeText.charAt(charPtr);
     }
 
@@ -154,7 +161,13 @@ public class Model {
      * @param currentSecond time elapsed in seconds since game started
      * @param wpm           words per minute
      */
-    public void recordWPM(double currentSecond, double wpm) {
+    public void recordWPM(double currentSecond, double wpm) throws Exception {
+        if (currentSecond < 0)
+            throw new Exception("currentSecond cannot be negative");
+
+        if (wpm < 0)
+            throw new Exception("wpm cannot be negative");
+
         timeArray.add(currentSecond);
         wpmArray.add(wpm);
     }
