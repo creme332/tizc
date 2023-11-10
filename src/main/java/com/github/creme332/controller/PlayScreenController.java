@@ -73,7 +73,16 @@ public class PlayScreenController {
             startTimer();
         }
 
-        if (keyCommand.charAt(0) == model.getCurrentChar()) {
+        char charToType = ' '; // character that user must type
+
+        try {
+            charToType = model.getCurrentChar();
+        } catch (Exception e) {
+            System.out.println(e);
+            return;
+        }
+
+        if (keyCommand.charAt(0) == charToType) {
             // correct character pressed
             try {
                 // remove any previous red highlight on current character
@@ -96,19 +105,21 @@ public class PlayScreenController {
             } catch (BadLocationException err) {
                 err.printStackTrace();
             }
-        } else {
-            // incorrect character pressed
-            model.incrementMistakes();
-
-            // highlight incorrectly typed character red, if it is not already red
-            try {
-                if (model.getBadHighlight() == null) {
-                    model.setBadHighlight(playScreen.highlightChar(model.getCursorPos(), false));
-                }
-            } catch (BadLocationException err) {
-                err.printStackTrace();
-            }
+            return;
         }
+
+        // incorrect character pressed
+        model.incrementMistakes();
+
+        // highlight incorrectly typed character red, if it is not already red
+        try {
+            if (model.getBadHighlight() == null) {
+                model.setBadHighlight(playScreen.highlightChar(model.getCursorPos(), false));
+            }
+        } catch (BadLocationException err) {
+            err.printStackTrace();
+        }
+
     }
 
     /**
@@ -222,8 +233,13 @@ public class PlayScreenController {
                         .getWPM(
                                 model.getCursorPos(),
                                 elapsedSeconds);
-                if (elapsedSeconds > 0)
-                    model.recordWPM(elapsedSeconds, currentWPM);
+                if (elapsedSeconds > 0) {
+                    try {
+                        model.recordWPM(elapsedSeconds, currentWPM);
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                }
             }
         };
 
