@@ -3,7 +3,9 @@ package com.github.creme332;
 import com.github.creme332.model.Model;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThrows;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -67,6 +69,26 @@ public class ModelTest {
     }
 
     @Test
+    public void throwErrorWhenTypeTextNotInitialised() {
+        Exception exception = assertThrows(
+                Exception.class,
+                () -> m.getCurrentChar());
+
+        assertEquals("typeText has not been initialised", exception.getMessage());
+    }
+
+    @Test
+    public void throwErrorWhenCharPtrOutOfBounds() {
+        m.setTypeText("a");
+        m.incrementCursor();
+        Exception exception = assertThrows(
+                Exception.class,
+                () -> m.getCurrentChar());
+
+        assertEquals("charPtr is out of bounds", exception.getMessage());
+    }
+
+    @Test
     public void incrementTotalMistakes() {
         m.incrementMistakes();
         assertTrue(m.getTotalMistakes() == 1);
@@ -80,7 +102,12 @@ public class ModelTest {
         double[] time = new double[] { 0, 1, 2, 3, 4, 5, 6 };
         double[] wpm = new double[] { 0, 30, 30, 40, 50, 60, 70 };
         for (int i = 0; i < time.length; i++) {
-            m.recordWPM(time[i], wpm[i]);
+            try {
+                m.recordWPM(time[i], wpm[i]);
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
 
         double delta = 0.0001;
@@ -89,7 +116,20 @@ public class ModelTest {
     }
 
     @Test
-    public void throwErrorIfAttemptToRecordInvalidWPM() {
-        assertTrue(true);
+    public void throwErrorIfRecordNegativeTime() {
+        Exception exception = assertThrows(
+                Exception.class,
+                () -> m.recordWPM(-1, 0));
+
+        assertEquals("currentSecond cannot be negative", exception.getMessage());
+    }
+
+    @Test
+    public void throwErrorIfRecordNegativeWPM() {
+        Exception exception = assertThrows(
+                Exception.class,
+                () -> m.recordWPM(1, -23));
+
+        assertEquals("wpm cannot be negative", exception.getMessage());
     }
 }
