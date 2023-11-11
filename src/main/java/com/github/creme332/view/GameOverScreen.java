@@ -25,6 +25,8 @@ public class GameOverScreen extends JPanel {
     private JButton restarButton = new JButton("Restart");
     private JLabel timeTakenText = new JLabel();
     private JLabel wpmText = new JLabel();
+    private JLabel cpmText = new JLabel();
+
     private JLabel accuracyText = new JLabel();
     public static String name = "gameOverScreen";
 
@@ -58,6 +60,13 @@ public class GameOverScreen extends JPanel {
         wpmText.setIcon(speedometerIcon);
         wpmText.setHorizontalAlignment(JLabel.CENTER);
         wpmText.setForeground(Color.WHITE);
+
+        // styles for CPM
+        setCPM(0);
+        cpmText.setFont(myFont.Regular.deriveFont(mediumFontSize));
+        cpmText.setIcon(speedometerIcon);
+        cpmText.setHorizontalAlignment(JLabel.CENTER);
+        cpmText.setForeground(Color.WHITE);
 
         // styles for accuracy
         setAccuracy(0);
@@ -99,13 +108,19 @@ public class GameOverScreen extends JPanel {
         gbc.gridwidth = 1;
         this.add(wpmText, gbc);
 
-        // position accuracyText at (1, 2) with unit width
+        // position cpmText at (1, 2) with a unit width
         gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        this.add(cpmText, gbc);
+
+        // position accuracyText at (1, 3) with unit width
+        gbc.gridx = 3;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
         this.add(accuracyText, gbc);
 
-        // position restartButton at (2, 1) with unit width
+        // position restartButton at (3, 1) with unit width
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.gridwidth = 1;
@@ -175,6 +190,15 @@ public class GameOverScreen extends JPanel {
      */
     public void setWPM(long wpm) {
         wpmText.setText(String.format("%d wpm", wpm));
+    }
+
+    /**
+     * Displays characters per minute in wpmText JLabel.
+     * 
+     * @param wpm characers per minute.
+     */
+    public void setCPM(long cpm) {
+        cpmText.setText(String.format("%d cpm", cpm));
     }
 
     /**

@@ -230,7 +230,7 @@ public class PlayScreenController {
 
                 // record current wpm
                 double currentWPM = new Calculator()
-                        .getWPM(
+                        .wpm(
                                 model.getCursorPos(),
                                 elapsedSeconds);
                 if (elapsedSeconds > 0) {
