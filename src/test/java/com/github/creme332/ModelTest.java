@@ -21,8 +21,7 @@ public class ModelTest {
         m = new Model();
     }
 
-    @Test
-    public void initialiseModel() {
+    public void checkDefaultModel() {
         assertTrue(m.getBadHighlight() == null);
         assertTrue(m.getCursorPos() == 0);
         assertTrue(m.getStartTime() < 0);
@@ -30,6 +29,18 @@ public class ModelTest {
         assertTrue(m.getGameDuration() == 0);
         assertTrue(m.getTimeArray().length == 0);
         assertTrue(m.getWPMArray().length == 0);
+    }
+
+    @Test
+    public void initialiseModel() {
+        checkDefaultModel();
+    }
+
+    @Test
+    public void resetModel() {
+        m.setGameDuration(1000);
+        m.reset();
+        checkDefaultModel();
     }
 
     @Test
@@ -71,6 +82,13 @@ public class ModelTest {
     @Test
     public void throwErrorWhenTypeTextNotInitialised() {
         Exception exception = assertThrows(
+                Exception.class,
+                () -> m.getCurrentChar());
+
+        assertEquals("typeText has not been initialised", exception.getMessage());
+
+        m.setTypeText(null);
+        exception = assertThrows(
                 Exception.class,
                 () -> m.getCurrentChar());
 
