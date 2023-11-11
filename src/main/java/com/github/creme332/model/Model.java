@@ -31,7 +31,7 @@ public class Model {
      * Resets model to its intial state.
      */
     public void reset() {
-        typeText = (new WordGenerator(10)).getString();
+        typeText = (new WordGenerator()).getRandomText();
         badHighlight = null;
         charPtr = 0;
         startTime = -1;

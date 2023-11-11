@@ -10,16 +10,14 @@ import java.util.Scanner;
  * Generates the text to be typed.
  */
 public class WordGenerator {
-    private ArrayList<String> allWords; // list of all words in dictionary.txt
+    private ArrayList<String> dictionary; // list of all words in dictionary.txt
     private int totalWordCount; // total number of words in dictionary.txt
     private Random rand; // used for generating random words
-    private int wordCount; // required number of words in text to be generated
 
-    public WordGenerator(int word_count) {
-        allWords = getAllWords();
-        totalWordCount = allWords.size();
+    public WordGenerator() {
+        dictionary = loadDictionary();
+        totalWordCount = dictionary.size();
         rand = new Random();
-        wordCount = word_count > 0 ? word_count : 0;
     }
 
     /**
@@ -27,9 +25,19 @@ public class WordGenerator {
      * String is in lowercase and has no numbers or special characters.
      * The number of words is given by `wordCount`.
      * 
+     * @param wordCount Number of words in string
+     * 
      * @return A sentence containing random words.
      */
-    public String getString() {
+    public String getRandomText(int wordCount) throws Exception {
+        if (wordCount <= 0) {
+            throw new Exception("Word count must be a positive value");
+        }
+
+        if (wordCount > 2000) {
+            throw new Exception("Word count must be between 1 and 2000 inclusive");
+        }
+
         String result = "";
         for (int i = 0; i < wordCount; i++) {
             result += getRandomWord();
@@ -42,10 +50,27 @@ public class WordGenerator {
 
     /**
      * 
+     * @return A space-separated lowercase string with a default number of words.
+     *         Default is
+     *         10.
+     */
+    public String getRandomText() {
+        String result = "error";
+        try {
+            result = getRandomText(10);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return result;
+    }
+
+    /**
+     * 
      * @return A single random word from dictionary
      */
     private String getRandomWord() {
-        return allWords.get(rand.nextInt(totalWordCount));
+        return dictionary.get(rand.nextInt(totalWordCount));
     }
 
     /**
@@ -53,11 +78,13 @@ public class WordGenerator {
      * 
      * @return an array containing all words in dictionary
      */
-    private ArrayList<String> getAllWords() {
+    private ArrayList<String> loadDictionary() {
         // Reference: https://www.w3schools.com/java/java_files_read.asp
         ArrayList<String> allWords = new ArrayList<String>();
+        String dictionaryPath = "/data/dictionary.txt";
+
         try {
-            File myObj = new File(this.getClass().getResource("/data/dictionary.txt").getPath());
+            File myObj = new File(this.getClass().getResource(dictionaryPath).getPath());
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
