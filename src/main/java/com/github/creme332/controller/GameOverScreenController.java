@@ -14,12 +14,12 @@ import com.github.creme332.utils.Calculator;
 /**
  * Controller for game over screen
  */
-public class GameOverController {
+public class GameOverScreenController {
     private GameOverScreen gameOverScreen = new GameOverScreen();
     private Calculator calc = new Calculator();
     private Model model;
 
-    public GameOverController(Model model) {
+    public GameOverScreenController(Model model) {
         this.model = model;
     }
 

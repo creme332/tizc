@@ -16,7 +16,7 @@ public class Controller implements PropertyChangeListener {
     private Frame frame = new Frame();
     private HomeScreenController homeScreenController = new HomeScreenController();
     private PlayScreenController playScreenController = new PlayScreenController(model);
-    private GameOverController gameOverController = new GameOverController(model);
+    private GameOverScreenController gameOverController = new GameOverScreenController(model);
 
     public Controller() {
         // insert screens to frame
