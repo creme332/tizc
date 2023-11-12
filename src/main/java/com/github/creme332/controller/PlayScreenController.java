@@ -29,6 +29,13 @@ public class PlayScreenController {
 
     private PropertyChangeSupport support; // variable for observer pattern
 
+    /**
+     * Highlighter object from swing. It stores the return value
+     * of the `highlightChar` function when
+     * a character is wrongly typed.
+     */
+    private Object badHighlight;
+
     public PlayScreenController(Model model) {
         // initialise model
         this.model = model;
@@ -86,9 +93,9 @@ public class PlayScreenController {
             // correct character pressed
             try {
                 // remove any previous red highlight on current character
-                if (model.getBadHighlight() != null) {
-                    playScreen.removeHighlight(model.getBadHighlight());
-                    model.setBadHighlight(null);
+                if (badHighlight != null) {
+                    playScreen.removeHighlight(badHighlight);
+                    badHighlight = null;
                 }
 
                 // color current character green
@@ -113,8 +120,8 @@ public class PlayScreenController {
 
         // highlight incorrectly typed character red, if it is not already red
         try {
-            if (model.getBadHighlight() == null) {
-                model.setBadHighlight(playScreen.highlightChar(model.getCursorPos(), false));
+            if (badHighlight == null) {
+                badHighlight = playScreen.highlightChar(model.getCursorPos(), false);
             }
         } catch (BadLocationException err) {
             err.printStackTrace();

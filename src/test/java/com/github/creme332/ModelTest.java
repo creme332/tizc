@@ -22,7 +22,6 @@ public class ModelTest {
     }
 
     public void checkDefaultModel() {
-        assertTrue(m.getBadHighlight() == null);
         assertTrue(m.getCursorPos() == 0);
         assertTrue(m.getStartTime() < 0);
         assertTrue(m.getTotalMistakes() == 0);

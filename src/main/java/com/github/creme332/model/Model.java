@@ -10,14 +10,6 @@ import java.util.ArrayList;
  */
 public class Model {
     private String typeText; // Text to be typed
-    private Object badHighlight;
-    /**
-     * badHighlight:
-     * 
-     * Highlighter object from swing. It stores the return value
-     * of the `highlightChar` function in PlayScreen when
-     * a character is wrongly typed.
-     */
     private int charPtr = 0; // index of character to be typed (cursor position)
     private long startTime = -1; // time, in ms, at which player started typing
     private int totalMistakes = 0; // number of times a character was wrongly typed
@@ -32,7 +24,6 @@ public class Model {
      */
     public void reset() {
         typeText = (new WordGenerator()).getRandomText();
-        badHighlight = null;
         charPtr = 0;
         startTime = -1;
         totalMistakes = 0;
@@ -135,24 +126,6 @@ public class Model {
      */
     public int getTotalMistakes() {
         return totalMistakes;
-    }
-
-    /**
-     * 
-     * @return highlight object for incorrectly typed character.
-     *         If no character was incorrectly typed, value is null.
-     */
-    public Object getBadHighlight() {
-        return badHighlight;
-    }
-
-    /**
-     * Save the highlight object for the incorrectly typed character
-     * 
-     * @param highlight
-     */
-    public void setBadHighlight(Object highlight) {
-        badHighlight = highlight;
     }
 
     /**
