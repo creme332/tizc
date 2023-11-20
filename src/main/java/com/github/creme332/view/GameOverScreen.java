@@ -93,7 +93,7 @@ public class GameOverScreen extends JPanel {
         // position chart
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 3;
+        gbc.gridwidth = 4;
         this.add(chartPanel, gbc);
 
         // position timeTakenText at (1, 0) with unit width
@@ -123,7 +123,7 @@ public class GameOverScreen extends JPanel {
         // position restartButton at (3, 1) with unit width
         gbc.gridx = 1;
         gbc.gridy = 3;
-        gbc.gridwidth = 1;
+        gbc.gridwidth = 2;
         // gbc.weighty = 0.3;
         this.add(restarButton, gbc);
     }
