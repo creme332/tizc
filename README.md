@@ -1,13 +1,17 @@
-# tizc 🖐
+![repository banner](design/banner.png)
 
-A typing test built with the AWT and Swing graphics library. 
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![coverage](.github/badges/jacoco.svg)
+
+# About
+A minimal typing test built with the AWT and Swing graphics library. 
 
 ![](design/design.excalidraw.png)
 
 ## Features
 - Data persistence across sessions
 - Customisations
-- Detailed statistics after each game
+- Detailed statistics with a chart after each test
 - Model-View-Controller pattern
 - Tested with JUnit
 - JavaDoc documentation
@@ -30,31 +34,35 @@ Run the jar file:
 java -jar tizc.jar
 ```
 
-Or, run `App.java` in an IDE.
+Or, run `src/main/java/com/github/creme332/App.java` in an IDE.
 
 > 🔴 **Known bug**: If a white screen is displayed on startup, minimize the window then maximize it again.
+
+## Code coverage
+To generate jacoco report:
+```bash
+mvn jacoco:prepare-agent test install jacoco:report
+```
 
 ## Usage
 Click on the `Play` button and start typing when you are ready. As soon as you make a mistake, the cursor will stop, and you will have to type the correct letter.
 
 > 🟢 **Tip**: When a mistake is made, there is no need to press `Backspace`.
 
-> 🟢 **Tip**: Press `Tab` to restart game at any time. The timer only starts when you start typing.
+> 🟢 **Tip**: Press `Tab` to restart test at any time. The timer only starts when you start typing.
 
 ## To-do
-- [ ] Use maven to setup lib
-- [ ] Add JUnit testing + github actions
 - [ ] Use https://www.formdev.com/flatlaf/
 - [ ] Create a release with a .jar file. Use github actions to auto-generate.
-- [ ] Display incorrectly typed letters at end of game
+- [ ] Track worst keys typed
+- [ ] Add time limit
 - [ ] Add a settings section
   - [ ] Add customisations (number of words ...)
-- [ ] Add data persistence
-  - [ ] use sql database
+- [ ] Add data persistence with xstream
   - [ ] Create a dynamic scoreboard
   - [ ] Save highscore
 - [ ] [Make UI responsive](https://www.youtube.com/watch?v=ZJsjlucSoXM&ab_channel=SIMPLECODE)
-- [ ] Create a banner 
+- [ ] Add banner to repository settings
 
 ## References
 - List of english words in `words.txt`: https://www.ef.com/wwen/english-resources/english-vocabulary/top-1000-words/
