@@ -3,6 +3,8 @@ package com.github.creme332.view;
 import java.awt.*;
 import javax.swing.*;
 
+import com.github.creme332.view.Settings.Form;
+
 /**
  * Frame of the GUI application.
  */
@@ -73,7 +75,7 @@ public class Frame extends JFrame {
      */
     public void setScreen(String newWindow) {
         if (newWindow != HomeScreen.name && newWindow != GameOverScreen.name && newWindow != PlayScreen.name
-                && newWindow != SettingsScreen.name) {
+                && newWindow != Form.name) {
             System.out.println("Invalid screen name");
             return;
         }

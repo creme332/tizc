@@ -3,6 +3,8 @@ package com.github.creme332.controller;
 import java.awt.event.*;
 import com.github.creme332.model.Model;
 import com.github.creme332.view.*;
+import com.github.creme332.view.Settings.Form;
+
 import java.beans.*;
 
 import javax.swing.AbstractAction;
@@ -13,19 +15,24 @@ import javax.swing.Action;
  */
 public class Controller implements PropertyChangeListener {
     private Model model = new Model(); // game state
-    private Frame frame = new Frame();
+    private Frame frame = new Frame(); // frame of app
     private HomeScreenController homeScreenController = new HomeScreenController();
     private PlayScreenController playScreenController = new PlayScreenController(model);
     private GameOverScreenController gameOverController = new GameOverScreenController(model);
+    private SettingsScreenController settingsScreenController = new SettingsScreenController();
 
     public Controller() {
         // insert screens to frame
         frame.addToScreenContainer(homeScreenController.getHomeScreen(), HomeScreen.name);
         frame.addToScreenContainer(playScreenController.getPlayScreen(), PlayScreen.name);
         frame.addToScreenContainer(gameOverController.getGameOverScreen(), GameOverScreen.name);
+        frame.addToScreenContainer(settingsScreenController.getSettingsScreen(), Form.name);
+
+        // pass lambda functions
+        settingsScreenController.dansMethod(HomeScreen.name, frame::setScreen);
 
         // set home screen as default screen
-        frame.setScreen(HomeScreen.name);
+        frame.setScreen(Form.name);
 
         // listen to start button presses on home screen
         homeScreenController.addStartButtonListener(new ActionListener() {
