@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import javax.swing.SpinnerListModel;
@@ -18,17 +17,16 @@ import com.github.creme332.view.settings.DifficultySection;
 
 public class SettingsScreen extends JPanel implements ActionListener {
     public static String name = "settingsScreen";
-    private JButton saveButton = new JButton("Save");
+    private JButton saveButton = new JButton("Save & Exit");
 
     Integer[] monthStrings = { 10, 30, 60, 120, 500 }; // get month names
     SpinnerListModel monthModel = new SpinnerListModel(monthStrings);
-    JLabel settingsLabel = new JLabel();
 
-    DifficultySection modeSection = new DifficultySection("Mode", new String[] { "word", "quote" });
-    DifficultySection abs = new DifficultySection("Difficulty", new String[] { "easy", "medium", "hard" });
-    DifficultySection bbb = new DifficultySection("Live speed", new String[] { "hide", "show" });
-    DifficultySection ccc = new DifficultySection("Live accuracy", new String[] { "hide", "show" });
-    DifficultySection ddd = new DifficultySection("Live timer", new String[] { "hide", "show" });
+    DifficultySection modeSection = new DifficultySection("Mode", new String[] { "word", "quote" }, "word");
+    DifficultySection abs = new DifficultySection("Difficulty", new String[] { "easy", "medium", "hard" }, "easy");
+    DifficultySection bbb = new DifficultySection("Live speed", new String[] { "hide", "show" }, "hide");
+    DifficultySection ccc = new DifficultySection("Live accuracy", new String[] { "hide", "show" }, "hide");
+    DifficultySection ddd = new DifficultySection("Live timer", new String[] { "hide", "show" }, "show");
 
     GridBagLayout layout;
 
@@ -44,9 +42,6 @@ public class SettingsScreen extends JPanel implements ActionListener {
         gbc.gridwidth = 1;
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        settingsLabel.setText("Settings");
-        settingsLabel.setFont(UIManager.getFont("h1.font"));
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -77,6 +72,8 @@ public class SettingsScreen extends JPanel implements ActionListener {
         gbc.gridy = 5;
         gbc.gridwidth = 1;
         saveButton.setPreferredSize(new Dimension(100, 100));
+        saveButton.setFont(UIManager.getFont("h1.font"));
+
         this.add(saveButton, gbc);
     }
 
