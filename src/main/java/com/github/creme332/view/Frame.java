@@ -28,13 +28,13 @@ public class Frame extends JFrame {
         // add close button to frame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // maximize frame on startup. 
-        // TODO: Fix white screen bug when frame is maximised
+        // maximize frame on startup.
+        // TODO: Fix white screen bug when frame is maximized
         // this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        // center frame on startup if frame is not maximised
+        // center frame on startup if frame is not maximized
         if (this.getExtendedState() != JFrame.MAXIMIZED_BOTH) {
-            // ! Do not set locationRelative to null if screen is maximised
+            // ! Do not set locationRelative to null if screen is maximized
             this.setLocationRelativeTo(null);
         }
 
@@ -72,7 +72,8 @@ public class Frame extends JFrame {
      *                  "gameOverScreen"
      */
     public void setScreen(String newWindow) {
-        if (newWindow != HomeScreen.name && newWindow != GameOverScreen.name && newWindow != PlayScreen.name) {
+        if (newWindow != HomeScreen.name && newWindow != GameOverScreen.name && newWindow != PlayScreen.name
+                && newWindow != SettingsScreen.name) {
             System.out.println("Invalid screen name");
             return;
         }
