@@ -20,7 +20,7 @@ public class Model {
     ArrayList<Double> wpmArray = new ArrayList<Double>();
 
     /**
-     * Resets model to its intial state.
+     * Resets model to its initial state.
      */
     public void reset() {
         typeText = (new WordGenerator()).getRandomText();
@@ -66,9 +66,9 @@ public class Model {
      * @return character
      */
     public char getCurrentChar() throws Exception {
-        // check if typeText is not initialised
+        // check if typeText is not initialized
         if (typeText == null || typeText.length() == 0)
-            throw new Exception("typeText has not been initialised");
+            throw new Exception("typeText has not been initialized");
 
         // check if chartPtr is valid
         if (charPtr >= typeText.length() || charPtr < 0)
@@ -98,7 +98,7 @@ public class Model {
     }
 
     /**
-     * Points to the next chracter to be typed. If no more characters to be typed,
+     * Points to the next character to be typed. If no more characters to be typed,
      * cursor = length of text
      */
     public void incrementCursor() {
