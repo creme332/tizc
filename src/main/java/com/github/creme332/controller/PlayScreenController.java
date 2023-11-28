@@ -20,8 +20,8 @@ import com.github.creme332.utils.Calculator;
  * Controller for PlayScreen
  */
 public class PlayScreenController {
-    Model model;
-    PlayScreen playScreen = new PlayScreen();
+    private Model model;
+    private PlayScreen playScreen = new PlayScreen();
 
     // setup variables for timer
     private Timer timer;
