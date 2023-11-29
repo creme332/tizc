@@ -7,31 +7,22 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
-import javax.swing.SpinnerListModel;
 import javax.swing.UIManager;
+
+import com.github.creme332.utils.Settings;
 
 public class Form extends JPanel implements ActionListener {
     public static String name = "settingsScreen";
-    private JButton saveButton = new JButton("Save & Exit");
+    private JButton exitButton = new JButton("Exit");
 
-    Integer[] monthStrings = { 10, 30, 60, 120, 500 }; // get month names
-    SpinnerListModel monthModel = new SpinnerListModel(monthStrings);
-
-    Section modeSection = new Section("Mode", new String[] { "word", "quote" });
-    Section difficultySection = new Section("Difficulty",
-            new String[] { "easy", "medium", "hard" });
-    Section speedSection = new Section("Live speed", new String[] { "hide", "show" });
-    Section accuracySection = new Section("Live accuracy", new String[] { "hide", "show" });
-    Section timerSection = new Section("Live timer", new String[] { "hide", "show" });
-
-    GridBagLayout layout;
+    private Map<String, String[]> gameSettings = new Settings().getSettings();
+    private GridBagLayout layout;
 
     public Form() {
-
         GridBagConstraints gbc = new GridBagConstraints();
         layout = new GridBagLayout();
         this.setLayout(layout);
@@ -43,38 +34,24 @@ public class Form extends JPanel implements ActionListener {
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        this.add(modeSection, gbc);
+        int row = 0;
+        int column = 1;
+        for (String settingName : gameSettings.keySet()) {
+            Section section = new Section(settingName, gameSettings.get(settingName));
+            gbc.gridx = column;
+            gbc.gridy = row;
+            gbc.gridwidth = 2;
+            this.add(section, gbc);
+            row++;
+        }
 
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.gridwidth = 2;
-        this.add(difficultySection, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        this.add(speedSection, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.gridwidth = 2;
-        this.add(accuracySection, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        this.add(timerSection, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 5;
+        // add exit button
+        gbc.gridx = column;
+        gbc.gridy = row;
         gbc.gridwidth = 1;
-        saveButton.setPreferredSize(new Dimension(100, 100));
-        saveButton.setFont(UIManager.getFont("h1.font"));
-
-        this.add(saveButton, gbc);
+        exitButton.setPreferredSize(new Dimension(100, 100));
+        exitButton.setFont(UIManager.getFont("h1.font"));
+        this.add(exitButton, gbc);
     }
 
     @Override
@@ -99,6 +76,6 @@ public class Form extends JPanel implements ActionListener {
     }
 
     public void addActionToSaveButton(ActionListener newActionListener) {
-        saveButton.addActionListener(newActionListener);
+        exitButton.addActionListener(newActionListener);
     }
 }

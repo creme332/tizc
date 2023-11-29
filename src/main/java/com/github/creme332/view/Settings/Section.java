@@ -2,7 +2,6 @@ package com.github.creme332.view.Settings;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.prefs.Preferences;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
@@ -10,16 +9,17 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 
+import com.github.creme332.utils.Settings;
+
 public class Section extends JPanel implements ActionListener {
-    private Preferences preferences;
     private String name;
     private String unknownPreference = "Unknown";
+
+    private Settings settings = new Settings();
 
     // TODO: Add javadoc
     public Section(String settingName, String[] options) {
         this.name = settingName;
-
-        // TODO: Ensure that options have length at least 1
 
         JLabel title = new JLabel(settingName);
         title.putClientProperty("FlatLaf.style", "font: bold $h2.regular.font");
@@ -27,7 +27,7 @@ public class Section extends JPanel implements ActionListener {
         this.add(title);
 
         ButtonGroup group = new ButtonGroup();
-        String currentPreference = getCurrentOption();
+        String currentPreference = settings.getData(settingName);
 
         // if no preference set, use first option as default preference
         if (currentPreference.equals(unknownPreference)) {
@@ -49,18 +49,12 @@ public class Section extends JPanel implements ActionListener {
         this.setOpaque(false);
     }
 
-    public String getCurrentOption() {
-        preferences = Preferences.userRoot().node(this.getClass().getName());
-        return preferences.get(name, unknownPreference);
-    }
-
     public void actionPerformed(ActionEvent e) {
         System.out.println(e.getActionCommand());
         System.out.println(this.getClass().getName());
 
         System.out.println(String.format("Previous %1$s setting = %2$s ",
-                name, getCurrentOption()));
-
-        preferences.put(name, e.getActionCommand());
+                name, settings.getData(name)));
+        settings.setData(name, e.getActionCommand());
     }
 }
