@@ -1,5 +1,6 @@
 package com.github.creme332.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -8,7 +9,6 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -24,10 +24,11 @@ public class HomeScreen extends JPanel {
     public static String name = "homeScreen";
 
     public HomeScreen() {
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BorderLayout());
 
         JPanel header = new JPanel();
         JPanel body = new JPanel();
+        header.setLayout(new BorderLayout());
         body.setLayout(new GridBagLayout());
         body.setOpaque(false);
         header.setOpaque(false);
@@ -51,12 +52,12 @@ public class HomeScreen extends JPanel {
         // set icon to settings button
         settingsButton.setIcon(settingsIcon);
 
-        header.add(settingsButton);
-        this.add(header);
+        header.add(settingsButton, BorderLayout.EAST);
+        this.add(header, BorderLayout.PAGE_START);
 
         // set style for Play button
         startGameButton.setPreferredSize(new Dimension(200, 100));
-        startGameButton.setFont(myFont.deriveFont(30f));
+        startGameButton.setFont(myFont.deriveFont(40f));
         startGameButton.setFocusPainted(false);
         startGameButton.setOpaque(false);
         startGameButton.setContentAreaFilled(false);
@@ -64,7 +65,7 @@ public class HomeScreen extends JPanel {
         startGameButton.setBorderPainted(false);
 
         body.add(startGameButton);
-        this.add(body);
+        this.add(body, BorderLayout.CENTER);
     }
 
     /***
