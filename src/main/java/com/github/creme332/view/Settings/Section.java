@@ -30,7 +30,7 @@ public class Section extends JPanel implements ActionListener {
         String currentPreference = getCurrentOption();
 
         // if no preference set, use first option as default preference
-        if (currentPreference == unknownPreference) {
+        if (currentPreference.equals(unknownPreference)) {
             currentPreference = options[0];
         }
 
@@ -38,7 +38,7 @@ public class Section extends JPanel implements ActionListener {
         for (int i = 0; i < options.length; i++) {
             JRadioButton btn = new JRadioButton(options[i]);
             btn.setFont(UIManager.getFont("large.font"));
-            if (currentPreference == options[i])
+            if (currentPreference.equals(options[i]))
                 btn.setSelected(true);
             group.add(btn);
             this.add(btn);
