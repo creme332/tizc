@@ -11,6 +11,10 @@ public class HomeScreenController {
         homeScreen.addStartButtonListener(newActionListener);
     }
 
+    public void addSettingsButtonListener(ActionListener newActionListener) {
+        homeScreen.addSettingsButtonListener(newActionListener);
+    }
+
     public HomeScreen getHomeScreen() {
         return homeScreen;
     }

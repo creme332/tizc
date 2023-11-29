@@ -1,6 +1,6 @@
 package com.github.creme332.controller;
 
-import java.util.function.Consumer;
+import java.awt.event.ActionListener;
 
 import com.github.creme332.view.Settings.Form;
 
@@ -15,22 +15,8 @@ public class SettingsScreenController {
         return screen;
     }
 
-    /**
-     * Switch to home screen.
-     * 
-     * @param i
-     * @param aMethod
-     */
-    public void dansMethod(String i, Consumer<String> aMethod) {
-        /*
-         * you can now call the passed method by saying aMethod.accept(i), and it
-         * will be the equivalent of saying A.methodToPass(i)
-         */
-        aMethod.accept(i);
+    public void addExitButtonListener(ActionListener action) {
+        screen.addActionToSaveButton(action);
     }
-
-    // TODO: When save button is clicked,
-    // 1. save settings to preferences
-    // 2. switch to home screen
 
 }

@@ -28,11 +28,26 @@ public class Controller implements PropertyChangeListener {
         frame.addToScreenContainer(gameOverController.getGameOverScreen(), GameOverScreen.name);
         frame.addToScreenContainer(settingsScreenController.getSettingsScreen(), Form.name);
 
-        // pass lambda functions
-        settingsScreenController.dansMethod(HomeScreen.name, frame::setScreen);
+        // add listener for settings screen
+        settingsScreenController.addExitButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // when exit button is clicked, show home screen
+                frame.setScreen(HomeScreen.name);
+            }
+        });
 
         // set home screen as default screen
-        frame.setScreen(Form.name);
+        frame.setScreen(HomeScreen.name);
+
+        // listen to start button presses on home screen
+        homeScreenController.addSettingsButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // when start button is clicked, show playScreen
+                frame.setScreen(Form.name);
+            }
+        });
 
         // listen to start button presses on home screen
         homeScreenController.addStartButtonListener(new ActionListener() {
