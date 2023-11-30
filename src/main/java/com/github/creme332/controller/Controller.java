@@ -40,7 +40,7 @@ public class Controller implements PropertyChangeListener {
         // set home screen as default screen
         frame.setScreen(HomeScreen.name);
 
-        // listen to start button presses on home screen
+        // listen to settings button click on home screen
         homeScreenController.addSettingsButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -53,6 +53,9 @@ public class Controller implements PropertyChangeListener {
         homeScreenController.addStartButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                // initialise game with latest settings
+                playScreenController.initialiseGame();
+
                 // when start button is clicked, show playScreen
                 frame.setScreen(PlayScreen.name);
             }

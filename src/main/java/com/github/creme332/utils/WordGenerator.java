@@ -7,16 +7,17 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
- * Generates the text to be typed.
+ * Generates the text to be typed based on settings set.
  */
 public class WordGenerator {
+    private Settings gameSettings = new Settings();
     private ArrayList<String> dictionary; // list of all words in dictionary.txt
-    private int totalWordCount; // total number of words in dictionary.txt
+    private int dictionarySize; // total number of words in dictionary.txt
     private Random rand; // used for generating random words
 
     public WordGenerator() {
         dictionary = loadDictionary();
-        totalWordCount = dictionary.size();
+        dictionarySize = dictionary.size();
         rand = new Random();
     }
 
@@ -50,15 +51,41 @@ public class WordGenerator {
 
     /**
      * 
+     * @return word count based on difficulty setting
+     */
+    public int getWordCount() {
+        int wordCount;
+        String difficulty = gameSettings.getData("Difficulty");
+        switch (difficulty) {
+            case "easy":
+                wordCount = 10;
+                break;
+            case "medium":
+                wordCount = 50;
+                break;
+            case "hard":
+                wordCount = 100;
+                break;
+            default:
+                wordCount = 10;
+                break;
+        }
+        return wordCount;
+    }
+
+    /**
+     * 
      * @return A space-separated lowercase string with a default number of words.
      *         Default is
      *         10.
      */
     public String getRandomText() {
+        String difficulty = gameSettings.getData("Difficulty");
+        System.out.println(String.format("Current difficulty for generation: %s", difficulty));
+
         String result = "error";
         try {
-            result = getRandomText(10);
-
+            result = getRandomText(getWordCount());
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -70,7 +97,7 @@ public class WordGenerator {
      * @return A single random word from dictionary
      */
     private String getRandomWord() {
-        return dictionary.get(rand.nextInt(totalWordCount));
+        return dictionary.get(rand.nextInt(dictionarySize));
     }
 
     /**
