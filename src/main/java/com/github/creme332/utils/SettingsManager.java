@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Settings {
+public class SettingsManager {
     // available settings
     private Map<String, String[]> dict = new HashMap<String, String[]>();
 
@@ -14,7 +14,7 @@ public class Settings {
     private String nodeName = "com.github.creme332.view.Settings.Section";
     private String unknownPreference = "Unknown";
 
-    public Settings() {
+    public SettingsManager() {
         // initialize all settings and their possible options
         dict.put("Mode", new String[] { "word", "quote" });
         dict.put("Difficulty",

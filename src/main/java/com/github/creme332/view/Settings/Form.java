@@ -13,13 +13,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-import com.github.creme332.utils.Settings;
+import com.github.creme332.utils.SettingsManager;
 
 public class Form extends JPanel implements ActionListener {
     public static String name = "settingsScreen";
     private JButton exitButton = new JButton("Exit");
 
-    private Map<String, String[]> gameSettings = new Settings().getSettings();
+    private Map<String, String[]> gameSettings = new SettingsManager().getSettings();
     private GridBagLayout layout;
 
     public Form() {

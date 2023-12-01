@@ -10,7 +10,7 @@ import java.util.Scanner;
  * Generates the text to be typed based on settings set.
  */
 public class WordGenerator {
-    private Settings gameSettings = new Settings();
+    private SettingsManager gameSettings = new SettingsManager();
     private ArrayList<String> dictionary; // list of all words in dictionary.txt
     private int dictionarySize; // total number of words in dictionary.txt
     private Random rand; // used for generating random words

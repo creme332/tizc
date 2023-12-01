@@ -9,13 +9,13 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 
-import com.github.creme332.utils.Settings;
+import com.github.creme332.utils.SettingsManager;
 
 public class Section extends JPanel implements ActionListener {
     private String name;
     private String unknownPreference = "Unknown";
 
-    private Settings settings = new Settings();
+    private SettingsManager settings = new SettingsManager();
 
     // TODO: Add javadoc
     public Section(String settingName, String[] options) {
@@ -50,8 +50,8 @@ public class Section extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getActionCommand());
-        System.out.println(this.getClass().getName());
+        System.out.println(String.format("%1$s setting updated to %2$s", name, e.getActionCommand()));
+        // System.out.println(this.getClass().getName());
 
         System.out.println(String.format("Previous %1$s setting = %2$s ",
                 name, settings.getData(name)));
