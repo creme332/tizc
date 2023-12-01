@@ -33,6 +33,15 @@ public class GameOverScreenController {
     }
 
     /**
+     * Add action when home button is pressed
+     * 
+     * @param action
+     */
+    public void addActionForHomeButton(ActionListener action) {
+        gameOverScreen.addHomeButtonListener(action);
+    }
+
+    /**
      * Add an action when tab is pressed
      * 
      * @param tabAction

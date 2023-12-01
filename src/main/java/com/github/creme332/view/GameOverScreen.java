@@ -1,6 +1,8 @@
 package com.github.creme332.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,6 +10,8 @@ import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -22,7 +26,9 @@ import com.github.creme332.utils.PoppinsFont;
  * Screen displayed when game ends.
  */
 public class GameOverScreen extends JPanel {
-    private JButton restarButton = new JButton("Restart");
+    private JButton restartButton;
+    private JButton homeButton;
+
     private JLabel timeTakenText = new JLabel();
     private JLabel wpmText = new JLabel();
     private JLabel cpmText = new JLabel();
@@ -46,6 +52,19 @@ public class GameOverScreen extends JPanel {
         ImageIcon timerIcon = loadIcon("/icon/deadline.png", iconSize);
         ImageIcon speedometerIcon = loadIcon("/icon/speedometer.png", iconSize);
         ImageIcon accuracyIcon = loadIcon("/icon/accuracy.png", iconSize);
+        JPanel buttonContainer = new JPanel(new FlowLayout());
+
+        // styles for buttonContainer
+        buttonContainer.setOpaque(false);
+
+        // create buttons
+        restartButton = createStyledButton("Restart");
+        homeButton = createStyledButton("Home");
+
+        // add buttons to container
+        buttonContainer.add(restartButton);
+        buttonContainer.add(Box.createHorizontalStrut(50));
+        buttonContainer.add(homeButton);
 
         // styles for time taken
         setTimeTaken(0);
@@ -74,12 +93,6 @@ public class GameOverScreen extends JPanel {
         accuracyText.setIcon(accuracyIcon);
         accuracyText.setHorizontalAlignment(JLabel.CENTER);
         accuracyText.setForeground(Color.WHITE);
-
-        // styles for restartButton
-        restarButton.setFocusPainted(false);
-        restarButton.setFont(myFont.Regular.deriveFont(30f));
-        restarButton.setContentAreaFilled(false);
-        restarButton.setForeground(Color.WHITE);
 
         // styles for chart
         chartPanel = new XChartPanel<XYChart>(chart.get());
@@ -120,12 +133,12 @@ public class GameOverScreen extends JPanel {
         gbc.gridwidth = 1;
         this.add(accuracyText, gbc);
 
-        // position restartButton at (3, 1) with unit width
+        // position buttonContainer at (3, 1) with width 2
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
-        // gbc.weighty = 0.3;
-        this.add(restarButton, gbc);
+        this.add(buttonContainer, gbc);
+
     }
 
     /**
@@ -158,6 +171,28 @@ public class GameOverScreen extends JPanel {
         g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }
 
+    /**
+     * Creates a JButton with some styles
+     * 
+     * @param text Text inside button
+     * @return Styled button
+     */
+    private JButton createStyledButton(String text) {
+        JButton btn = new JButton(text);
+        PoppinsFont myFont = new PoppinsFont();
+
+        // styles for restartButton
+        btn.setFocusPainted(false);
+        btn.setFont(myFont.Regular.deriveFont(30f));
+        btn.setContentAreaFilled(false);
+        btn.setForeground(Color.WHITE);
+        btn.setBorder(BorderFactory.createLineBorder(Color.white));
+        btn.setPreferredSize(new Dimension(300, 60));
+
+        return btn;
+    }
+
+    // TODO: Must be a utils
     /**
      * Returns an icon found in resources folder.
      * 
@@ -195,7 +230,7 @@ public class GameOverScreen extends JPanel {
     /**
      * Displays characters per minute in wpmText JLabel.
      * 
-     * @param wpm characers per minute.
+     * @param wpm characters per minute.
      */
     public void setCPM(long cpm) {
         cpmText.setText(String.format("%d cpm", cpm));
@@ -214,13 +249,22 @@ public class GameOverScreen extends JPanel {
         }
     }
 
-    /***
+    /**
      * Add action listener to restart button
      * 
      * @param newActionListener
      */
     public void addRestartButtonListener(ActionListener newActionListener) {
-        restarButton.addActionListener(newActionListener);
+        restartButton.addActionListener(newActionListener);
+    }
+
+    /***
+     * Add action listener to home button
+     * 
+     * @param newActionListener
+     */
+    public void addHomeButtonListener(ActionListener newActionListener) {
+        homeButton.addActionListener(newActionListener);
     }
 
     public void drawChart(double[] timeData, double[] wpmData) {

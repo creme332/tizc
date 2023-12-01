@@ -53,7 +53,7 @@ public class Controller implements PropertyChangeListener {
         homeScreenController.addStartButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                // initialise game with latest settings
+                // initialize game with latest settings
                 playScreenController.initialiseGame();
 
                 // when start button is clicked, show playScreen
@@ -68,9 +68,18 @@ public class Controller implements PropertyChangeListener {
             }
         };
 
+        Action goHomeAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                frame.setScreen(HomeScreen.name);
+            }
+        };
+
         // Restart game when Tab key is pressed
         gameOverController.addActionOnGameRestart(restartGameAction);
         gameOverController.addTabAction(restartGameAction);
+
+        gameOverController.addActionForHomeButton(goHomeAction);
 
         // playScreenController determines when game is over. Listen to it.
         playScreenController.addGameOverListener(this);
