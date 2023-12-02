@@ -54,7 +54,7 @@ public class Controller implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // initialize game with latest settings
-                playScreenController.initialiseGame();
+                playScreenController.initGame();
 
                 // when start button is clicked, show playScreen
                 frame.setScreen(PlayScreen.name);
@@ -91,7 +91,7 @@ public class Controller implements PropertyChangeListener {
      * Restarts game and displays PlayScreen
      */
     private void restartGame() {
-        playScreenController.initialiseGame();
+        playScreenController.initGame();
         frame.setScreen(PlayScreen.name);
     }
 

@@ -99,6 +99,10 @@ public class PlayScreen extends JPanel {
         accuracyLabel.setVisible(isVisible);
     }
 
+    /**
+     * 
+     * @return A JLabel with default styles overwritten
+     */
     private JLabel createStyledLabel() {
         Font PoppinsBold = new PoppinsFont().Bold;
         JLabel myLabel = new JLabel();

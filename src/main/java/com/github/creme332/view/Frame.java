@@ -46,7 +46,6 @@ public class Frame extends JFrame {
     }
 
     /**
-     * 
      * @return Unique name of screen currently being displayed: "homeScreen",
      *         "playScreen", or
      *         "gameOverScreen"

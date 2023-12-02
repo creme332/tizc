@@ -39,13 +39,13 @@ public class PlayScreenController {
     private Object badHighlight;
 
     public PlayScreenController(Model model) {
-        // initialise model
+        // initialize model
         this.model = model;
 
         // PlayScreenController is a subject and notifies observers.
         support = new PropertyChangeSupport(this);
 
-        initialiseGame();
+        initGame();
 
         createKeyBindings();
     }
@@ -69,7 +69,7 @@ public class PlayScreenController {
         if (keyCommand.length() > 1)
             return;
 
-        // ignore keypresses after game is over
+        // ignore key presses after game is over
         if (model.getCursorPos() >= model.getTypeText().length())
             return;
 
@@ -196,7 +196,7 @@ public class PlayScreenController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // when tab key is pressed while on playScreen, restart game
-                initialiseGame();
+                initGame();
             }
         };
 
@@ -216,9 +216,9 @@ public class PlayScreenController {
     }
 
     /**
-     * Initialises all variables for a new game.
+     * Initializes all variables for a new game.
      */
-    public void initialiseGame() {
+    public void initGame() {
         // stop timer
         stopTimer();
 

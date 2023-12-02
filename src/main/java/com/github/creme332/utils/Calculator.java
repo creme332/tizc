@@ -37,7 +37,8 @@ public class Calculator {
     /**
      * Calculates the accuracy of a player
      * 
-     * @param charCount    total number of characters (including spaces) in text
+     * @param charCount    total number of correct characters (including spaces) in
+     *                     text
      *                     typed
      * @param mistakeCount number of times incorrect characters wrongly typed
      * @return A percentage (0-100)
