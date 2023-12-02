@@ -4,17 +4,24 @@
 ![coverage](.github/badges/jacoco.svg)
 
 # About
-A minimal typing test built with the AWT and Swing graphics library. 
+A minimal typing test built with Java. 
 
 ![](design/design.excalidraw.png)
 
 ## Features
 - Data persistence across sessions
-- Customisations
+- Customizations (mode, difficulty, UI)
 - Detailed statistics with a chart after each test
 - Model-View-Controller pattern
 - Tested with JUnit
 - JavaDoc documentation
+
+## Tools
+- Maven for build
+- JUnit for testing
+- AWT and Swing graphics library
+- Flatlaf for GUI
+- Java Preferences API to save user settings
 
 ## Installation
 > 🔴 **Requirement**: You must have Java JDK 11+ installed.
@@ -49,19 +56,18 @@ Click on the `Play` button and start typing when you are ready. As soon as you m
 
 > 🟢 **Tip**: When a mistake is made, there is no need to press `Backspace`.
 
-> 🟢 **Tip**: Press `Tab` to restart test at any time. The timer only starts when you start typing.
+> 🟢 **Tip**: Press `Tab` to restart/reset test at any time. The timer only starts when you start typing.
 
 ## To-do
-- [ ] Use https://www.formdev.com/flatlaf/
+- [ ] Configure UI manager to use special font.
 - [ ] Create a release with a .jar file. Use github actions to auto-generate.
 - [ ] Track worst keys typed
 - [ ] Add time limit
-- [ ] Add a settings section
-  - [ ] Add customisations (number of words ...)
 - [ ] Add data persistence with xstream
   - [ ] Create a dynamic scoreboard
-  - [ ] Save highscore
+  - [ ] Save high score
 - [ ] [Make UI responsive](https://www.youtube.com/watch?v=ZJsjlucSoXM&ab_channel=SIMPLECODE)
+- [ ] Add tests for settings
 - [ ] Add banner to repository settings
 
 ## References
