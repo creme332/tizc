@@ -6,13 +6,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.github.creme332.utils.IconLoader;
 import com.github.creme332.utils.PoppinsFont;
 
 /**
@@ -35,10 +35,7 @@ public class HomeScreen extends JPanel {
 
         Font myFont = new PoppinsFont().Black;
 
-        ImageIcon settingsIcon = new ImageIcon(
-                new ImageIcon(this.getClass().getResource("/icon/settings.png")).getImage().getScaledInstance(50,
-                        50,
-                        Image.SCALE_DEFAULT));
+        ImageIcon settingsIcon = new IconLoader().loadIcon("/icon/settings.png", 50);
 
         // remove default styles from button
         settingsButton.setFocusPainted(false);
@@ -90,7 +87,7 @@ public class HomeScreen extends JPanel {
     protected void paintComponent(Graphics g) {
         // add background image
         super.paintComponent(g);
-        ImageIcon img = new ImageIcon(this.getClass().getResource("/bg1.jpg"));
+        ImageIcon img = new IconLoader().loadIcon("/bg1.jpg");
 
         g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }

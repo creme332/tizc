@@ -18,7 +18,7 @@ public class WPMChart {
     private String seriesName = "game";
     private PoppinsFont myFont = new PoppinsFont();
     private Font labelFont = myFont.Regular.deriveFont(16f);
-    private Color greenColour = new Color(147, 232, 211);
+    private Color greenColor = new Color(147, 232, 211);
     private Color transparent = new Color(0, 0, 0, 0);
 
     private XYChart chart;
@@ -61,7 +61,7 @@ public class WPMChart {
         chart.getStyler().setAxisTickLabelsFont(labelFont);
 
         // style annotation line
-        chart.getStyler().setAnnotationLineColor(greenColour);
+        chart.getStyler().setAnnotationLineColor(greenColor);
 
         // make annotation line dashed: https://stackoverflow.com/q/21989082/17627866
         chart.getStyler().setAnnotationLineStroke(
@@ -123,10 +123,10 @@ public class WPMChart {
         chart.removeSeries(seriesName);
         XYSeries series = chart.addSeries(seriesName, timeData, wpmData);
 
-        // customise series
-        series.setLineColor(greenColour);
+        // customize series
+        series.setLineColor(greenColor);
         series.setLineWidth(3f);
-        series.setMarkerColor(greenColour);
+        series.setMarkerColor(greenColor);
     }
 
     /**

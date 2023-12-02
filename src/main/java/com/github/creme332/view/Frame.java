@@ -33,7 +33,7 @@ public class Frame extends JFrame {
 
         // maximize frame on startup.
         // TODO: Fix white screen bug when frame is maximized
-        // this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // center frame on startup if frame is not maximized
         if (this.getExtendedState() != JFrame.MAXIMIZED_BOTH) {

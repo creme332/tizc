@@ -17,13 +17,11 @@ public class Section extends JPanel implements ActionListener {
 
     private SettingsManager settings = new SettingsManager();
 
-    // TODO: Add javadoc
     public Section(String settingName, String[] options) {
         this.name = settingName;
 
         JLabel title = new JLabel(settingName);
         title.putClientProperty("FlatLaf.style", "font: bold $h2.regular.font");
-
         this.add(title);
 
         ButtonGroup group = new ButtonGroup();
@@ -46,15 +44,16 @@ public class Section extends JPanel implements ActionListener {
 
         }
 
-        this.setOpaque(false);
+        this.setOpaque(false); // make section transparent
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println(String.format("%1$s setting updated to %2$s", name, e.getActionCommand()));
+        // debugging stuffs:
+        // System.out.println(String.format("%1$s setting updated to %2$s", name,
+        // e.getActionCommand()));
         // System.out.println(this.getClass().getName());
-
-        System.out.println(String.format("Previous %1$s setting = %2$s ",
-                name, settings.getData(name)));
+        // System.out.println(String.format("Previous %1$s setting = %2$s ",
+        // name, settings.getData(name)));
         settings.setData(name, e.getActionCommand());
     }
 }

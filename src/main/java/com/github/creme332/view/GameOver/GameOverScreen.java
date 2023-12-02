@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
@@ -20,6 +19,7 @@ import javax.swing.JPanel;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
+import com.github.creme332.utils.IconLoader;
 import com.github.creme332.utils.PoppinsFont;
 
 /**
@@ -42,6 +42,7 @@ public class GameOverScreen extends JPanel {
 
     public GameOverScreen() {
         PoppinsFont myFont = new PoppinsFont();
+        IconLoader loader = new IconLoader();
         float mediumFontSize = 50; // font size to be used in JLabels
         int iconSize = 50;
 
@@ -49,9 +50,9 @@ public class GameOverScreen extends JPanel {
         layout = new GridBagLayout();
         this.setLayout(layout);
 
-        ImageIcon timerIcon = loadIcon("/icon/deadline.png", iconSize);
-        ImageIcon speedometerIcon = loadIcon("/icon/speedometer.png", iconSize);
-        ImageIcon accuracyIcon = loadIcon("/icon/accuracy.png", iconSize);
+        ImageIcon timerIcon = loader.loadIcon("/icon/deadline.png", iconSize);
+        ImageIcon speedometerIcon = loader.loadIcon("/icon/speedometer.png", iconSize);
+        ImageIcon accuracyIcon = loader.loadIcon("/icon/accuracy.png", iconSize);
         JPanel buttonContainer = new JPanel(new FlowLayout());
 
         // styles for buttonContainer
@@ -166,7 +167,7 @@ public class GameOverScreen extends JPanel {
     protected void paintComponent(Graphics g) {
         // add background image to panel
         super.paintComponent(g);
-        ImageIcon img = new ImageIcon(this.getClass().getResource("/bg.jpg"));
+        ImageIcon img = new IconLoader().loadIcon("/bg.jpg");
 
         g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }
@@ -190,21 +191,6 @@ public class GameOverScreen extends JPanel {
         btn.setPreferredSize(new Dimension(300, 60));
 
         return btn;
-    }
-
-    // TODO: Must be a utils
-    /**
-     * Returns an icon found in resources folder.
-     * 
-     * @param path     Must start with / since path is relative to resources folder.
-     * @param iconSize size of icon in pixels
-     * @return
-     */
-    private ImageIcon loadIcon(String path, int iconSize) {
-        return new ImageIcon(
-                new ImageIcon(this.getClass().getResource(path)).getImage().getScaledInstance(iconSize,
-                        iconSize,
-                        Image.SCALE_DEFAULT));
     }
 
     /**

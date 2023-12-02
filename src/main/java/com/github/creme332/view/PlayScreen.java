@@ -17,6 +17,7 @@ import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.HighlightPainter;
 
+import com.github.creme332.utils.IconLoader;
 import com.github.creme332.utils.PoppinsFont;
 
 /**
@@ -119,7 +120,7 @@ public class PlayScreen extends JPanel {
     protected void paintComponent(Graphics g) {
         // add background image to screen
         super.paintComponent(g);
-        ImageIcon img = new ImageIcon(this.getClass().getResource("/bg2.jpg"));
+        ImageIcon img = new IconLoader().loadIcon("/bg2.jpg");
 
         g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }
