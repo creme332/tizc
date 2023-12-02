@@ -31,9 +31,8 @@ public class Frame extends JFrame {
         // add close button to frame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // maximize frame on startup.
-        // TODO: Fix white screen bug when frame is maximized
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // ! Maximize frame on startup may cause a white screen to appear. 
+        // this.setExtendedState(JFrame.MAXIMIZED_BOTH); // maximize frame on startup
 
         // center frame on startup if frame is not maximized
         if (this.getExtendedState() != JFrame.MAXIMIZED_BOTH) {
