@@ -3,6 +3,7 @@ package com.github.creme332.controller;
 import java.awt.event.*;
 import com.github.creme332.model.Model;
 import com.github.creme332.view.*;
+import com.github.creme332.view.GameOver.GameOverScreen;
 import com.github.creme332.view.Settings.Form;
 
 import java.beans.*;

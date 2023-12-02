@@ -3,6 +3,7 @@ package com.github.creme332.view;
 import java.awt.*;
 import javax.swing.*;
 
+import com.github.creme332.view.GameOver.GameOverScreen;
 import com.github.creme332.view.Settings.Form;
 
 /**

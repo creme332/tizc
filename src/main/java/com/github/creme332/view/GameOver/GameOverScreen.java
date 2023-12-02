@@ -1,4 +1,4 @@
-package com.github.creme332.view;
+package com.github.creme332.view.GameOver;
 
 import java.awt.Color;
 import java.awt.Dimension;

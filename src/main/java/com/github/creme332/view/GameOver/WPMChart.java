@@ -1,4 +1,4 @@
-package com.github.creme332.view;
+package com.github.creme332.view.GameOver;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

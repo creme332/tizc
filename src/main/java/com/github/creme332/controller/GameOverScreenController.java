@@ -7,9 +7,9 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.github.creme332.view.GameOverScreen;
 import com.github.creme332.model.Model;
 import com.github.creme332.utils.Calculator;
+import com.github.creme332.view.GameOver.GameOverScreen;
 
 /**
  * Controller for game over screen
