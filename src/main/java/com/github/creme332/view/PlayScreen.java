@@ -3,8 +3,11 @@ package com.github.creme332.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,23 +27,30 @@ public class PlayScreen extends JPanel {
     private Color GOOD_COLOR = Color.BLACK; // color of highlight when correct character is typed
     private Color BAD_COLOR = new Color(78, 78, 78); // color of highlight when incorrect character is typed
 
-    private JLabel timerLabel = new JLabel(); // label to display time
+    private JLabel timerLabel; // label to display time
+    private JLabel speedLabel; // label to display speed
+    private JLabel accuracyLabel; // label to display accuracy
+
     private JTextArea typingArea = new JTextArea(10, 30); // text to be typed
     public static String name = "playScreen";
 
     public PlayScreen() {
         Font PoppinsLight = new PoppinsFont().Light;
-        Font PoppinsBold = new PoppinsFont().Bold;
 
         // set timer label properties
-        timerLabel.setFont(PoppinsBold.deriveFont(25f));
-        timerLabel.setHorizontalAlignment(JLabel.CENTER);
-        timerLabel.setOpaque(false);
-        timerLabel.setForeground(Color.WHITE);
+        timerLabel = createStyledLabel();
         showTime(0);
 
+        // set accuracy label properties
+        accuracyLabel = createStyledLabel();
+        showAccuracy(0);
+
+        // set speed label properties
+        speedLabel = createStyledLabel();
+        showSpeed(0);
+
         // panels for layout
-        JPanel headerPanel = new JPanel(); // container for clock
+        JPanel headerPanel = new JPanel(new FlowLayout()); // container for clock
         JPanel bodyPanel = new JPanel(); // container for typing area
 
         // add borders to panels for debugging
@@ -49,10 +59,15 @@ public class PlayScreen extends JPanel {
         // this.setBorder(BorderFactory.createLineBorder(Color.red));
 
         // setup header panel
-        headerPanel.setLayout(new BorderLayout());
         headerPanel.setPreferredSize(new Dimension(400, 50));
         headerPanel.setOpaque(false); // Make panel transparent
+
+        // add labels to headerPanel
         headerPanel.add(timerLabel);
+        headerPanel.add(Box.createHorizontalStrut(50));
+        headerPanel.add(speedLabel);
+        headerPanel.add(Box.createHorizontalStrut(50));
+        headerPanel.add(accuracyLabel);
 
         // setup typing area
         typingArea.setFont(PoppinsLight.deriveFont(30f));
@@ -67,8 +82,33 @@ public class PlayScreen extends JPanel {
 
         // setup frame layout
         this.setLayout(new BorderLayout());
+
         this.add(headerPanel, BorderLayout.PAGE_START);
         this.add(bodyPanel, BorderLayout.CENTER);
+    }
+
+    public void toggleLiveTimer(boolean isVisible) {
+        timerLabel.setVisible(isVisible);
+    }
+
+    public void toggleLiveSpeed(boolean isVisible) {
+        speedLabel.setVisible(isVisible);
+    }
+
+    public void toggleLiveAccuracy(boolean isVisible) {
+        accuracyLabel.setVisible(isVisible);
+    }
+
+    private JLabel createStyledLabel() {
+        Font PoppinsBold = new PoppinsFont().Bold;
+        JLabel myLabel = new JLabel();
+
+        myLabel.setFont(PoppinsBold.deriveFont(25f));
+        myLabel.setHorizontalAlignment(JLabel.CENTER);
+        myLabel.setOpaque(false);
+        myLabel.setForeground(Color.WHITE);
+
+        return myLabel;
     }
 
     @Override
@@ -87,6 +127,24 @@ public class PlayScreen extends JPanel {
      */
     public void showTime(long timeInSeconds) {
         timerLabel.setText(String.format("%ds", timeInSeconds));
+    }
+
+    /**
+     * Displays current speed in wpm in speedLabel
+     * 
+     * @param wpm
+     */
+    public void showSpeed(long wpm) {
+        speedLabel.setText(String.format("%d wpm", wpm));
+    }
+
+    /**
+     * Displays current accuracy in speedLabel
+     * 
+     * @param accuracy
+     */
+    public void showAccuracy(long accuracy) {
+        accuracyLabel.setText(String.format("%d %%", accuracy));
     }
 
     /**

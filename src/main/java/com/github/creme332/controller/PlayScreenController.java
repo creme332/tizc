@@ -15,6 +15,7 @@ import javax.swing.text.BadLocationException;
 import com.github.creme332.view.PlayScreen;
 import com.github.creme332.model.Model;
 import com.github.creme332.utils.Calculator;
+import com.github.creme332.utils.SettingsManager;
 
 /**
  * Controller for PlayScreen
@@ -22,6 +23,7 @@ import com.github.creme332.utils.Calculator;
 public class PlayScreenController {
     private Model model;
     private PlayScreen playScreen = new PlayScreen();
+    private SettingsManager settings = new SettingsManager();
 
     // setup variables for timer
     private Timer timer;
@@ -231,18 +233,24 @@ public class PlayScreenController {
             @Override
             public void run() {
                 long ms = System.currentTimeMillis();
-                long elapsedSeconds = (ms - model.getStartTime()) / 1000;
-                model.setGameDuration(elapsedSeconds);
-                playScreen.showTime(model.getGameDuration());
+                Calculator myCalc = new Calculator();
+                long currentTime = (ms - model.getStartTime()) / 1000;
+                double currentWPM = myCalc.wpm(
+                        model.getCursorPos() + 1,
+                        currentTime);
+                long currentAccuracy = myCalc.accuracy(model.getCursorPos() + 1, model.getTotalMistakes());
 
-                // record current wpm
-                double currentWPM = new Calculator()
-                        .wpm(
-                                model.getCursorPos(),
-                                elapsedSeconds);
-                if (elapsedSeconds > 0) {
+                model.setGameDuration(currentTime);
+
+                // show live statistics (some of the statistics may be hidden)
+                playScreen.showTime(currentTime);
+                playScreen.showAccuracy(currentAccuracy);
+                playScreen.showSpeed((long) currentWPM);
+
+                // record current wpm to generate charts later on
+                if (currentTime > 0) {
                     try {
-                        model.recordWPM(elapsedSeconds, currentWPM);
+                        model.recordWPM(currentTime, currentWPM);
                     } catch (Exception e) {
                         System.out.println(e);
                     }
@@ -250,8 +258,15 @@ public class PlayScreenController {
             }
         };
 
-        // reset game duration
+        // reset live game statistics
         playScreen.showTime(0);
+        playScreen.showAccuracy(0);
+        playScreen.showSpeed(0);
+
+        // hide/show statistics as per settings
+        playScreen.toggleLiveTimer(settings.getData("Live timer").equals("show"));
+        playScreen.toggleLiveSpeed(settings.getData("Live speed").equals("show"));
+        playScreen.toggleLiveAccuracy(settings.getData("Live accuracy").equals("show"));
 
         // reset highlights
         playScreen.removeAllHighlights();
