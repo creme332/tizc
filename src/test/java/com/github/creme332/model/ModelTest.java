@@ -1,4 +1,4 @@
-package com.github.creme332;
+package com.github.creme332.model;
 
 import com.github.creme332.model.Model;
 
