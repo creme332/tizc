@@ -79,6 +79,13 @@ public class ModelTest {
     }
 
     @Test
+    public void checkIfStartTimePositiveWhenTimerStarts() {
+        m.initStartTime();
+
+        assertTrue(m.getStartTime() > 0);
+    }
+
+    @Test
     public void throwErrorWhenTypeTextNotInitialised() {
         Exception exception = assertThrows(
                 Exception.class,
