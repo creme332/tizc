@@ -5,6 +5,7 @@ import com.github.creme332.model.Model;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.junit.Assert.assertThrows;
 
 import org.junit.Before;
@@ -31,7 +32,7 @@ public class ModelTest {
     }
 
     @Test
-    public void initialiseModel() {
+    public void initializeModel() {
         checkDefaultModel();
     }
 
@@ -79,7 +80,18 @@ public class ModelTest {
     }
 
     @Test
-    public void checkIfStartTimePositiveWhenTimerStarts() {
+    public void returnCharWhenTextInitialized() {
+        m.setTypeText("abcdefghijklmn");
+        try {
+            assertTrue(m.getCurrentChar() == 'a');
+
+        } catch (Exception e) {
+            fail("No exception should be thrown since text has been initialized");
+        }
+    }
+
+    @Test
+    public void returnPositiveTimeWhenTimerStarts() {
         m.initStartTime();
 
         assertTrue(m.getStartTime() > 0);
@@ -130,7 +142,7 @@ public class ModelTest {
                 m.recordWPM(time[i], wpm[i]);
 
             } catch (Exception e) {
-                System.out.println(e);
+                fail("No exception should be thrown since time and wpm values are valid.");
             }
         }
 
