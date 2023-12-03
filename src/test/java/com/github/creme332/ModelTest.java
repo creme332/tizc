@@ -84,14 +84,14 @@ public class ModelTest {
                 Exception.class,
                 () -> m.getCurrentChar());
 
-        assertEquals("typeText has not been initialised", exception.getMessage());
+        assertEquals("typeText has not been initialized", exception.getMessage());
 
         m.setTypeText(null);
         exception = assertThrows(
                 Exception.class,
                 () -> m.getCurrentChar());
 
-        assertEquals("typeText has not been initialised", exception.getMessage());
+        assertEquals("typeText has not been initialized", exception.getMessage());
     }
 
     @Test
