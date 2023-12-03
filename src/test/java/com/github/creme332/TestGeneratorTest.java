@@ -1,6 +1,6 @@
 package com.github.creme332;
 
-import com.github.creme332.utils.WordGenerator;
+import com.github.creme332.utils.TestGenerator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -12,12 +12,12 @@ import org.junit.Test;
 /**
  * Unit test for Word Generator.
  */
-public class WordGeneratorTest {
-    WordGenerator m;
+public class TestGeneratorTest {
+    TestGenerator m;
 
     @Before
     public void setup() {
-        m = new WordGenerator();
+        m = new TestGenerator();
     }
 
     @Test

@@ -9,13 +9,13 @@ import java.util.Scanner;
 /**
  * Generates the text to be typed based on settings set.
  */
-public class WordGenerator {
+public class TestGenerator {
     private SettingsManager gameSettings = new SettingsManager();
     private ArrayList<String> dictionary; // list of all words in dictionary.txt
     private int dictionarySize; // total number of words in dictionary.txt
     private Random rand; // used for generating random words
 
-    public WordGenerator() {
+    public TestGenerator() {
         dictionary = loadDictionary();
         dictionarySize = dictionary.size();
         rand = new Random();

@@ -1,6 +1,6 @@
 package com.github.creme332.model;
 
-import com.github.creme332.utils.WordGenerator;
+import com.github.creme332.utils.TestGenerator;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class Model {
      * Resets model to its initial state.
      */
     public void reset() {
-        typeText = (new WordGenerator()).getRandomText();
+        typeText = (new TestGenerator()).getRandomText();
         charPtr = 0;
         startTime = -1;
         totalMistakes = 0;
