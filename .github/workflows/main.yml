@@ -42,7 +42,4 @@ jobs:
           fi
 
       - name: push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+        run: git push https://${{ secrets.GITHUB_PAT }}@github.com/creme332/tizc.git
