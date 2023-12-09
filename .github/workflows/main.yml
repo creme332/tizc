@@ -17,8 +17,10 @@ jobs:
           java-version: "17"
           distribution: "adopt"
 
-      - name: Build with Maven
-        run: mvn -B test
+      - name: Build headless tests with Maven
+        uses: coactions/setup-xvfb@v1
+        with:
+          run: mvn -B test
 
       - name: Generate JaCoco report
         run: mvn jacoco:prepare-agent test install jacoco:report
