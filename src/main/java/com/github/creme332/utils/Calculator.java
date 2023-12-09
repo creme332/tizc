@@ -28,7 +28,7 @@ public class Calculator {
      * @return CPM
      */
     public double cpm(long charCount, long timeTaken) {
-        if (timeTaken > 0) {
+        if (timeTaken > 0 && charCount >= 0) {
             return (secondsInMinute * charCount / timeTaken);
         }
         return 0;
@@ -43,9 +43,9 @@ public class Calculator {
      * @param mistakeCount number of times incorrect characters wrongly typed
      * @return A percentage (0-100)
      */
-    public long accuracy(long charCount, long mistakeCount) {
-        if (charCount > 0)
-            return 100 * (charCount - mistakeCount) / charCount;
+    public double accuracy(long charCount, long mistakeCount) {
+        if (charCount > 0 && mistakeCount >= 0)
+            return 100.0 * (charCount - mistakeCount) / charCount;
         return 0;
     }
 

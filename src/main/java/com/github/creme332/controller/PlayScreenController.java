@@ -238,13 +238,13 @@ public class PlayScreenController {
                 double currentWPM = myCalc.wpm(
                         model.getCursorPos() + 1,
                         currentTime);
-                long currentAccuracy = myCalc.accuracy(model.getCursorPos() + 1, model.getTotalMistakes());
+                double currentAccuracy = myCalc.accuracy(model.getCursorPos() + 1, model.getTotalMistakes());
 
                 model.setGameDuration(currentTime);
 
                 // show live statistics (some of the statistics may be hidden)
                 playScreen.showTime(currentTime);
-                playScreen.showAccuracy(currentAccuracy);
+                playScreen.showAccuracy((long) currentAccuracy);
                 playScreen.showSpeed((long) currentWPM);
 
                 // record current wpm to generate charts later on

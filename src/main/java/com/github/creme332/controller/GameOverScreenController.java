@@ -78,7 +78,7 @@ public class GameOverScreenController {
 
         // display accuracy
         gameOverScreen.setAccuracy(
-                calc.accuracy(
+                (long) calc.accuracy(
                         model.getTypeText().length(),
                         model.getTotalMistakes()));
     }
