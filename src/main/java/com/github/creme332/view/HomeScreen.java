@@ -34,8 +34,14 @@ public class HomeScreen extends JPanel {
         header.setOpaque(false);
 
         Font myFont = new PoppinsFont().Black;
+        ImageIcon settingsIcon;
 
-        ImageIcon settingsIcon = new IconLoader().loadIcon("/icon/settings.png", 50);
+        try {
+            settingsIcon = new IconLoader().loadIcon("/icon/settings.png", 50);
+        } catch (Exception e) {
+            System.out.println(e);
+            return;
+        }
 
         // remove default styles from button
         settingsButton.setFocusPainted(false);
@@ -87,7 +93,13 @@ public class HomeScreen extends JPanel {
     protected void paintComponent(Graphics g) {
         // add background image
         super.paintComponent(g);
-        ImageIcon img = new IconLoader().loadIcon("/bg1.jpg");
+        ImageIcon img = new ImageIcon();
+
+        try {
+            img = new IconLoader().loadIcon("/bg1.jpg");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }

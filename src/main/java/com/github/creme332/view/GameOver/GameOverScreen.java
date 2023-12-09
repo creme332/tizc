@@ -50,9 +50,17 @@ public class GameOverScreen extends JPanel {
         layout = new GridBagLayout();
         this.setLayout(layout);
 
-        ImageIcon timerIcon = loader.loadIcon("/icon/deadline.png", iconSize);
-        ImageIcon speedometerIcon = loader.loadIcon("/icon/speedometer.png", iconSize);
-        ImageIcon accuracyIcon = loader.loadIcon("/icon/accuracy.png", iconSize);
+        ImageIcon timerIcon, speedometerIcon, accuracyIcon;
+
+        try {
+            timerIcon = loader.loadIcon("/icon/deadline.png", iconSize);
+            speedometerIcon = loader.loadIcon("/icon/speedometer.png", iconSize);
+            accuracyIcon = loader.loadIcon("/icon/accuracy.png", iconSize);
+        } catch (Exception e) {
+            System.out.println(e);
+            return;
+        }
+
         JPanel buttonContainer = new JPanel(new FlowLayout());
 
         // styles for buttonContainer
@@ -167,7 +175,13 @@ public class GameOverScreen extends JPanel {
     protected void paintComponent(Graphics g) {
         // add background image to panel
         super.paintComponent(g);
-        ImageIcon img = new IconLoader().loadIcon("/bg.jpg");
+        ImageIcon img = new ImageIcon();
+
+        try {
+            img = new IconLoader().loadIcon("/bg.jpg");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }

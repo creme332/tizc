@@ -120,8 +120,13 @@ public class PlayScreen extends JPanel {
     protected void paintComponent(Graphics g) {
         // add background image to screen
         super.paintComponent(g);
-        ImageIcon img = new IconLoader().loadIcon("/bg2.jpg");
+        ImageIcon img = new ImageIcon();
 
+        try {
+            img = new IconLoader().loadIcon("/bg2.jpg");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
     }
 
