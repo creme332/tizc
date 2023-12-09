@@ -80,8 +80,8 @@ public class TestGenerator {
      *         10.
      */
     public String getRandomText() {
-        String difficulty = gameSettings.getData("Difficulty");
-        System.out.println(String.format("Current difficulty for generation: %s", difficulty));
+        // String difficulty = gameSettings.getData("Difficulty");
+        // System.out.println(String.format("Current difficulty for generation: %s", difficulty));
 
         String result = "error";
         try {
