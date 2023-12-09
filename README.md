@@ -59,16 +59,21 @@ Click on the `Play` button and start typing when you are ready. As soon as you m
 > 🟢 **Tip**: Press `Tab` to restart/reset test at any time. The timer only starts when you start typing.
 
 ## To-do
-- [ ] Configure UI manager to use special font.
+- [ ] Update UI
+  - [ ] Configure defaults of UI manager 
+  - [ ] settings page
+    - [ ] If less than 3 settings are visible on play screen, labels are not centered
+  - [ ] look into migs layout
+- [ ] Test UI 
 - [ ] Create a release with a .jar file. Use github actions to auto-generate.
-- [ ] Track worst keys typed
-- [ ] Add time limit
-- [ ] Add data persistence with xstream
+- [ ] Add data persistence with xstream or maybe firebase
   - [ ] Create a dynamic scoreboard
   - [ ] Save high score
+- [ ] Other features
+  - [ ] Add time limit
+  - [ ] Track worst keys typed
 - [ ] [Make UI responsive](https://www.youtube.com/watch?v=ZJsjlucSoXM&ab_channel=SIMPLECODE)
-- [ ] Add tests for settings
-- [ ] Add banner to repository settings
+- [ ] Add social preview banner to public repository settings
 
 ## References
 - List of english words in `words.txt`: https://www.ef.com/wwen/english-resources/english-vocabulary/top-1000-words/
