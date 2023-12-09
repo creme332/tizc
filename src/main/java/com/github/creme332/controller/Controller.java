@@ -16,7 +16,7 @@ import javax.swing.Action;
  */
 public class Controller implements PropertyChangeListener {
     private Model model = new Model(); // game state
-    private Frame frame = new Frame(); // frame of app
+    public Frame frame = new Frame(); // frame of app
     private HomeScreenController homeScreenController = new HomeScreenController();
     private PlayScreenController playScreenController = new PlayScreenController(model);
     private GameOverScreenController gameOverController = new GameOverScreenController(model);
@@ -91,7 +91,7 @@ public class Controller implements PropertyChangeListener {
     /**
      * Restarts game and displays PlayScreen
      */
-    private void restartGame() {
+    public void restartGame() {
         playScreenController.initGame();
         frame.setScreen(PlayScreen.name);
     }
