@@ -1,7 +1,5 @@
 package com.github.creme332.utils;
 
-import com.github.creme332.utils.TestGenerator;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;

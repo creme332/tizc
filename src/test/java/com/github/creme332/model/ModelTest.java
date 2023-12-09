@@ -1,7 +1,5 @@
 package com.github.creme332.model;
 
-import com.github.creme332.model.Model;
-
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
