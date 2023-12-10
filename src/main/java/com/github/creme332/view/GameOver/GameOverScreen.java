@@ -20,7 +20,6 @@ import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
 import com.github.creme332.utils.IconLoader;
-import com.github.creme332.utils.PoppinsFont;
 
 /**
  * Screen displayed when game ends.
@@ -41,9 +40,7 @@ public class GameOverScreen extends JPanel {
     GridBagLayout layout;
 
     public GameOverScreen() {
-        PoppinsFont myFont = new PoppinsFont();
         IconLoader loader = new IconLoader();
-        float mediumFontSize = 50; // font size to be used in JLabels
         int iconSize = 50;
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -77,28 +74,28 @@ public class GameOverScreen extends JPanel {
 
         // styles for time taken
         setTimeTaken(0);
-        timeTakenText.setFont(myFont.Regular.deriveFont(mediumFontSize));
+        timeTakenText.putClientProperty("FlatLaf.style", "font: bold $h1.regular.font");
         timeTakenText.setIcon(timerIcon);
         timeTakenText.setHorizontalAlignment(JLabel.CENTER);
         timeTakenText.setForeground(Color.WHITE);
 
         // styles for speed
         setWPM(0);
-        wpmText.setFont(myFont.Regular.deriveFont(mediumFontSize));
+        wpmText.putClientProperty("FlatLaf.style", "font: bold $h1.regular.font");
         wpmText.setIcon(speedometerIcon);
         wpmText.setHorizontalAlignment(JLabel.CENTER);
         wpmText.setForeground(Color.WHITE);
 
         // styles for CPM
         setCPM(0);
-        cpmText.setFont(myFont.Regular.deriveFont(mediumFontSize));
+        cpmText.putClientProperty("FlatLaf.style", "font: bold $h1.regular.font");
         cpmText.setIcon(speedometerIcon);
         cpmText.setHorizontalAlignment(JLabel.CENTER);
         cpmText.setForeground(Color.WHITE);
 
         // styles for accuracy
         setAccuracy(0);
-        accuracyText.setFont(myFont.Regular.deriveFont(mediumFontSize));
+        accuracyText.putClientProperty("FlatLaf.style", "font: bold $h1.regular.font");
         accuracyText.setIcon(accuracyIcon);
         accuracyText.setHorizontalAlignment(JLabel.CENTER);
         accuracyText.setForeground(Color.WHITE);
@@ -194,11 +191,10 @@ public class GameOverScreen extends JPanel {
      */
     private JButton createStyledButton(String text) {
         JButton btn = new JButton(text);
-        PoppinsFont myFont = new PoppinsFont();
 
         // styles for restartButton
         btn.setFocusPainted(false);
-        btn.setFont(myFont.Regular.deriveFont(30f));
+        btn.putClientProperty("FlatLaf.style", "font: bold 130% $defaultFont");
         btn.setContentAreaFilled(false);
         btn.setForeground(Color.WHITE);
         btn.setBorder(BorderFactory.createLineBorder(Color.white));

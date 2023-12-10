@@ -4,6 +4,8 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.UIManager;
+
 import org.knowm.xchart.AnnotationLine;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
@@ -12,12 +14,9 @@ import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 
-import com.github.creme332.utils.PoppinsFont;
-
 public class WPMChart {
     private String seriesName = "game";
-    private PoppinsFont myFont = new PoppinsFont();
-    private Font labelFont = myFont.Regular.deriveFont(16f);
+    private Font labelFont = UIManager.getFont("medium.font");
     private Color greenColor = new Color(147, 232, 211);
     private Color transparent = new Color(0, 0, 0, 0);
 

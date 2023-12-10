@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.github.creme332.utils.IconLoader;
-import com.github.creme332.utils.PoppinsFont;
 
 /**
  * First screen that is shown to user when app starts.
@@ -33,7 +32,6 @@ public class HomeScreen extends JPanel {
         body.setOpaque(false);
         header.setOpaque(false);
 
-        Font myFont = new PoppinsFont().Black;
         ImageIcon settingsIcon;
 
         try {
@@ -60,8 +58,7 @@ public class HomeScreen extends JPanel {
 
         // set style for Play button
         startGameButton.setPreferredSize(new Dimension(200, 100));
-        startGameButton.setFont(myFont.deriveFont(40f));
-        startGameButton.setFocusPainted(false);
+        startGameButton.setFont(new Font("Poppins Black", Font.PLAIN, 40));
         startGameButton.setOpaque(false);
         startGameButton.setContentAreaFilled(false);
         startGameButton.setForeground(Color.WHITE);

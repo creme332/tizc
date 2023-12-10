@@ -11,7 +11,6 @@ import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 import com.github.creme332.utils.SettingsManager;
 
@@ -50,7 +49,7 @@ public class Form extends JPanel implements ActionListener {
         gbc.gridy = row;
         gbc.gridwidth = 1;
         exitButton.setPreferredSize(new Dimension(100, 100));
-        exitButton.setFont(UIManager.getFont("h1.font"));
+        exitButton.putClientProperty("FlatLaf.style", "font: bold 150% $defaultFont");
         this.add(exitButton, gbc);
     }
 

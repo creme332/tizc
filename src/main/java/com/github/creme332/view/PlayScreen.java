@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.Box;
@@ -18,7 +17,6 @@ import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.HighlightPainter;
 
 import com.github.creme332.utils.IconLoader;
-import com.github.creme332.utils.PoppinsFont;
 
 /**
  * Main screen where user plays.
@@ -36,8 +34,6 @@ public class PlayScreen extends JPanel {
     public static String name = "playScreen";
 
     public PlayScreen() {
-        Font PoppinsLight = new PoppinsFont().Light;
-
         // set timer label properties
         timerLabel = createStyledLabel();
         showTime(0);
@@ -71,7 +67,7 @@ public class PlayScreen extends JPanel {
         headerPanel.add(accuracyLabel);
 
         // setup typing area
-        typingArea.setFont(PoppinsLight.deriveFont(30f));
+        typingArea.putClientProperty("FlatLaf.style", "font: 140% $large.font");
         typingArea.setForeground(Color.white);
         typingArea.setEditable(false);
         typingArea.setLineWrap(true);
@@ -105,10 +101,9 @@ public class PlayScreen extends JPanel {
      * @return A JLabel with default styles overwritten
      */
     private JLabel createStyledLabel() {
-        Font PoppinsBold = new PoppinsFont().Bold;
         JLabel myLabel = new JLabel();
 
-        myLabel.setFont(PoppinsBold.deriveFont(25f));
+        myLabel.putClientProperty("FlatLaf.style", "font: $h3.font");
         myLabel.setHorizontalAlignment(JLabel.CENTER);
         myLabel.setOpaque(false);
         myLabel.setForeground(Color.WHITE);
