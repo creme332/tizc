@@ -3,6 +3,7 @@ package com.github.creme332.view;
 import java.awt.*;
 import javax.swing.*;
 
+import com.github.creme332.utils.IconLoader;
 import com.github.creme332.view.GameOver.GameOverScreen;
 import com.github.creme332.view.Settings.Form;
 
@@ -20,6 +21,17 @@ public class Frame extends JFrame {
     private String currentScreen; // screen which is currently displayed
 
     public Frame() {
+
+        ImageIcon img = new ImageIcon();
+
+        try {
+            img = new IconLoader().loadIcon("/icon/logo-32x32.png");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        this.setIconImage(img.getImage());
+
         this.setTitle("tizc"); // set frame title
 
         // set frame size
@@ -31,7 +43,7 @@ public class Frame extends JFrame {
         // add close button to frame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // ! Maximize frame on startup may cause a white screen to appear. 
+        // ! Maximize frame on startup may cause a white screen to appear.
         // this.setExtendedState(JFrame.MAXIMIZED_BOTH); // maximize frame on startup
 
         // center frame on startup if frame is not maximized
