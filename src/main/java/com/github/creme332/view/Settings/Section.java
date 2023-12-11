@@ -14,14 +14,14 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
 import com.github.creme332.model.Setting;
-import com.github.creme332.utils.SettingsManager;
 
 public class Section extends JPanel implements ActionListener {
     private String name;
     private String unknownPreference = "Unknown";
-    private SettingsManager settings = new SettingsManager();
+    private Setting setting;
 
     public Section(Setting setting) {
+        this.setting = setting;
         this.name = setting.getKey();
         String[] options = setting.getOptions();
 
@@ -38,6 +38,7 @@ public class Section extends JPanel implements ActionListener {
 
         // create title
         JLabel title = new JLabel(name);
+        title.setIcon(setting.getIcon());
         title.putClientProperty("FlatLaf.style", "font: bold $h2.regular.font");
         titlePanel.add(title);
         this.add(titlePanel);
@@ -54,7 +55,7 @@ public class Section extends JPanel implements ActionListener {
         bodyPanel.add(descriptionPanel);
 
         ButtonGroup group = new ButtonGroup();
-        String currentPreference = settings.getData(name);
+        String currentPreference = setting.getData();
 
         // if no preference set, use first option as default preference
         if (currentPreference.equals(unknownPreference)) {
@@ -86,6 +87,6 @@ public class Section extends JPanel implements ActionListener {
         // System.out.println(this.getClass().getName());
         // System.out.println(String.format("Previous %1$s setting = %2$s ",
         // name, settings.getData(name)));
-        settings.setData(name, e.getActionCommand());
+        setting.setData(e.getActionCommand());
     }
 }
