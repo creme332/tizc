@@ -4,19 +4,30 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.prefs.Preferences;
 
+import org.kordamp.ikonli.swing.FontIcon;
+
 public class Setting {
     private String key;
     private String options[];
     private String description;
+    private FontIcon icon;
 
     private Preferences preferences;
     static String nodeName = "com.github.creme332.view.Settings.Section";
     public static String invalidOption = "Unknown";
 
-    public Setting(String name, String[] options, String description) {
+    public Setting(String name, String[] options, String description, FontIcon icon) {
         this.key = name;
         this.options = options;
         this.description = description;
+        this.icon = icon;
+
+        // define a node where settings will be stored
+        preferences = Preferences.userRoot().node(nodeName);
+    }
+
+    public FontIcon getIcon() {
+        return icon;
     }
 
     public String getKey() {
