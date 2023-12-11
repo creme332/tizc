@@ -12,6 +12,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.kordamp.ikonli.bootstrapicons.BootstrapIcons;
+import org.kordamp.ikonli.swing.FontIcon;
+
 import com.github.creme332.utils.IconLoader;
 
 /**
@@ -32,15 +35,6 @@ public class HomeScreen extends JPanel {
         body.setOpaque(false);
         header.setOpaque(false);
 
-        ImageIcon settingsIcon;
-
-        try {
-            settingsIcon = new IconLoader().loadIcon("/icon/settings.png", 50);
-        } catch (Exception e) {
-            System.out.println(e);
-            return;
-        }
-
         // remove default styles from button
         settingsButton.setFocusPainted(false);
         settingsButton.setOpaque(false);
@@ -51,7 +45,8 @@ public class HomeScreen extends JPanel {
         settingsButton.setLocation(20, 20);
 
         // set icon to settings button
-        settingsButton.setIcon(settingsIcon);
+        FontIcon icon = FontIcon.of(BootstrapIcons.GEAR, 50, Color.white);
+        settingsButton.setIcon(icon);
 
         header.add(settingsButton, BorderLayout.EAST);
         this.add(header, BorderLayout.PAGE_START);
