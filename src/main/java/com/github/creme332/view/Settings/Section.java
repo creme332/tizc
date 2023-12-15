@@ -1,10 +1,15 @@
 package com.github.creme332.view.Settings;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
@@ -12,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
 
 import com.github.creme332.model.Setting;
 
@@ -19,6 +25,7 @@ public class Section extends JPanel implements ActionListener {
     private String name;
     private String unknownPreference = "Unknown";
     private Setting setting;
+    Border blackline = BorderFactory.createLineBorder(Color.white);
 
     public Section(Setting setting) {
         this.setting = setting;
@@ -35,6 +42,14 @@ public class Section extends JPanel implements ActionListener {
         // create children of bodyPanel
         JPanel descriptionPanel = new JPanel();
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        JPanel buttonsGroupPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        buttonsGroupPanel.setPreferredSize(new Dimension(500, 60));
+
+        // buttonsPanel.setBorder(blackline);
+        // buttonsGroupPanel.setBorder(blackline);
 
         // create title
         JLabel title = new JLabel(name);
@@ -62,18 +77,37 @@ public class Section extends JPanel implements ActionListener {
             currentPreference = options[0];
         }
 
+        // set global gbc constraints
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.gridy = 0; // align all items horizontally
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets.right = 10; // add right margin of 10px to each item
+
         // create radio buttons for current setting
         for (int i = 0; i < options.length; i++) {
             JRadioButton btn = new JRadioButton(options[i]);
+
+            // style button
             btn.setFont(UIManager.getFont("large.font"));
+            btn.setBorderPainted(true);
+            btn.setOpaque(true);
+
             if (currentPreference.equals(options[i]))
                 btn.setSelected(true);
             group.add(btn);
-            buttonsPanel.add(btn);
+
+            gbc.gridx = i;
+
+            // for last option, do not set right margin
+            if (i == options.length - 1)
+                gbc.insets.right = 0;
+
+            buttonsGroupPanel.add(btn, gbc);
             btn.addActionListener(this); // Register a listener for the radio buttons.
 
         }
-
+        buttonsPanel.add(buttonsGroupPanel);
         bodyPanel.add(buttonsPanel);
         this.add(bodyPanel);
 
@@ -81,12 +115,6 @@ public class Section extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        // debugging stuffs:
-        // System.out.println(String.format("%1$s setting updated to %2$s", name,
-        // e.getActionCommand()));
-        // System.out.println(this.getClass().getName());
-        // System.out.println(String.format("Previous %1$s setting = %2$s ",
-        // name, settings.getData(name)));
         setting.setData(e.getActionCommand());
     }
 }
