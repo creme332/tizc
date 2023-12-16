@@ -87,6 +87,8 @@ public class SettingsManager {
      * @return Data stored at particular key. If invalid key, returns invalidOption.
      */
     public String getData(String key) {
+        if (!validateKey(key))
+            return Setting.invalidOption;
         return settingDict.get(key).getData();
     }
 
