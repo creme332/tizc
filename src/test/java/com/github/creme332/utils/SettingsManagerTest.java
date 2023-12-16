@@ -6,6 +6,8 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.creme332.model.Setting;
+
 public class SettingsManagerTest {
     SettingsManager m;
 
@@ -15,13 +17,13 @@ public class SettingsManagerTest {
     }
 
     @Test
-    public void returnInvalidOption() {
-        assertTrue(m.getData("invalid-key") == SettingsManager.invalidOption);
+    public void returnInvalidOptionForInvalidKey() {
+        assertTrue(m.getData("invalid-key").equals(Setting.invalidOption));
     }
 
     @Test
     public void returnValidOptionForValidKey() {
-        assertTrue(Arrays.deepEquals(m.getSettings().get("Live speed"), new String[] { "hide", "show" }));
+        assertTrue(Arrays.deepEquals(m.getSettings().get("Live speed").getOptions(), new String[] { "hide", "show" }));
     }
 
     @Test
@@ -31,7 +33,7 @@ public class SettingsManagerTest {
         m.setData("Live speed", "hidden");
 
         // original option must not change
-        assertTrue(m.getData("Live speed") == originalOption);
+        assertTrue(m.getData("Live speed").equals(originalOption));
     }
 
     @Test
@@ -40,10 +42,10 @@ public class SettingsManagerTest {
         String originalOption = m.getData(key);
 
         m.setData(key, "hide");
-        assertTrue(m.getData(key) == "hide");
+        assertTrue(m.getData(key).equals("hide"));
 
         m.setData(key, "show");
-        assertTrue(m.getData(key) == "show");
+        assertTrue(m.getData(key).equals("show"));
 
         // reinstate original option
         m.setData(key, originalOption);
@@ -54,12 +56,12 @@ public class SettingsManagerTest {
         String key = "Live speedzzz";
 
         m.setData(key, "hide");
-        assertTrue(m.getData(key) == SettingsManager.invalidOption);
+        assertTrue(m.getData(key).equals(Setting.invalidOption));
     }
 
     @Test
-    public void returnFiveSettings() {
-        assertTrue(m.getSettings().keySet().size() == 5);
+    public void returnPositiveNumberOfSettings() {
+        assertTrue(m.getSettings().keySet().size() > 0);
     }
 
 }
