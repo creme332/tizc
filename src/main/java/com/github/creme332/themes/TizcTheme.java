@@ -2,7 +2,7 @@ package com.github.creme332.themes;
 
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
-import java.io.File;
+import java.io.InputStream;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 
@@ -18,30 +18,19 @@ public class TizcTheme extends FlatDarkLaf {
     }
 
     private static void installFonts() {
-        File font_file;
-        try {
-            // setup Poppins Black font
-            font_file = new File(TizcTheme.class.getResource("/font/Poppins/Poppins-Black.ttf").getPath());
-            GraphicsEnvironment.getLocalGraphicsEnvironment()
-                    .registerFont(Font.createFont(Font.TRUETYPE_FONT, font_file));
+        InputStream inputStream;
+        String[] fontStyle = { "Black", "Bold", "Light", "Medium", "Regular" };
 
-            font_file = new File(TizcTheme.class.getResource("/font/Poppins/Poppins-Bold.ttf").getPath());
-            GraphicsEnvironment.getLocalGraphicsEnvironment()
-                    .registerFont(Font.createFont(Font.TRUETYPE_FONT, font_file));
+        for (String style : fontStyle) {
+            try {
+                String path = String.format("/font/Poppins/Poppins-%s.ttf", style);
+                inputStream = TizcTheme.class.getResourceAsStream(path);
+                GraphicsEnvironment.getLocalGraphicsEnvironment()
+                        .registerFont(Font.createFont(Font.TRUETYPE_FONT, inputStream));
 
-            font_file = new File(TizcTheme.class.getResource("/font/Poppins/Poppins-Light.ttf").getPath());
-            GraphicsEnvironment.getLocalGraphicsEnvironment()
-                    .registerFont(Font.createFont(Font.TRUETYPE_FONT, font_file));
-
-            font_file = new File(TizcTheme.class.getResource("/font/Poppins/Poppins-Medium.ttf").getPath());
-            GraphicsEnvironment.getLocalGraphicsEnvironment()
-                    .registerFont(Font.createFont(Font.TRUETYPE_FONT, font_file));
-
-            font_file = new File(TizcTheme.class.getResource("/font/Poppins/Poppins-Regular.ttf").getPath());
-            GraphicsEnvironment.getLocalGraphicsEnvironment()
-                    .registerFont(Font.createFont(Font.TRUETYPE_FONT, font_file));
-        } catch (Exception e) {
-            System.out.println(e);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
 
     }

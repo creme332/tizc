@@ -2,8 +2,7 @@ package com.github.creme332.utils;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 /**
@@ -81,7 +80,8 @@ public class TestGenerator {
      */
     public String getRandomText() {
         // String difficulty = gameSettings.getData("Difficulty");
-        // System.out.println(String.format("Current difficulty for generation: %s", difficulty));
+        // System.out.println(String.format("Current difficulty for generation: %s",
+        // difficulty));
 
         String result = "error";
         try {
@@ -106,22 +106,22 @@ public class TestGenerator {
      * @return an array containing all words in dictionary
      */
     private ArrayList<String> loadDictionary() {
-        // Reference: https://www.w3schools.com/java/java_files_read.asp
         ArrayList<String> allWords = new ArrayList<String>();
         String dictionaryPath = "/data/dictionary.txt";
+        InputStream inputStream = TestGenerator.class.getResourceAsStream(dictionaryPath);
 
-        try {
-            File myObj = new File(this.getClass().getResource(dictionaryPath).getPath());
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                allWords.add(0, data);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
-            e.printStackTrace();
+        if (inputStream == null) {
+            System.out.println("Unable to load dictionary.");
+            return new ArrayList<String>();
         }
+
+        Scanner scanner = new Scanner(inputStream);
+        while (scanner.hasNextLine()) {
+            String data = scanner.nextLine();
+            allWords.add(0, data);
+        }
+        scanner.close();
+
         return allWords;
     }
 }
