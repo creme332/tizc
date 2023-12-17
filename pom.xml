@@ -17,13 +17,25 @@
   </properties>
 
   <dependencies>
+    <!-- ! icon pack must appear first to avoid issue when compiling project to jar -->
+    <!-- Reference: https://github.com/kordamp/ikonli/issues/11 -->
+    <dependency>
+      <groupId>org.kordamp.ikonli</groupId>
+      <artifactId>ikonli-bootstrapicons-pack</artifactId>
+      <version>12.3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kordamp.ikonli</groupId>
+      <artifactId>ikonli-swing</artifactId>
+      <version>12.3.1</version>
+    </dependency>
 
     <dependency>
       <groupId>com.formdev</groupId>
       <artifactId>flatlaf</artifactId>
       <version>3.2.5</version>
     </dependency>
-
 
     <dependency>
       <groupId>org.knowm.xchart</groupId>
@@ -37,19 +49,6 @@
       <version>4.13</version>
       <scope>test</scope>
     </dependency>
-
-    <dependency>
-      <groupId>org.kordamp.ikonli</groupId>
-      <artifactId>ikonli-swing</artifactId>
-      <version>12.3.1</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kordamp.ikonli</groupId>
-      <artifactId>ikonli-bootstrapicons-pack</artifactId>
-      <version>12.3.1</version>
-    </dependency>
-
   </dependencies>
 
   <build>
@@ -128,6 +127,31 @@
           </configuration>
         </plugin>
 
+        <!-- Plugin below is required to solve missing manifest file issue when project is packaged to jar -->
+        <!-- Reference: https://stackoverflow.com/a/574650/17627866 -->
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <appendAssemblyId>false</appendAssemblyId>
+            <archive>
+              <manifest>
+                <mainClass>com.github.creme332.App</mainClass>
+              </manifest>
+            </archive>
+            <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+          </configuration>
+          <executions>
+            <execution>
+              <id>make-assembly</id>              <!-- this is used for inheritance merges -->
+              <phase>package</phase>              <!-- bind to the packaging phase -->
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
