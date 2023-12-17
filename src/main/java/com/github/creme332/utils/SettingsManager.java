@@ -112,4 +112,8 @@ public class SettingsManager {
 
         settingDict.get(key).setData(data);
     }
+
+    public boolean soundActivated() {
+        return getData("Typing sound").equals("on");
+    }
 }

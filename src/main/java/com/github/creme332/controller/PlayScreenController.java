@@ -4,8 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -76,6 +85,16 @@ public class PlayScreenController {
         // System.out.println(
         // String.format("Current index = %d. Pressed %s", model.getCursorPos(),
         // keyCommand));
+
+        // check if sound setting is enabled and play sound if needed
+        if ((new SettingsManager()).soundActivated()) {
+            try {
+                playSound();
+            } catch (Exception e) {
+                // if unable to play sound, print out error but let game go on.
+                System.out.println(e);
+            }
+        }
 
         // when a key is pressed for the first time, start timer
         if (model.getStartTime() <= 0) {
@@ -273,5 +292,14 @@ public class PlayScreenController {
 
         // show text to be typed
         playScreen.showText(model.getTypeText());
+    }
+
+    void playSound()
+            throws MalformedURLException, UnsupportedAudioFileException, IOException, LineUnavailableException {
+        URL ostFile = PlayScreenController.class.getResource("/tap.wav");
+        AudioInputStream audioIn = AudioSystem.getAudioInputStream(ostFile);
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioIn);
+        clip.start();
     }
 }
