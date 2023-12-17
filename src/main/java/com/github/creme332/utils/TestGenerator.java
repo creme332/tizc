@@ -1,9 +1,11 @@
 package com.github.creme332.utils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 import java.io.InputStream;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Generates the text to be typed based on settings set.
@@ -106,7 +108,7 @@ public class TestGenerator {
      * @return an array containing all words in dictionary
      */
     private ArrayList<String> loadDictionary() {
-        ArrayList<String> allWords = new ArrayList<String>();
+        Set<String> allWords = new HashSet<String>();
         String dictionaryPath = "/data/dictionary.txt";
         InputStream inputStream = TestGenerator.class.getResourceAsStream(dictionaryPath);
 
@@ -118,10 +120,10 @@ public class TestGenerator {
         Scanner scanner = new Scanner(inputStream);
         while (scanner.hasNextLine()) {
             String data = scanner.nextLine();
-            allWords.add(0, data);
+            allWords.add(data);
         }
         scanner.close();
 
-        return allWords;
+        return new ArrayList<>(allWords);
     }
 }
