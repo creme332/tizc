@@ -130,7 +130,9 @@
         <!-- Plugin below is required to solve missing manifest file issue when project is packaged to jar -->
         <!-- Reference: https://stackoverflow.com/a/574650/17627866 -->
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.6.0</version>
           <configuration>
             <appendAssemblyId>false</appendAssemblyId>
             <archive>
