@@ -38,6 +38,7 @@ public class PlayScreenController {
     private Timer timer;
     private TimerTask task;
 
+    private Boolean soundIssueReported = false;
     private PropertyChangeSupport support; // variable for observer pattern
 
     /**
@@ -87,13 +88,16 @@ public class PlayScreenController {
         // keyCommand));
 
         // check if sound setting is enabled and play sound if needed
-        if ((new SettingsManager()).soundActivated()) {
+        if (!soundIssueReported && (new SettingsManager()).soundActivated()) {
             try {
                 playSound();
             } catch (Exception e) {
-                // if unable to play sound, print out error but let game go on.
+                // if unable to play sound, print error once and let game go on.
+                soundIssueReported = true;
+                System.out.println("There is a sound issue with your device:");
                 System.out.println(e);
             }
+
         }
 
         // when a key is pressed for the first time, start timer
