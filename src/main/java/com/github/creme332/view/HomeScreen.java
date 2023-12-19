@@ -3,7 +3,6 @@ package com.github.creme332.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
@@ -53,7 +52,7 @@ public class HomeScreen extends JPanel {
 
         // set style for Play button
         startGameButton.setPreferredSize(new Dimension(200, 100));
-        startGameButton.setFont(new Font("Poppins Black", Font.PLAIN, 40));
+        startGameButton.putClientProperty("FlatLaf.style", "font: $h1.font");
         startGameButton.setOpaque(false);
         startGameButton.setContentAreaFilled(false);
         startGameButton.setForeground(Color.WHITE);
