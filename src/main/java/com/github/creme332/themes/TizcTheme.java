@@ -9,6 +9,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 public class TizcTheme extends FlatDarkLaf {
     public static boolean setup() {
         installFonts();
+        TizcTheme.registerCustomDefaultsSource("themes");
         return setup(new TizcTheme());
     }
 
