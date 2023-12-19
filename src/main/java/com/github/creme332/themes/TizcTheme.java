@@ -20,7 +20,7 @@ public class TizcTheme extends FlatDarkLaf {
 
     private static void installFonts() {
         InputStream inputStream;
-        String[] fontStyle = { "Black", "Bold", "Light", "Medium", "Regular" };
+        String[] fontStyle = { "Black", "Bold", "Light", "Regular" };
 
         for (String style : fontStyle) {
             try {
