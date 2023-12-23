@@ -27,7 +27,7 @@ public class Form extends JPanel implements ActionListener {
 
         JPanel titlePanel = new JPanel();
         JLabel title = new JLabel("Settings");
-        title.putClientProperty("FlatLaf.style", "font: $h1.font");
+        title.putClientProperty("FlatLaf.style", "font: $h0.font");
         titlePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         titlePanel.add(title);
