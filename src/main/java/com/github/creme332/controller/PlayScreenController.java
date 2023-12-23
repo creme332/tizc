@@ -141,6 +141,8 @@ public class PlayScreenController {
         }
 
         // incorrect character pressed
+
+        // increment number of mistakes made by 1
         model.incrementMistakes();
 
         // highlight incorrectly typed character red, if it is not already red
@@ -150,6 +152,11 @@ public class PlayScreenController {
             }
         } catch (BadLocationException err) {
             err.printStackTrace();
+        }
+
+        // check if game mode is death mode and end game immediately
+        if (settings.getData("Mode").equals("death")) {
+            handleGameOver();
         }
 
     }

@@ -264,6 +264,11 @@ public class GameOverScreen extends JPanel {
     }
 
     public void drawChart(double[] timeData, double[] wpmData) {
+        if (timeData.length == 0 || wpmData.length == 0) {
+            timeData = new double[] { 0 };
+            wpmData = new double[] { 0 };
+        }
+
         chart.updateSeries(timeData, wpmData);
         double average = Arrays.stream(wpmData).average().orElse(Double.NaN);
         chart.updateAverageWPM(average);

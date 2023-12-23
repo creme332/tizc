@@ -9,6 +9,7 @@ import javax.swing.KeyStroke;
 
 import com.github.creme332.model.Model;
 import com.github.creme332.utils.Calculator;
+import com.github.creme332.utils.SettingsManager;
 import com.github.creme332.view.GameOver.GameOverScreen;
 
 /**
@@ -57,6 +58,8 @@ public class GameOverScreenController {
      * Display game statistics: game duration, WPM, accuracy
      */
     public void showStats() {
+        SettingsManager settings = new SettingsManager();
+
         // display chart
         gameOverScreen.drawChart(model.getTimeArray(),
                 model.getWPMArray());
@@ -64,22 +67,30 @@ public class GameOverScreenController {
         // display game duration
         gameOverScreen.setTimeTaken(model.getGameDuration());
 
+        // get char count depending on game mode
+        long charCount = 0;
+        if (settings.getData("Mode").equals("death")) {
+            charCount = model.getCursorPos() + 1;
+        } else {
+            charCount = model.getTypeText().length();
+        }
+
         // display cpm
         double cpm = calc.cpm(
-                model.getTypeText().length(),
+                charCount,
                 model.getGameDuration());
         gameOverScreen.setCPM((long) cpm);
 
         // display final wpm
         double wpm = calc.wpm(
-                model.getTypeText().length(),
+                charCount,
                 model.getGameDuration());
         gameOverScreen.setWPM((long) wpm);
 
         // display accuracy
         gameOverScreen.setAccuracy(
                 (long) calc.accuracy(
-                        model.getTypeText().length(),
+                        charCount,
                         model.getTotalMistakes()));
     }
 

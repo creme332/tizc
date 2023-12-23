@@ -17,44 +17,40 @@ public class SettingsManager {
     public SettingsManager() {
         // initialize all settings and their possible options
         FontIcon icon = FontIcon.of(BootstrapIcons.SPEEDOMETER, 20, Color.white);
-        Setting s = new Setting("Mode", new String[] { "word", "quote" },
-                "In word mode you must type a list random words whereas in quote mode, you are given a random quote. The number of words in each mode is determined by the difficulty setting.",
+        Setting setting = new Setting("Mode", new String[] { "word", "death" },
+                "In word mode you must type a limited number of random words with no time limit. Death mode is the same as word mode with the exception that the game ends on your first mistake.",
                 icon);
         settingDict.put(
                 "Mode",
-                s);
+                setting);
 
         icon = FontIcon.of(BootstrapIcons.STAR_FILL, 20, Color.white);
-        s = new Setting("Difficulty", new String[] { "easy", "medium", "hard" },
-                "Normal is the classic type test experience. Expert fails the test if you submit (press space) an incorrect word. Master fails if you press a single incorrect key (meaning you have to achieve 100% accuracy).",
+        setting = new Setting("Difficulty", new String[] { "easy", "medium", "hard" },
+                "In the word game mode, the higher the difficulty, the more words you have to type with no time limit. In time mode, the higher the difficulty, the less time you have to type as many words as you can.",
                 icon);
-        settingDict.put("Difficulty", s);
+        settingDict.put("Difficulty", setting);
 
         icon = FontIcon.of(BootstrapIcons.SPEEDOMETER, 20, Color.white);
-        s = new Setting("Live speed", new String[] { "hide", "show" },
+        setting = new Setting("Live speed", new String[] { "hide", "show" },
                 "Displays a live speed during the test. Updates once every second.", icon);
-        settingDict.put("Live speed", s);
+        settingDict.put("Live speed", setting);
 
         icon = FontIcon.of(BootstrapIcons.CURSOR, 20, Color.white);
-        s = new Setting("Live accuracy", new String[] { "hide", "show" }, "Displays live accuracy during the test.",
+        setting = new Setting("Live accuracy", new String[] { "hide", "show" },
+                "Displays live accuracy during the test.",
                 icon);
-        settingDict.put("Live accuracy", s);
+        settingDict.put("Live accuracy", setting);
 
         icon = FontIcon.of(BootstrapIcons.STOPWATCH, 20, Color.white);
-        s = new Setting("Live timer", new String[] { "hide", "show" },
+        setting = new Setting("Live timer", new String[] { "hide", "show" },
                 "Displays a live timer for timed tests and word count for word based tests (word, quote or custom mode).",
                 icon);
-        settingDict.put("Live timer", s);
-
-        icon = FontIcon.of(BootstrapIcons.MOON, 20, Color.white);
-        s = new Setting("Lazy mode", new String[] { "off", "on" },
-                "Replaces accents / diacritics / special characters with their normal letter equivalents.", icon);
-        settingDict.put("Lazy mode", s);
+        settingDict.put("Live timer", setting);
 
         icon = FontIcon.of(BootstrapIcons.SPEAKER, 20, Color.white);
-        s = new Setting("Typing sound", new String[] { "off", "on" },
+        setting = new Setting("Typing sound", new String[] { "off", "on" },
                 "Plays a short sound when you press a key.", icon);
-        settingDict.put("Typing sound", s);
+        settingDict.put("Typing sound", setting);
     }
 
     /**

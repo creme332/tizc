@@ -119,6 +119,8 @@ public class WPMChart {
      * @param wpmData  array of WPM data.
      */
     public void updateSeries(double[] timeData, double[] wpmData) {
+        assert (timeData.length > 0 && wpmData.length > 0);
+
         chart.removeSeries(seriesName);
         XYSeries series = chart.addSeries(seriesName, timeData, wpmData);
 
