@@ -1,6 +1,6 @@
 ![repository banner](design/banner.png)
 
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?logo=openjdk&logoColor=white)
 ![coverage](.github/badges/jacoco.svg)
 
 # About
@@ -10,7 +10,7 @@ A minimal typing test built with Java.
 
 ## Features
 - Data persistence across sessions
-- Customizations (mode, difficulty, UI)
+- Multiple customizations (mode, difficulty, sound effects, ...)
 - Detailed statistics with a chart after each test
 - Model-View-Controller pattern
 - Tested with JUnit
@@ -19,32 +19,29 @@ A minimal typing test built with Java.
 ## Tools
 - Maven for build
 - JUnit for testing
-- AWT and Swing graphics library
-- Flatlaf for GUI
+- AWT, Swing, and Flatlaf for GUI
 - Java Preferences API to save user settings
 
 ## Installation
+
+### Method 1
 > 🔴 **Requirement**: You must have Java JDK 11+ installed.
 
-Clone the repository using Git (or download it using any other method):
+1. Download JAR file from the latest release. 
+2. Navigate to the directory where your JAR is found.
+3. Run the JAR file:
+  ```bash
+  java -jar tizc.jar
+  ```
+### Method 2
+> 🔴 **Requirement**: You must have Maven installed.
+
+Download the latest release of the project the run `src/main/java/com/github/creme332/App.java` in an IDE.
+
+## Update jar file
 ```bash
-git clone git@github.com:creme332/tizc.git
+mvn clean compile assembly:single
 ```
-
-Navigate to the root directory of the project:
-```bash
-cd tizc
-```
-
-Run the jar file:
-```bash
-java -jar tizc.jar
-```
-
-Or, run `src/main/java/com/github/creme332/App.java` in an IDE.
-
-> 🔴 **Known bug**: If a white screen is displayed on startup, minimize the window then maximize it again.
-
 ## Code coverage
 To generate jacoco report:
 ```bash
@@ -59,21 +56,19 @@ Click on the `Play` button and start typing when you are ready. As soon as you m
 > 🟢 **Tip**: Press `Tab` to restart/reset test at any time. The timer only starts when you start typing.
 
 ## To-do
-- [ ] Update UI
-  - [ ] Configure defaults of UI manager 
-  - [ ] settings page
-    - [ ] If less than 3 settings are visible on play screen, labels are not centered
-  - [ ] look into migs layout
-- [ ] Test UI 
-- [ ] Create a release with a .jar file. Use github actions to auto-generate.
-- [ ] Add data persistence with xstream or maybe firebase
+- [ ] when game ends in death mode, wait 2s before showing game over screen
+- [ ] Refactor PlayScreen by splitting view into subviews
+- [ ] Connect to mysql database
   - [ ] Create a dynamic scoreboard
   - [ ] Save high score
-- [ ] Other features
-  - [ ] Add time limit
+- [ ] Add new features
+  - [ ] Add time limit and cancel tests longer than this limit
   - [ ] Track worst keys typed
-- [ ] [Make UI responsive](https://www.youtube.com/watch?v=ZJsjlucSoXM&ab_channel=SIMPLECODE)
+  - [ ] Support for capital letters, punctuation, numbers.
+- [ ] Use JPackage to convert .jar to .exe
 - [ ] Add social preview banner to public repository settings
+- [ ] Write tests for UI
+- [ ] [Make UI responsive](https://www.youtube.com/watch?v=ZJsjlucSoXM&ab_channel=SIMPLECODE)
 
 ## References
 - List of english words in `words.txt`: https://www.ef.com/wwen/english-resources/english-vocabulary/top-1000-words/
