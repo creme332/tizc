@@ -108,7 +108,10 @@ public class SettingsManager {
 
         settingDict.get(key).setData(data);
     }
-
+    /**
+     * Checks whether sound setting is enabled.
+     * @return True if sound is enabled.
+     */
     public boolean soundActivated() {
         return getData("Typing sound").equals("on");
     }
