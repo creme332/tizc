@@ -1,17 +1,16 @@
-![repository banner](design/banner.png)
-
+# tizc
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?logo=openjdk&logoColor=white)
 ![coverage](.github/badges/jacoco.svg)
 
-# About
 A minimal typing test built with Java. 
 
-![](design/design.excalidraw.png)
+![GIF of typing test](tizc.gif)
 
 ## Features
-- Data persistence across sessions
-- Multiple customizations (mode, difficulty, sound effects, ...)
-- Detailed statistics with a chart after each test
+- Live errors, wpm, and accuracy displays
+- Adjustable difficulty
+- Typing sound effect
+- Detailed statistics with a wpm chart after each test
 - Model-View-Controller pattern
 - Tested with JUnit
 - JavaDoc documentation
@@ -20,7 +19,6 @@ A minimal typing test built with Java.
 - Maven for build
 - JUnit for testing
 - AWT, Swing, and Flatlaf for GUI
-- Java Preferences API to save user settings
 
 ## Installation
 
@@ -66,7 +64,6 @@ Click on the `Play` button and start typing when you are ready. As soon as you m
   - [ ] Track worst keys typed
   - [ ] Support for capital letters, punctuation, numbers.
 - [ ] Use JPackage to convert .jar to .exe
-- [ ] Add social preview banner to public repository settings
 - [ ] Write tests for UI
 - [ ] [Make UI responsive](https://www.youtube.com/watch?v=ZJsjlucSoXM&ab_channel=SIMPLECODE)
 
