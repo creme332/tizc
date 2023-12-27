@@ -26,7 +26,7 @@ There are two ways to install this project and both ways **requires [Java JDK 11
 
 ### Method 1
 
-1. Download jar file from the latest release. 
+1. Download the jar file from the latest [Releases](https://github.com/creme332/tizc/releases). 
 2. Navigate to the directory where your jar is found.
 3. Run the jar file:
   ```bash
@@ -63,9 +63,9 @@ mvn jacoco:prepare-agent test install jacoco:report
 ## Usage
 Click on the `Play` button and start typing when you are ready. As soon as you make a mistake, the cursor will stop, and you will have to type the correct letter.
 
-> 🟢 **Tip**: When a mistake is made, there is no need to press `Backspace`.
+> 🟢 **Tip**: When a mistake is made, there is no need to press <kbd>Backspace</kbd>.
 
-> 🟢 **Tip**: Press `Tab` to restart/reset test at any time. The timer only starts when you start typing.
+> 🟢 **Tip**: Press <kbd>Tab</kbd> to restart/reset test at any time. The timer only starts when you start typing.
 
 ## To-do
 - [ ] In death mode, wait 2s before showing game over screen
