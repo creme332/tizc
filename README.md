@@ -1,12 +1,14 @@
 # tizc
+
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?logo=openjdk&logoColor=white)
-![coverage](.github/badges/jacoco.svg)
+![coverage](https://github.com/creme332/tizc/blob/main/.github/badges/jacoco.svg)
 
 A minimal typing test built with Java. 
 
 ![GIF of typing test](assets/tizc.gif)
 
 ## Features
+
 - Live errors, wpm, and accuracy displays
 - Adjustable difficulty
 - Typing sound effect
@@ -16,6 +18,7 @@ A minimal typing test built with Java.
 - JavaDoc documentation
 
 ## Tools
+
 - Maven for build
 - JUnit for testing
 - AWT, Swing, and Flatlaf for GUI
@@ -32,7 +35,9 @@ There are two ways to install this project and both ways **requires [Java JDK 11
   ```bash
   java -jar tizc-0.jar
   ```
+
 ### Method 2
+
 > 🔴 **Additional requirements**: You must have Git and Maven installed.
 
 Clone repository:
@@ -50,17 +55,21 @@ mvn clean install
 Run `src/main/java/com/github/creme332/App.java` in an IDE.
 
 #### Useful commands
+
 To create a jar file:
+
 ```bash
 mvn clean compile assembly:single
 ```
 
 To generate jacoco code coverage report:
+
 ```bash
 mvn jacoco:prepare-agent test install jacoco:report
 ```
 
 ## Usage
+
 Click on the `Play` button and start typing when you are ready. As soon as you make a mistake, the cursor will stop, and you will have to type the correct letter.
 
 > 🟢 **Tip**: When a mistake is made, there is no need to press <kbd>Backspace</kbd>.
@@ -68,6 +77,7 @@ Click on the `Play` button and start typing when you are ready. As soon as you m
 > 🟢 **Tip**: Press <kbd>Tab</kbd> to restart/reset test at any time. The timer only starts when you start typing.
 
 ## To-do
+
 - [ ] In death mode, wait 2s before showing game over screen
 - [ ] Add more tests including UI tests
 - [ ] Refactor PlayScreen by splitting view into subviews
@@ -82,6 +92,7 @@ Click on the `Play` button and start typing when you are ready. As soon as you m
 - [ ] [Make UI responsive](https://www.youtube.com/watch?v=ZJsjlucSoXM&ab_channel=SIMPLECODE)
 
 ## References
+
 - List of english words in `words.txt`: https://www.ef.com/wwen/english-resources/english-vocabulary/top-1000-words/
 - Font from [Google Fonts](https://fonts.google.com/specimen/Poppins)
 - [Passive View MVC Pattern](https://martinfowler.com/eaaDev/PassiveScreen.html)
